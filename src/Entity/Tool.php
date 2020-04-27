@@ -44,16 +44,6 @@ class Tool
     private $displayOrder;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $informations;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $informationPicturePath;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="tools")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -88,6 +78,11 @@ class Tool
      * @ORM\OneToMany(targetEntity="App\Entity\Consumable", mappedBy="tool", orphanRemoval=true)
      */
     private $consumable;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Information", mappedBy="tool", cascade={"persist", "remove"})
+     */
+    private $information;
 
     public function __construct()
     {
@@ -161,30 +156,6 @@ class Tool
     public function setDisplayOrder(int $displayOrder): self
     {
         $this->displayOrder = $displayOrder;
-
-        return $this;
-    }
-
-    public function getInformations(): ?string
-    {
-        return $this->informations;
-    }
-
-    public function setInformations(?string $informations): self
-    {
-        $this->informations = $informations;
-
-        return $this;
-    }
-
-    public function getInformationPicturePath(): ?string
-    {
-        return $this->informationPicturePath;
-    }
-
-    public function setInformationPicturePath(?string $informationPicturePath): self
-    {
-        $this->informationPicturePath = $informationPicturePath;
 
         return $this;
     }
@@ -382,6 +353,23 @@ class Tool
             if ($consumable->getTool() === $this) {
                 $consumable->setTool(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getInformation(): ?Information
+    {
+        return $this->information;
+    }
+
+    public function setInformation(Information $information): self
+    {
+        $this->information = $information;
+
+        // set the owning side of the relation if necessary
+        if ($information->getTool() !== $this) {
+            $information->setTool($this);
         }
 
         return $this;
