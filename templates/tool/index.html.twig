@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tool index{% endblock %}
+
+{% block body %}
+    <h1>Tool index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>PicturePath</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>DisplayOrder</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tool in tools %}
+            <tr>
+                <td>{{ tool.id }}</td>
+                <td>{{ tool.name }}</td>
+                <td>{{ tool.picturePath }}</td>
+                <td>{{ tool.description }}</td>
+                <td>{{ tool.type }}</td>
+                <td>{{ tool.displayOrder }}</td>
+                <td>
+                    <a href="{{ path('tool_show', {'id': tool.id}) }}">show</a>
+                    <a href="{{ path('tool_edit', {'id': tool.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('tool_new') }}">Create new</a>
+{% endblock %}
