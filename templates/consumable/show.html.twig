@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consumable{% endblock %}
+
+{% block body %}
+    <h1>Consumable</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ consumable.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ consumable.name }}</td>
+            </tr>
+            <tr>
+                <th>PicturePath</th>
+                <td>{{ consumable.picturePath }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ consumable.description }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ consumable.price }}</td>
+            </tr>
+            <tr>
+                <th>Charge</th>
+                <td>{{ consumable.charge }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('consumable_index') }}">back to list</a>
+
+    <a href="{{ path('consumable_edit', {'id': consumable.id}) }}">edit</a>
+
+    {{ include('consumable/_delete_form.html.twig') }}
+{% endblock %}
