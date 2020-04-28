@@ -2,12 +2,14 @@
 
 namespace App\Form;
 
-use App\Entity\Category;
 use App\Entity\Tool;
+use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class ToolType extends AbstractType
 {
@@ -15,7 +17,21 @@ class ToolType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('picturePath')
+            ->add('imageFile', FileType::class, [
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'mimeTypes' => [
+                            'image/jpg',
+                            'image/jpeg',
+                            'image/png',
+                            'image/gif',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid image document',
+                    ])
+                ]
+            ])
             ->add('description')
             ->add('type')
             ->add('displayOrder')

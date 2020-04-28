@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Tool;
 use App\Form\ToolType;
 use App\Repository\ToolRepository;
+use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,11 +31,21 @@ class ToolController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        
         $tool = new Tool();
         $form = $this->createForm(ToolType::class, $tool);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // file input handling
+            $uploadedFile = $form['imageFile']->getData();
+            if ($uploadedFile) {
+                $destination = $this->getParameter('kernel.project_dir').'/public/img/tools';
+                $fileUploader = new FileUploader($destination);
+                $newFileName = $fileUploader->upload($uploadedFile);
+                $tool->setPicturePath($newFileName);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($tool);
             $entityManager->flush();
@@ -67,6 +78,14 @@ class ToolController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // file input handling
+            $uploadedFile = $form['imageFile']->getData();
+            if ($uploadedFile) {
+                $destination = $this->getParameter('kernel.project_dir').'/public/img/tools';
+                $fileUploader = new FileUploader($destination);
+                $newFileName = $fileUploader->upload($uploadedFile);
+                $tool->setPicturePath($newFileName);
+            }
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('tool_index');
