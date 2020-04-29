@@ -13,7 +13,7 @@ class CharacteristicType extends AbstractType
     {
         $builder
             ->add('content')
-            ->add('tool')
+            // ->add('tool')
         ;
     }
 

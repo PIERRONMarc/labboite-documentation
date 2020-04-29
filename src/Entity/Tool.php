@@ -70,7 +70,7 @@ class Tool
     private $noticeParagraph;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Characteristic", mappedBy="tool", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Characteristic", mappedBy="tool", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $characteristic;
 

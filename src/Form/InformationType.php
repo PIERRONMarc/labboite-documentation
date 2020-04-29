@@ -39,7 +39,7 @@ class InformationType extends AbstractType
             ],
         ])
             ->add('content')
-            ->add('tool')
+            // ->add('tool')
         ;
     }
 

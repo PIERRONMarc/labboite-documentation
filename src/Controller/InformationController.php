@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\Information;
-use App\Form\InformationType;
+use App\Entity\Tool;
+use App\Form\FinalInformationType;
+use App\Repository\ToolRepository;
 use Gedmo\Sluggable\Util\Urlizer;
-use App\Repository\InformationRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,28 +18,25 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 class InformationController extends AbstractController
 {
     /**
-     * @Route("/", name="information_index", methods={"GET"})
+     * @Route("/", name="information_index")
      */
-    public function index(InformationRepository $informationRepository): Response
+    public function index(ToolRepository $toolRepository)
     {
         return $this->render('information/index.html.twig', [
-            'information' => $informationRepository->findAll(),
+            'tool' => $toolRepository->findAll()
         ]);
     }
-
+    
     /**
-     * @Route("/new", name="information_new", methods={"GET","POST"})
+     * @Route("/edit/{id}", name="information_edit", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function edit(Request $request, Tool $tool): Response
     {
-        $information = new Information();
-        $form = $this->createForm(InformationType::class, $information);
+        $form = $this->createForm(FinalInformationType::class, $tool);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
-            
-            $picturePath = $form->get('imageFile')->getData();
+            $picturePath = $form->get('information')->get('imageFile')->getData();
 
             // this condition is needed because the 'brochure' field is not required
             // so the PDF file must be processed only when a file is uploaded
@@ -63,18 +60,18 @@ class InformationController extends AbstractController
 
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
-                $information->setPicturePath($newFilename);
+                $tool->getInformation()->setPicturePath($newFilename);
             }
 
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($information);
+            $entityManager->persist($tool);
             $entityManager->flush();
 
             return $this->redirectToRoute('information_index');
         }
 
-        return $this->render('information/new.html.twig', [
-            'information' => $information,
+        return $this->render('information/edit.html.twig', [
+            'tool' => $tool,
             'form' => $form->createView(),
         ]);
     }
@@ -82,71 +79,10 @@ class InformationController extends AbstractController
     /**
      * @Route("/{id}", name="information_show", methods={"GET"})
      */
-    public function show(Information $information): Response
+    public function show(Tool $tool): Response
     {
         return $this->render('information/show.html.twig', [
-            'information' => $information,
+            'tool' => $tool,
         ]);
-    }
-
-    /**
-     * @Route("/{id}/edit", name="information_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Information $information): Response
-    {
-        $form = $this->createForm(InformationType::class, $information);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $picturePath = $form->get('imageFile')->getData();
-
-            // this condition is needed because the 'brochure' field is not required
-            // so the PDF file must be processed only when a file is uploaded
-            if ($picturePath) {
-                $originalFilename = pathinfo($picturePath->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                $newFilename = Urlizer::urlize($originalFilename).'-'.uniqid().'.'.$picturePath->guessExtension();
-
-
-                // Move the file to the directory where brochures are stored
-                try {
-                    $destination = $this->getParameter('kernel.project_dir').'/public/img/informations';
-                    $picturePath->move(
-                       $destination,
-                        $newFilename
-
-                    );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                }
-
-                // updates the 'brochureFilename' property to store the PDF file name
-                // instead of its contents
-                $information->setPicturePath($newFilename);
-            }
-            
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('information_index');
-        }
-
-        return $this->render('information/edit.html.twig', [
-            'information' => $information,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="information_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, Information $information): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$information->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($information);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('information_index');
     }
 }
