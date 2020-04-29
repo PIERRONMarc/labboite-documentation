@@ -80,4 +80,10 @@ class Theme
 
         return $this;
     }
+    public function __toString(){
+        // to show the name of the Tool in the select
+        return $this->name;
+        // to show the id of the Tategory in the select
+        // return $this->id;
+    }
 }
