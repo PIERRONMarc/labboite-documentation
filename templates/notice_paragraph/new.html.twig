@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New NoticeParagraph{% endblock %}
+
+{% block body %}
+    <h1>Create new NoticeParagraph</h1>
+
+    {{ include('notice_paragraph/_form.html.twig') }}
+
+    <a href="{{ path('notice_paragraph_index') }}">back to list</a>
+{% endblock %}

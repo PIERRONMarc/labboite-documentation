@@ -27,8 +27,8 @@
                 <td>{{ consumable.price }}</td>
                 <td>{{ consumable.charge }}</td>
                 <td>
-                    <a href="{{ path('consumable_show', {'id': consumable.id}) }}">show</a>
-                    <a href="{{ path('consumable_edit', {'id': consumable.id}) }}">edit</a>
+                    {# <a href="{{ path('consumable_show', {'id_consumable': consumable.id}) }}">show</a> #}
+                    <a href="{{ path('consumable_edit', {'consumable': consumable.id }) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -39,5 +39,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('consumable_new') }}">Create new</a>
+    <a href="{{ path('consumable_new', {'tool': tool.id}) }}">Create new</a>
 {% endblock %}

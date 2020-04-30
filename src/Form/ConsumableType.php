@@ -43,7 +43,7 @@ class ConsumableType extends AbstractType
             ->add('description')
             ->add('price')
             ->add('charge')
-            ->add('tool')
+            
         ;
     }
 

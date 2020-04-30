@@ -2,13 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\Tool;
 use App\Entity\Consumable;
 use App\Form\ConsumableType;
+use App\Form\FinalConsumableType;
 use Gedmo\Sluggable\Util\Urlizer;
+use App\Repository\ToolRepository;
 use App\Repository\ConsumableRepository;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -18,20 +21,33 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
  */
 class ConsumableController extends AbstractController
 {
+    
+
     /**
-     * @Route("/", name="consumable_index", methods={"GET"})
+     * @Route("/tools", name="tools_index")
      */
-    public function index(ConsumableRepository $consumableRepository): Response
+    public function indexTool(ToolRepository $toolRepository)
     {
-        return $this->render('consumable/index.html.twig', [
-            'consumables' => $consumableRepository->findAll(),
+        return $this->render('consumable/indexTools.html.twig', [
+            'tool' => $toolRepository->findAll()
         ]);
     }
 
     /**
-     * @Route("/new", name="consumable_new", methods={"GET","POST"})
+     * @Route("/{id}", name="consumable_index", methods={"GET"})
      */
-    public function new(Request $request): Response
+    public function index(ConsumableRepository $consumableRepository, Tool $tool): Response
+    {
+        return $this->render('consumable/index.html.twig', [
+            'consumables' => $consumableRepository->findBy(['tool'=>$tool]),
+            'tool' => $tool
+        ]);
+    }
+    
+    /**
+     * @Route("/new/{tool}", name="consumable_new", methods={"GET","POST"})
+     */
+    public function new(Request $request, Tool $tool): Response
     {
         $consumable = new Consumable();
         $form = $this->createForm(ConsumableType::class, $consumable);
@@ -66,15 +82,19 @@ class ConsumableController extends AbstractController
                 $consumable->setPicturePath($newFilename);
             }
             $entityManager = $this->getDoctrine()->getManager();
+            $consumable->setTool($tool);
             $entityManager->persist($consumable);
             $entityManager->flush();
 
-            return $this->redirectToRoute('consumable_index');
+            return $this->redirectToRoute('consumable_index',[
+                'id'=>$consumable->getTool()->getId()
+            ]);
         }
 
         return $this->render('consumable/new.html.twig', [
             'consumable' => $consumable,
             'form' => $form->createView(),
+            'tool' => $tool
         ]);
     }
 
@@ -89,7 +109,7 @@ class ConsumableController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="consumable_edit", methods={"GET","POST"})
+     * @Route("/edit/{consumable}", name="consumable_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Consumable $consumable): Response
     {
@@ -125,12 +145,14 @@ class ConsumableController extends AbstractController
             }
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('consumable_index');
+            return $this->redirectToRoute('consumable_index', [
+                'id'=>$consumable->getTool()->getId()
+            ]);
         }
 
         return $this->render('consumable/edit.html.twig', [
             'consumable' => $consumable,
-            'form' => $form->createView(),
+            'form' => $form->createView()
         ]);
     }
 
@@ -145,6 +167,8 @@ class ConsumableController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('consumable_index');
+        return $this->redirectToRoute('consumable_index', [
+            'id'=>$consumable->getTool()->getId()
+        ]);
     }
 }
