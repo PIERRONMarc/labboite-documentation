@@ -28,7 +28,7 @@ class InformationController extends AbstractController
     }
     
     /**
-     * @Route("/edit/{id}", name="information_edit", methods={"GET","POST"})
+     * @Route("/edit/{name}", name="information_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Tool $tool): Response
     {
@@ -77,7 +77,7 @@ class InformationController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="information_show", methods={"GET"})
+     * @Route("/{name}", name="information_show", methods={"GET"})
      */
     public function show(Tool $tool): Response
     {

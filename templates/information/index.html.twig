@@ -19,8 +19,8 @@
                 <td>{{ tool.id }}</td>
                 <td>{{ tool.name }}</td>
                 <td>
-                    <a href="{{ path('information_show', {'id': tool.id}) }}">show information</a>
-                    <a href="{{ path('information_edit', {'id': tool.id}) }}">edit information</a>
+                    <a href="{{ path('information_show', {'name': tool.name}) }}">show information</a>
+                    <a href="{{ path('information_edit', {'name': tool.name}) }}">edit information</a>
                 </td>
             </tr>
         {% else %}
