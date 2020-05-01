@@ -26,6 +26,7 @@
                 <td>{{ user.registrationDate|date }}</td>
                 <td style="display:flex">
                     <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+                    <a href="{{ path('user_change_password', {'id': user.id}) }}">change password</a>
                     {{ include('user/_delete_form.html.twig') }}
                 </td>
             </tr>

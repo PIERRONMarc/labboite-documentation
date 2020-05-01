@@ -33,16 +33,26 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Assert\Length(min="6", max="4096")
-     * @Assert\EqualTo(propertyPath="confirmPassword", message="passwords doest not match", groups="register")
-     * @Assert\NotBlank
      */
     private $password;
 
     /**
-     * @Assert\EqualTo(propertyPath="password", message="passwords doest not match", groups="register")
+     * @Assert\EqualTo(propertyPath="plainPassword", message="passwords doest not match", groups={"register", "changePassword"})
+     * @Assert\NotBlank(groups={"changePassword"})
+     * @Assert\Length(min="6", max="4096")
      */
     public $confirmPassword;
+
+    /**
+     * @Assert\EqualTo(propertyPath="confirmPassword", message="passwords doest not match", groups={"changePassword"})
+     * @Assert\NotBlank(groups={"register", "changePassword"})
+     * @Assert\Length(min="6", max="4096")
+     */
+    public $plainPassword;
+    /**
+     * @Assert\NotBlank(groups={"changePassword"})
+     */
+    public $oldPassword;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -138,7 +148,9 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        $this->plainPassword = null;
+        $this->confirmPassword = null;
+        $this->oldPassword = null;
     }
 
     public function getMail(): ?string

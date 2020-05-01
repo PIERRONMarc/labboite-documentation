@@ -10,21 +10,14 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class RegistrationFormType extends AbstractType
+class ChangePasswordType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username')
-            ->add('superAdmin', CheckboxType::class, [
-                'mapped' => false,
-                'required' => false
-            ])
+            ->add('oldPassword', PasswordType::class)
             ->add('plainPassword', PasswordType::class)
             ->add('confirmPassword', PasswordType::class)
-            ->add('mail', EmailType::class, [
-                'required' => false
-            ])
         ;
     }
 
@@ -32,7 +25,7 @@ class RegistrationFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
-            'validation_groups' => ['register']
+            'validation_groups' => ['changePassword']
         ]);
     }
 }

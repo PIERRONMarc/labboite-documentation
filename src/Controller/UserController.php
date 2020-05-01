@@ -2,12 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
-use App\Form\UserType;
-use App\Form\RegistrationFormType;
-use App\Form\UserEditionFormType;
-use App\Repository\UserRepository;
 use DateTime;
+use App\Entity\User;
+use App\Form\ChangePasswordType;
+use App\Form\UserEditionFormType;
+use App\Form\RegistrationFormType;
+use App\Repository\UserRepository;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -43,7 +44,7 @@ class UserController extends AbstractController
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
-                    $user->getPassword()
+                    $user->plainPassword
                 )
             );
 
@@ -71,7 +72,7 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, User $user, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function edit(Request $request, User $user): Response
     {
         if (in_array('ROLE_SUPER-ADMIN', $user->getRoles())) {
             $user->setIsSuperAdmin(true);
@@ -100,6 +101,42 @@ class UserController extends AbstractController
 
         return $this->render('user/edit.html.twig', [
             'userForm' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/change-password", name="user_change_password", methods={"GET", "POST"})
+     */
+    public function changePassword(Request $request, User $user, UserPasswordEncoderInterface $passwordEncoder) {
+
+        $form = $this->createForm(ChangePasswordType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($passwordEncoder->isPasswordValid($user, $user->oldPassword)) {
+                // encode the plain password
+                $user->setPassword(
+                    $passwordEncoder->encodePassword(
+                        $user,
+                        $user->plainPassword
+                    )
+                );
+
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                // do anything else you need here, like send an email
+                return $this->redirectToRoute('user_index');
+
+            } else {
+                $form->get('oldPassword')->addError(new FormError('Old password is incorrect'));
+            }
+        }
+
+        return $this->render('user/changePassword.html.twig', [
+            'passwordForm' => $form->createView(),
+            'user' => $user
         ]);
     }
 
