@@ -35,10 +35,6 @@ class ToolType extends AbstractType
             ->add('description')
             ->add('type')
             ->add('displayOrder')
-            ->add('category', EntityType::class, [
-                'class' => Category::class, 
-                'choice_label' => 'name'
-            ])
         ;
     }
 

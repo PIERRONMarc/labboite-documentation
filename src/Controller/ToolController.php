@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Tool;
 use App\Form\ToolType;
+use App\Repository\CategoryRepository;
 use App\Repository\ToolRepository;
 use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,19 +19,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class ToolController extends AbstractController
 {
     /**
-     * @Route("/", name="tool_index", methods={"GET"})
+     * @Route("/category", name="tool_category", methods={"GET"})
      */
-    public function index(ToolRepository $toolRepository): Response
+    public function categories(CategoryRepository $categoryRepository): Response
     {
-        return $this->render('tool/index.html.twig', [
-            'tools' => $toolRepository->findAll(),
+        return $this->render('tool/categories.html.twig', [
+            'categories' => $categoryRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/new", name="tool_new", methods={"GET","POST"})
+     * @Route("/new/{name}", name="tool_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Category $category): Response
     {
         
         $tool = new Tool();
@@ -46,21 +48,23 @@ class ToolController extends AbstractController
                 $tool->setPicturePath($newFileName);
             }
 
+            $tool->setCategory($category);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($tool);
             $entityManager->flush();
 
-            return $this->redirectToRoute('tool_index');
+            return $this->redirectToRoute('tool_index', ['name' => $category->getName()]);
         }
 
         return $this->render('tool/new.html.twig', [
-            'tool' => $tool,
+            'category' => $category,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="tool_show", methods={"GET"})
+     * @Route("/{name}/show", name="tool_show", methods={"GET"})
      */
     public function show(Tool $tool): Response
     {
@@ -70,7 +74,7 @@ class ToolController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="tool_edit", methods={"GET","POST"})
+     * @Route("/{name}/edit", name="tool_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Tool $tool): Response
     {
@@ -88,12 +92,23 @@ class ToolController extends AbstractController
             }
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('tool_index');
+            return $this->redirectToRoute('tool_index', ['name' => $tool->getCategory()->getName()]);
         }
 
         return $this->render('tool/edit.html.twig', [
             'tool' => $tool,
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{name}", name="tool_index")
+     */
+    public function index(ToolRepository $toolRepository, Category $category): Response
+    {
+        return $this->render('tool/index.html.twig', [
+            'tools' => $toolRepository->findBy(['category' => $category]),
+            'category' => $category
         ]);
     }
 
@@ -108,6 +123,6 @@ class ToolController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('tool_index');
+        return $this->redirectToRoute('tool_index', ['name' => $tool->getCategory()->getName()]);
     }
 }
