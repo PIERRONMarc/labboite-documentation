@@ -5,12 +5,7 @@
 
 {% block body %}
     <h1>Create new Question</h1>
-    <!-- Create the editor container -->
-    <div id="editor">
-    <p>Hello World!</p>
-    <p>Some initial <strong>bold</strong> text</p>
-    <p><br></p>
-    </div>
+  
     {{ include('question/_form.html.twig') }}
 
     <a href="{{ path('question_index') }}">back to list</a>

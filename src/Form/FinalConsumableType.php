@@ -2,27 +2,29 @@
 
 namespace App\Form;
 
-use App\Entity\NoticeParagraph;
+use App\Entity\Tool;
+use App\Entity\Consumable;
+use App\Form\ConsumableType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-class NoticeParagraphType extends AbstractType
+class FinalConsumableType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
-            ->add('content', TextareaType::class, array('attr' => array('class' => 'ckeditor')))
-            ->add('tool')
+            ->add('consumable', ConsumableType::class, [
+                'data_class'=>Consumable::class
+            ])
+            
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => NoticeParagraph::class,
+            'data_class' => Tool::class,
         ]);
     }
 }

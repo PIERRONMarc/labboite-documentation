@@ -9,3 +9,18 @@
 
     <a href="{{ path('notice_paragraph_index') }}">back to list</a>
 {% endblock %}
+{% block javascripts %}
+
+    <!-- Include the Quill library -->
+    
+<script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
+    <!-- Initialize Quill editor -->
+    <script src="{{ asset('assets/javascript/ckeditor/adapters/jquery.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/javascript/ckeditor/ckeditor.js') }}" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function() {
+        $('textarea.ckeditor').ckeditor();
+    });
+</script>
+    
+{% endblock %}
