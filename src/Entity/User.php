@@ -34,13 +34,13 @@ class User implements UserInterface
      * @var string The hashed password
      * @ORM\Column(type="string")
      * @Assert\Length(min="6", max="4096")
-     * @Assert\EqualTo(propertyPath="confirmPassword", message="passwords doest not match")
+     * @Assert\EqualTo(propertyPath="confirmPassword", message="passwords doest not match", groups="register")
      * @Assert\NotBlank
      */
     private $password;
 
     /**
-     * @Assert\EqualTo(propertyPath="password", message="passwords doest not match")
+     * @Assert\EqualTo(propertyPath="password", message="passwords doest not match", groups="register")
      */
     public $confirmPassword;
 
@@ -54,9 +54,23 @@ class User implements UserInterface
      */
     private $registrationDate;
 
+    private $isSuperAdmin = false;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getIsSuperAdmin(): bool
+    {
+        return (bool) $this->isSuperAdmin;
+    }
+
+    public function setIsSuperAdmin(bool $isSuperAdmin): self
+    {
+        $this->isSuperAdmin = $isSuperAdmin;
+
+        return $this;
     }
 
     /**

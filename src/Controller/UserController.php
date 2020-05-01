@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Form\RegistrationFormType;
+use App\Form\UserEditionFormType;
 use App\Repository\UserRepository;
 use DateTime;
 use Symfony\Component\HttpFoundation\Request;
@@ -62,7 +63,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('user_index');
         }
 
-        return $this->render('user/form.html.twig', [
+        return $this->render('user/registration.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }
@@ -72,20 +73,17 @@ class UserController extends AbstractController
      */
     public function edit(Request $request, User $user, UserPasswordEncoderInterface $passwordEncoder): Response
     {
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        if (in_array('ROLE_SUPER-ADMIN', $user->getRoles())) {
+            $user->setIsSuperAdmin(true);
+        }
+
+        $form = $this->createForm(UserEditionFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setPassword(
-                $passwordEncoder->encodePassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
 
             $roles = ['ROLE_ADMIN'];
-            if ($form->get('superAdmin')->getData()) {
+            if ($form->get('isSuperAdmin')->getData()) {
                 array_push($roles, 'ROLE_SUPER-ADMIN');
             }
             $user->setRoles($roles);
@@ -100,8 +98,8 @@ class UserController extends AbstractController
             return $this->redirectToRoute('user_index');
         }
 
-        return $this->render('user/form.html.twig', [
-            'registrationForm' => $form->createView(),
+        return $this->render('user/edit.html.twig', [
+            'userForm' => $form->createView(),
         ]);
     }
 

@@ -6,22 +6,18 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class RegistrationFormType extends AbstractType
+class UserEditionFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('username')
-            ->add('superAdmin', CheckboxType::class, [
-                'mapped' => false,
+            ->add('isSuperAdmin', CheckboxType::class, [
                 'required' => false
             ])
-            ->add('password', PasswordType::class)
-            ->add('confirmPassword', PasswordType::class)
             ->add('mail', EmailType::class, [
                 'required' => false
             ])
@@ -32,7 +28,6 @@ class RegistrationFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
-            'validation_groups' => ['register']
         ]);
     }
 }
