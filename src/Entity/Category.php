@@ -40,7 +40,7 @@ class Category
     private $thumbnailPath;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Tool", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="App\Entity\Tool", mappedBy="category", cascade={"remove"})
      */
     private $tools;
 

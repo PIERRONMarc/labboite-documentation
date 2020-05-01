@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Theme;
 use App\Form\CategoryType;
 use Gedmo\Sluggable\Util\Urlizer;
 use App\Repository\CategoryRepository;
+use App\Repository\ThemeRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,19 +20,20 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 class CategoryController extends AbstractController
 {
     /**
-     * @Route("/", name="category_index", methods={"GET"})
+     * @Route("/{name}", name="category_index", methods={"GET"})
      */
-    public function index(CategoryRepository $categoryRepository): Response
+    public function index(CategoryRepository $categoryRepository, Theme $theme): Response
     {
         return $this->render('category/index.html.twig', [
-            'categories' => $categoryRepository->findAll(),
+            'categories' => $categoryRepository->findBy(['theme' => $theme]),
+            'theme' => $theme
         ]);
     }
 
     /**
-     * @Route("/new", name="category_new", methods={"GET","POST"})
+     * @Route("/new/{name}", name="category_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Theme $theme): Response
     {
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
@@ -63,26 +66,18 @@ class CategoryController extends AbstractController
                 // instead of its contents
                 $category->setThumbnailPath($newFilename);
             }
+            $category->setTheme($theme);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($category);
             $entityManager->flush();
 
-            return $this->redirectToRoute('category_index');
+            return $this->redirectToRoute('category_index', ['name' => $theme->getName()]);
         }
 
         return $this->render('category/new.html.twig', [
             'category' => $category,
+            'theme' => $theme,
             'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="category_show", methods={"GET"})
-     */
-    public function show(Category $category): Response
-    {
-        return $this->render('category/show.html.twig', [
-            'category' => $category,
         ]);
     }
 
@@ -123,7 +118,7 @@ class CategoryController extends AbstractController
             }
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('category_index');
+            return $this->redirectToRoute('category_index', ['name' => $category->getTheme()->getName()]);
         }
 
         return $this->render('category/edit.html.twig', [
@@ -143,6 +138,6 @@ class CategoryController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('category_index');
+        return $this->redirectToRoute('category_index', ['name' => $category->getTheme()->getName()]);
     }
 }

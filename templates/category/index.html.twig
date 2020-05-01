@@ -23,7 +23,6 @@
                 <td>{{ category.displayOrder }}</td>
                 <td>{{ category.thumbnailPath }}</td>
                 <td>
-                    <a href="{{ path('category_show', {'id': category.id}) }}">show</a>
                     <a href="{{ path('category_edit', {'id': category.id}) }}">edit</a>
                 </td>
             </tr>
@@ -35,5 +34,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('category_new') }}">Create new</a>
+    <a href="{{ path('category_new', {'name': theme.name}) }}">Create new</a>
 {% endblock %}
