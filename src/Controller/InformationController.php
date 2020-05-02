@@ -18,16 +18,6 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 class InformationController extends AbstractController
 {
     /**
-     * @Route("/", name="information_index")
-     */
-    public function index(ToolRepository $toolRepository)
-    {
-        return $this->render('information/index.html.twig', [
-            'tool' => $toolRepository->findAll()
-        ]);
-    }
-    
-    /**
      * @Route("/edit/{name}", name="information_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Tool $tool): Response
@@ -67,7 +57,7 @@ class InformationController extends AbstractController
             $entityManager->persist($tool);
             $entityManager->flush();
 
-            return $this->redirectToRoute('information_index');
+            return $this->redirectToRoute('tool_index', ['name' => $tool->getCategory()->getName()] );
         }
 
         return $this->render('information/edit.html.twig', [

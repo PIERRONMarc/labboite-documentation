@@ -28,6 +28,7 @@
                 <td>{{ tool.displayOrder }}</td>
                 <td>
                     <a href="{{ path('tool_edit', {'name': tool.name}) }}">edit</a>
+                    <a href="{{ path('information_edit', {'name': tool.name}) }}">edit information</a>
                 </td>
             </tr>
         {% else %}
