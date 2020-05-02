@@ -47,4 +47,13 @@ class ThemeRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findFirstRecord(): ?Theme
+    {
+        return $this->createQueryBuilder('t')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }

@@ -76,7 +76,7 @@ class Tool
     private $noticeParagraph;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Characteristic", mappedBy="tool", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Characteristic", mappedBy="tool", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $characteristic;
 
@@ -379,5 +379,12 @@ class Tool
         }
 
         return $this;
+    }
+
+    public function __toString(){
+        // to show the name of the Tool in the select
+        return $this->name;
+        // to show the id of the Tategory in the select
+        // return $this->id;
     }
 }
