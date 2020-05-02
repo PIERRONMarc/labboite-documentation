@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consumable index{% endblock %}
+
+{% block body %}
+    <h1>Consumable index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>PicturePath</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Charge</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for consumable in consumables %}
+            <tr>
+                <td>{{ consumable.id }}</td>
+                <td>{{ consumable.name }}</td>
+                <td>{{ consumable.picturePath }}</td>
+                <td>{{ consumable.description }}</td>
+                <td>{{ consumable.price }}</td>
+                <td>{{ consumable.charge }}</td>
+                <td>
+                    <a href="{{ path('consumable_edit', {'consumable': consumable.id }) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('consumable_new', {'tool': tool.id}) }}">Create new</a>
+    <a href="{{ path('tool_index', {'name': tool.category.name}) }}">Back to list</a>
+{% endblock %}

@@ -64,16 +64,6 @@ class ToolController extends AbstractController
     }
 
     /**
-     * @Route("/{name}/show", name="tool_show", methods={"GET"})
-     */
-    public function show(Tool $tool): Response
-    {
-        return $this->render('tool/show.html.twig', [
-            'tool' => $tool,
-        ]);
-    }
-
-    /**
      * @Route("/{name}/edit", name="tool_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Tool $tool): Response

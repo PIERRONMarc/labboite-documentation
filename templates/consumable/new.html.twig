@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Consumable{% endblock %}
+
+{% block body %}
+    <h1>Create new Consumable</h1>
+
+    {{ include('consumable/_form.html.twig') }}
+
+    <a href="{{ path('consumable_index', {'id': tool.id}) }}">back to list</a>
+{% endblock %}
