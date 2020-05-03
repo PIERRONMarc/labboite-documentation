@@ -2,16 +2,18 @@
 
 namespace App\Controller;
 
-use App\Entity\Category;
 use App\Entity\Tool;
 use App\Form\ToolType;
-use App\Repository\CategoryRepository;
-use App\Repository\ToolRepository;
+use App\Entity\Category;
 use App\Service\FileUploader;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Gedmo\Sluggable\Util\Urlizer;
+use App\Repository\ToolRepository;
+use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Route("/tool")
@@ -19,19 +21,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class ToolController extends AbstractController
 {
     /**
-     * @Route("/category", name="tool_category", methods={"GET"})
+     * @Route("/new/{slug}", name="tool_new", methods={"GET","POST"})
      */
-    public function categories(CategoryRepository $categoryRepository): Response
-    {
-        return $this->render('tool/categories.html.twig', [
-            'categories' => $categoryRepository->findAll(),
-        ]);
-    }
-
-    /**
-     * @Route("/new/{name}", name="tool_new", methods={"GET","POST"})
-     */
-    public function new(Request $request, Category $category): Response
+    public function new(Request $request, Category $category, ValidatorInterface $validator): Response
     {
         
         $tool = new Tool();
@@ -48,13 +40,14 @@ class ToolController extends AbstractController
                 $tool->setPicturePath($newFileName);
             }
 
+            $tool->setSlug(Urlizer::urlize($tool->getName()));
             $tool->setCategory($category);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($tool);
             $entityManager->flush();
 
-            return $this->redirectToRoute('tool_index', ['name' => $category->getName()]);
+            return $this->redirectToRoute('tool_index', ['slug' => $category->getSlug()]);
         }
 
         return $this->render('tool/new.html.twig', [
@@ -64,7 +57,7 @@ class ToolController extends AbstractController
     }
 
     /**
-     * @Route("/{name}/edit", name="tool_edit", methods={"GET","POST"})
+     * @Route("/{slug}/edit", name="tool_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Tool $tool): Response
     {
@@ -80,9 +73,10 @@ class ToolController extends AbstractController
                 $newFileName = $fileUploader->upload($uploadedFile);
                 $tool->setPicturePath($newFileName);
             }
+            $tool->setSlug(Urlizer::urlize($tool->getName()));
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('tool_index', ['name' => $tool->getCategory()->getName()]);
+            return $this->redirectToRoute('tool_index', ['slug' => $tool->getCategory()->getSlug()]);
         }
 
         return $this->render('tool/edit.html.twig', [
@@ -92,7 +86,7 @@ class ToolController extends AbstractController
     }
 
     /**
-     * @Route("/{name}", name="tool_index")
+     * @Route("/{slug}", name="tool_index")
      */
     public function index(ToolRepository $toolRepository, Category $category): Response
     {
@@ -113,6 +107,6 @@ class ToolController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('tool_index', ['name' => $tool->getCategory()->getName()]);
+        return $this->redirectToRoute('tool_index', ['slug' => $tool->getCategory()->getSlug()]);
     }
 }

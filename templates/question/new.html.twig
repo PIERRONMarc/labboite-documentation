@@ -8,7 +8,7 @@
   
     {{ include('question/_form.html.twig') }}
 
-    <a href="{{ path('question_index', {'name': tool.name}) }}">back to list</a>
+    <a href="{{ path('question_index', {'slug': tool.slug}) }}">back to list</a>
 {% endblock %}
 {% block javascripts %}
 

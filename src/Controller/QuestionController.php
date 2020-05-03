@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class QuestionController extends AbstractController
 {
     /**
-     * @Route("/new/{name}", name="question_new", methods={"GET","POST"})
+     * @Route("/new/{slug}", name="question_new", methods={"GET","POST"})
      */
     public function new(Request $request, Tool $tool): Response
     {
@@ -32,7 +32,7 @@ class QuestionController extends AbstractController
             $entityManager->persist($question);
             $entityManager->flush();
 
-            return $this->redirectToRoute('question_index', ['name' => $tool->getName()]);
+            return $this->redirectToRoute('question_index', ['slug' => $tool->getSlug()]);
         }
 
         return $this->render('question/new.html.twig', [
@@ -53,7 +53,7 @@ class QuestionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('question_index', ['name' => $question->getTool()->getName()]);
+            return $this->redirectToRoute('question_index', ['slug' => $question->getTool()->getSlug()]);
         }
 
         return $this->render('question/edit.html.twig', [
@@ -73,11 +73,11 @@ class QuestionController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('question_index');
+        return $this->redirectToRoute('question_index', ['slug' => $question->getTool()->getSlug()]);
     }
 
     /**
-     * @Route("/{name}", name="question_index", methods={"GET"})
+     * @Route("/{slug}", name="question_index", methods={"GET"})
      */
     public function index(QuestionRepository $questionRepository, Tool $tool): Response
     {

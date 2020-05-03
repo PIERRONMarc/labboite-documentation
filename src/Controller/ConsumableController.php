@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 class ConsumableController extends AbstractController
 {
     /**
-     * @Route("/{id}", name="consumable_index", methods={"GET"})
+     * @Route("/{slug}", name="consumable_index", methods={"GET"})
      */
     public function index(ConsumableRepository $consumableRepository, Tool $tool): Response
     {
@@ -33,7 +33,7 @@ class ConsumableController extends AbstractController
     }
     
     /**
-     * @Route("/new/{tool}", name="consumable_new", methods={"GET","POST"})
+     * @Route("/new/{slug}", name="consumable_new", methods={"GET","POST"})
      */
     public function new(Request $request, Tool $tool): Response
     {
@@ -75,7 +75,7 @@ class ConsumableController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute('consumable_index',[
-                'id'=>$consumable->getTool()->getId()
+                'slug'=>$consumable->getTool()->getSlug()
             ]);
         }
 
@@ -124,7 +124,7 @@ class ConsumableController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('consumable_index', [
-                'id'=>$consumable->getTool()->getId()
+                'slug'=>$consumable->getTool()->getSlug()
             ]);
         }
 
@@ -146,7 +146,7 @@ class ConsumableController extends AbstractController
         }
 
         return $this->redirectToRoute('consumable_index', [
-            'id'=>$consumable->getTool()->getId()
+            'slug'=>$consumable->getTool()->getSlug()
         ]);
     }
 }

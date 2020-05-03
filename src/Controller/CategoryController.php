@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 class CategoryController extends AbstractController
 {
     /**
-     * @Route("/{name}", name="category_index", methods={"GET"})
+     * @Route("/{slug}", name="category_index", methods={"GET"})
      */
     public function index(CategoryRepository $categoryRepository, Theme $theme): Response
     {
@@ -31,7 +31,7 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @Route("/new/{name}", name="category_new", methods={"GET","POST"})
+     * @Route("/new/{slug}", name="category_new", methods={"GET","POST"})
      */
     public function new(Request $request, Theme $theme): Response
     {
@@ -66,12 +66,14 @@ class CategoryController extends AbstractController
                 // instead of its contents
                 $category->setThumbnailPath($newFilename);
             }
+
+            $category->setSlug(Urlizer::urlize($category->getName()));
             $category->setTheme($theme);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($category);
             $entityManager->flush();
 
-            return $this->redirectToRoute('category_index', ['name' => $theme->getName()]);
+            return $this->redirectToRoute('category_index', ['slug' => $theme->getSlug()]);
         }
 
         return $this->render('category/new.html.twig', [
@@ -82,7 +84,7 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="category_edit", methods={"GET","POST"})
+     * @Route("/{slug}/edit", name="category_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Category $category): Response
     {
@@ -116,9 +118,10 @@ class CategoryController extends AbstractController
                 // instead of its contents
                 $category->setThumbnailPath($newFilename);
             }
+            $category->setSlug(Urlizer::urlize($category->getName()));
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('category_index', ['name' => $category->getTheme()->getName()]);
+            return $this->redirectToRoute('category_index', ['slug' => $category->getTheme()->getSlug()]);
         }
 
         return $this->render('category/edit.html.twig', [
@@ -138,6 +141,6 @@ class CategoryController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('category_index', ['name' => $category->getTheme()->getName()]);
+        return $this->redirectToRoute('category_index', ['slug' => $category->getTheme()->getSlug()]);
     }
 }

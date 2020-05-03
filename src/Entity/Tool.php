@@ -11,7 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ToolRepository")
  * @UniqueEntity(
- *     fields={"name"},
+ *     fields={"name", "slug"},
  *     message="Tool already exists"
  * )
  */
@@ -89,6 +89,11 @@ class Tool
      * @ORM\OneToOne(targetEntity="App\Entity\Information", mappedBy="tool", cascade={"persist", "remove"})
      */
     private $information;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
 
     public function __construct()
     {
@@ -386,5 +391,17 @@ class Tool
         return $this->name;
         // to show the id of the Tategory in the select
         // return $this->id;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 }

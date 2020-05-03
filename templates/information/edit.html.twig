@@ -25,7 +25,7 @@
         <button class="btn">{{ button_label|default('Save') }}</button>
     {{ form_end(form) }}
 
-    <a href="{{ path('tool_index', {'name': tool.category.name}) }}">back to list</a>
+    <a href="{{ path('tool_index', {'slug': tool.category.slug}) }}">Back to list</a>
 {% endblock %}
 
 

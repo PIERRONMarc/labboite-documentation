@@ -7,5 +7,5 @@
 
     {{ include('tool/_form.html.twig') }}
 
-    <a href="{{ path('tool_index', {'name': category.name}) }}">back to list</a>
+    <a href="{{ path('tool_index', {'slug': category.slug}) }}">back to list</a>
 {% endblock %}

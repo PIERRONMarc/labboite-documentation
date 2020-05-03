@@ -27,11 +27,11 @@
                 <td>{{ tool.type }}</td>
                 <td>{{ tool.displayOrder }}</td>
                 <td>
-                    <a href="{{ path('tool_edit', {'name': tool.name}) }}">edit</a>
-                    <a href="{{ path('information_edit', {'name': tool.name}) }}">edit information</a>
-                    <a href="{{ path('consumable_index', {'id': tool.id}) }}">see consumables</a>
-                    <a href="{{ path('notice_paragraph_index', {'name': tool.name}) }}">see notice paragraph</a>
-                    <a href="{{ path('question_index', {'name': tool.name}) }}">see questions</a>
+                    <a href="{{ path('tool_edit', {'slug': tool.slug}) }}">edit</a>
+                    <a href="{{ path('information_edit', {'slug': tool.slug}) }}">edit information</a>
+                    <a href="{{ path('consumable_index', {'slug': tool.slug}) }}">see consumables</a>
+                    <a href="{{ path('notice_paragraph_index', {'slug': tool.slug}) }}">see notice paragraph</a>
+                    <a href="{{ path('question_index', {'slug': tool.slug}) }}">see questions</a>
                 </td>
             </tr>
         {% else %}
@@ -42,6 +42,6 @@
         </tbody>
     </table>
 
-    <a href="{{ path('tool_new', {'name': category.name}) }}">Create new</a>
-    <a href="{{ path('category_index', {'name': category.theme.name}) }}">back to category</a>
+    <a href="{{ path('tool_new', {'slug': category.slug}) }}">Create new</a>
+    <a href="{{ path('category_index', {'slug': category.theme.slug}) }}">back to category</a>
 {% endblock %}

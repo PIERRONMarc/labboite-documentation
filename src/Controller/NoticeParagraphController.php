@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class NoticeParagraphController extends AbstractController
 {
     /**
-     * @Route("/new/{name}", name="notice_paragraph_new", methods={"GET","POST"})
+     * @Route("/new/{slug}", name="notice_paragraph_new", methods={"GET","POST"})
      */
     public function new(Request $request, Tool $tool): Response
     {
@@ -31,7 +31,7 @@ class NoticeParagraphController extends AbstractController
             $entityManager->persist($noticeParagraph);
             $entityManager->flush();
 
-            return $this->redirectToRoute('tool_index', ['name' => $tool->getCategory()->getName()]);
+            return $this->redirectToRoute('tool_index', ['slug' => $tool->getCategory()->getSlug()]);
         }
 
         return $this->render('notice_paragraph/new.html.twig', [
@@ -52,7 +52,7 @@ class NoticeParagraphController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('notice_paragraph_index', ['name' => $noticeParagraph->getTool()->getName()]);
+            return $this->redirectToRoute('notice_paragraph_index', ['slug' => $noticeParagraph->getTool()->getSlug()]);
         }
 
         return $this->render('notice_paragraph/edit.html.twig', [
@@ -72,11 +72,11 @@ class NoticeParagraphController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('notice_paragraph_index', ['name' => $noticeParagraph->getTool()->getName()]);
+        return $this->redirectToRoute('notice_paragraph_index', ['slug' => $noticeParagraph->getTool()->getSlug()]);
     }
 
     /**
-     * @Route("/{name}", name="notice_paragraph_index", methods={"GET"})
+     * @Route("/{slug}", name="notice_paragraph_index", methods={"GET"})
      */
     public function index(NoticeParagraphRepository $noticeParagraphRepository, Tool $tool): Response
     {

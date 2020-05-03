@@ -7,7 +7,7 @@
 
     {{ include('notice_paragraph/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('notice_paragraph_index', {'name': notice_paragraph.tool.name}) }}">back to list</a>
+    <a href="{{ path('notice_paragraph_index', {'slug': notice_paragraph.tool.slug}) }}">back to list</a>
 
     {{ include('notice_paragraph/_delete_form.html.twig') }}
 {% endblock %}
