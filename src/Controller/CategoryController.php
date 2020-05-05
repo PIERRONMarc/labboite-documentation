@@ -102,7 +102,7 @@ class CategoryController extends AbstractController
 
                 // Move the file to the directory where brochures are stored
                 try {
-                    $destination = $this->getParameter('kernel.project_dir').'/public/img/categorys';
+                    $destination = $this->getParameter('kernel.project_dir').'/public/upload/category';
                     $pictureName->move(
                        $destination,
                         $newFilename

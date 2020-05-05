@@ -52,7 +52,7 @@ class ConsumableController extends AbstractController
 
                 // Move the file to the directory where brochures are stored
                 try {
-                    $destination = $this->getParameter('kernel.project_dir').'/public/upload/consumables';
+                    $destination = $this->getParameter('kernel.project_dir').'/public/upload/consumable';
                     $pictureName->move(
                        $destination,
                         $newFilename
@@ -106,7 +106,7 @@ class ConsumableController extends AbstractController
 
                 // Move the file to the directory where brochures are stored
                 try {
-                    $destination = $this->getParameter('kernel.project_dir').'/public/img/consumables';
+                    $destination = $this->getParameter('kernel.project_dir').'/public/upload/consumable';
                     $pictureName->move(
                        $destination,
                         $newFilename

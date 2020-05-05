@@ -41,7 +41,7 @@ class ToolController extends AbstractController
             // file input handling
             $uploadedFile = $form['imageFile']->getData();
             if ($uploadedFile) {
-                $destination = $this->getParameter('kernel.project_dir').'/public/img/tools';
+                $destination = $this->getParameter('kernel.project_dir').'/public/upload/tool';
                 $fileUploader = new FileUploader($destination);
                 $newFileName = $fileUploader->upload($uploadedFile);
                 $tool->setPictureName($newFileName);
@@ -75,7 +75,7 @@ class ToolController extends AbstractController
             // file input handling
             $uploadedFile = $form['imageFile']->getData();
             if ($uploadedFile) {
-                $destination = $this->getParameter('kernel.project_dir').'/public/upload/tools';
+                $destination = $this->getParameter('kernel.project_dir').'/public/upload/tool';
                 $fileUploader = new FileUploader($destination);
                 $newFileName = $fileUploader->upload($uploadedFile);
                 $tool->setPictureName($newFileName);
