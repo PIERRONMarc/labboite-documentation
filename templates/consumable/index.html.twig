@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consumable index{% endblock %}
+
+{% block body %}
+    <h1>Consumable index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>PictureName</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Charge</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for consumable in consumables %}
+            <tr>
+                <td>{{ consumable.id }}</td>
+                <td>{{ consumable.name }}</td>
+                <td>{{ consumable.pictureName }}</td>
+                <td>{{ consumable.description }}</td>
+                <td>{{ consumable.price }}</td>
+                <td>{{ consumable.charge }}</td>
+                <td>
+                    <a href="{{ path('consumable_edit', {'consumable': consumable.id, 'themeSlug': consumable.tool.category.theme.slug, 'categorySlug': consumable.tool.category.slug, 'toolSlug': consumable.tool.slug }) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('consumable_new', {'slug': tool.slug, 'themeSlug': tool.category.theme.slug, 'categorySlug': tool.category.slug}) }}">Create new</a>
+    <a href="{{ path('tool_index', {'slug': tool.category.slug, 'themeSlug': tool.category.theme.slug}) }}">Back to list</a>
+{% endblock %}

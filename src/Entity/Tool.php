@@ -2,12 +2,18 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ToolRepository")
+ * @UniqueEntity(
+ *     fields={"name"},
+ *     message="Tool already exists"
+ * )
  */
 class Tool
 {
@@ -26,7 +32,7 @@ class Tool
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $picturePath;
+    private $pictureName;
 
     /**
      * @ORM\Column(type="text")
@@ -70,7 +76,7 @@ class Tool
     private $noticeParagraph;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Characteristic", mappedBy="tool", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Characteristic", mappedBy="tool", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $characteristic;
 
@@ -83,6 +89,11 @@ class Tool
      * @ORM\OneToOne(targetEntity="App\Entity\Information", mappedBy="tool", cascade={"persist", "remove"})
      */
     private $information;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
 
     public function __construct()
     {
@@ -112,14 +123,14 @@ class Tool
         return $this;
     }
 
-    public function getPicturePath(): ?string
+    public function getPictureName(): ?string
     {
-        return $this->picturePath;
+        return $this->pictureName;
     }
 
-    public function setPicturePath(?string $picturePath): self
+    public function setPictureName(?string $pictureName): self
     {
-        $this->picturePath = $picturePath;
+        $this->pictureName = $pictureName;
 
         return $this;
     }
@@ -380,5 +391,17 @@ class Tool
         return $this->name;
         // to show the id of the Tategory in the select
         // return $this->id;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 }

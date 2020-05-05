@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}NoticeParagraph index{% endblock %}
+
+{% block body %}
+    <h1>NoticeParagraph index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Content</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for notice_paragraph in notice_paragraphs %}
+            <tr>
+                <td>{{ notice_paragraph.id }}</td>
+                <td>{{ notice_paragraph.title }}</td>
+                <td>{{ notice_paragraph.content }}</td>
+                <td>
+                    <a href="{{ path('notice_paragraph_edit', {'id': notice_paragraph.id, 'categorySlug': notice_paragraph.tool.category.slug, 'themeSlug': notice_paragraph.tool.category.theme.slug, 'toolSlug': notice_paragraph.tool.slug}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('notice_paragraph_new', {'slug': tool.slug, 'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug }) }}">Create new</a>
+    <a href="{{ path('tool_index', {'slug': tool.category.slug, 'themeSlug': tool.category.theme.slug }) }}">Back to list</a>
+{% endblock %}

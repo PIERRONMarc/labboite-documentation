@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")j
  */
 class Category
 {
@@ -29,7 +29,7 @@ class Category
     private $displayOrder;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Theme", inversedBy="categories")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Theme", inversedBy="categories", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $theme;
@@ -37,12 +37,17 @@ class Category
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $thumbnailPath;
+    private $thumbnailName;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Tool", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="App\Entity\Tool", mappedBy="category", cascade={"remove"})
      */
     private $tools;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
 
     public function __construct()
     {
@@ -90,14 +95,14 @@ class Category
         return $this;
     }
 
-    public function getThumbnailPath(): ?string
+    public function getThumbnailName(): ?string
     {
-        return $this->thumbnailPath;
+        return $this->thumbnailName;
     }
 
-    public function setThumbnailPath(?string $thumbnailPath): self
+    public function setThumbnailName(?string $thumbnailName): self
     {
-        $this->thumbnailPath = $thumbnailPath;
+        $this->thumbnailName = $thumbnailName;
 
         return $this;
     }
@@ -129,6 +134,18 @@ class Category
                 $tool->setCategory(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

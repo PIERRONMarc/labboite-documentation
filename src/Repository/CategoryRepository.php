@@ -47,4 +47,16 @@ class CategoryRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findBySlugs(String $categorySlug, String $themeSlug) {
+        return $this->createQueryBuilder('c')
+            ->where('t.slug = :themeSlug')
+            ->andWhere('c.slug = :categorySlug')
+            ->innerJoin('c.theme', 't')
+            ->setParameters(['categorySlug' => $categorySlug, 'themeSlug' => $themeSlug])
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
 }

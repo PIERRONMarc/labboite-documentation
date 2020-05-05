@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit NoticeParagraph{% endblock %}
+
+{% block body %}
+    <h1>Edit NoticeParagraph</h1>
+
+    {{ include('notice_paragraph/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('notice_paragraph_index', {'slug': notice_paragraph.tool.slug, 'categorySlug': notice_paragraph.tool.category.slug, 'themeSlug': notice_paragraph.tool.category.theme.slug}) }}">back to list</a>
+
+    {{ include('notice_paragraph/_delete_form.html.twig') }}
+{% endblock %}
+{% block javascripts %}
+
+    <!-- Include the Quill library -->
+    
+<script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
+    <!-- Initialize Quill editor -->
+    <script src="{{ asset('assets/javascript/ckeditor/adapters/jquery.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/javascript/ckeditor/ckeditor.js') }}" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function() {
+        $('textarea.ckeditor').ckeditor();
+    });
+</script>
+    
+{% endblock %}

@@ -61,7 +61,7 @@ class TipController extends AbstractController
 
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
-                $tip->setPicturePath($newFilename);
+                $tip->setPictureName($newFilename);
             }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($tip);
@@ -119,7 +119,7 @@ class TipController extends AbstractController
 
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
-                $tip->setPicturePath($newFilename);
+                $tip->setPictureName($newFilename);
             }
             $this->getDoctrine()->getManager()->flush();
 

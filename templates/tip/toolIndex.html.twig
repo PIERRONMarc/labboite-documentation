@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tip index{% endblock %}
+
+{% block body %}
+    <h1>Tip index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tool in tools %}
+            <tr>
+                <td>{{ tool.id }}</td>
+                <td>{{ tool.name }}</td>
+                <td>
+                    <a href="{{ path('tip_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}">edit tips</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

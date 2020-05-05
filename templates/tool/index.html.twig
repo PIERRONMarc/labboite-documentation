@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tool index{% endblock %}
+
+{% block body %}
+    <h1>Tool index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>PictureName</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>DisplayOrder</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tool in tools %}
+            <tr>
+                <td>{{ tool.id }}</td>
+                <td>{{ tool.name }}</td>
+                <td>{{ tool.pictureName }}</td>
+                <td>{{ tool.description }}</td>
+                <td>{{ tool.type }}</td>
+                <td>{{ tool.displayOrder }}</td>
+                <td>
+                    <a href="{{ path('tool_edit', {'slug': tool.slug, 'themeSlug': category.theme.slug}) }}">edit</a>
+                    <a href="{{ path('information_edit', {'slug': tool.slug, 'themeSlug': category.theme.slug, 'categorySlug': category.slug}) }}">edit information</a>
+                    <a href="{{ path('consumable_index', {'slug': tool.slug, 'themeSlug': category.theme.slug, 'categorySlug': category.slug}) }}">see consumables</a>
+                    <a href="{{ path('notice_paragraph_index', {'slug': tool.slug, 'themeSlug': category.theme.slug, 'categorySlug': category.slug}) }}">see notice paragraph</a>
+                    <a href="{{ path('question_index', {'slug': tool.slug, 'themeSlug': category.theme.slug, 'categorySlug': category.slug}) }}">see questions</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('tool_new', {'slug': category.slug, 'themeSlug': category.theme.slug}) }}">Create new</a>
+    <a href="{{ path('category_index', {'slug': category.theme.slug}) }}">back to category</a>
+{% endblock %}
