@@ -11,7 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ToolRepository")
  * @UniqueEntity(
- *     fields={"name", "slug"},
+ *     fields={"name"},
  *     message="Tool already exists"
  * )
  */

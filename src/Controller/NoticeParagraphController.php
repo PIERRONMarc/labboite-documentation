@@ -11,13 +11,21 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/notice/paragraph")
- */
 class NoticeParagraphController extends AbstractController
 {
     /**
-     * @Route("/new/{slug}", name="notice_paragraph_new", methods={"GET","POST"})
+     * @Route("{themeSlug}/{categorySlug}/{slug}/notice", name="notice_paragraph_index", methods={"GET"})
+     */
+    public function index(NoticeParagraphRepository $noticeParagraphRepository, Tool $tool): Response
+    {
+        return $this->render('notice_paragraph/index.html.twig', [
+            'tool' => $tool,
+            'notice_paragraphs' => $noticeParagraphRepository->findBy(['tool' => $tool]),
+        ]);
+    }
+    
+    /**
+     * @Route("back-office/{themeSlug}/{categorySlug}/{slug}/notice/new", name="notice_paragraph_new", methods={"GET","POST"})
      */
     public function new(Request $request, Tool $tool): Response
     {
@@ -31,7 +39,10 @@ class NoticeParagraphController extends AbstractController
             $entityManager->persist($noticeParagraph);
             $entityManager->flush();
 
-            return $this->redirectToRoute('tool_index', ['slug' => $tool->getCategory()->getSlug()]);
+            return $this->redirectToRoute('tool_index', [
+                'slug' => $tool->getCategory()->getSlug(),
+                'themeSlug' => $tool->getCategory()->getTheme()->getSlug()
+            ]);
         }
 
         return $this->render('notice_paragraph/new.html.twig', [
@@ -42,7 +53,7 @@ class NoticeParagraphController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="notice_paragraph_edit", methods={"GET","POST"})
+     * @Route("back-office/{themeSlug}/{categorySlug}/{toolSlug}/notice/{id}/edit", name="notice_paragraph_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, NoticeParagraph $noticeParagraph): Response
     {
@@ -52,7 +63,11 @@ class NoticeParagraphController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('notice_paragraph_index', ['slug' => $noticeParagraph->getTool()->getSlug()]);
+            return $this->redirectToRoute('notice_paragraph_index', [
+                'slug' => $noticeParagraph->getTool()->getSlug(),
+                'themeSlug' => $noticeParagraph->getTool()->getCategory()->getTheme()->getSlug(),
+                'categorySlug' => $noticeParagraph->getTool()->getCategory()->getSlug()
+            ]);
         }
 
         return $this->render('notice_paragraph/edit.html.twig', [
@@ -62,7 +77,7 @@ class NoticeParagraphController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="notice_paragraph_delete", methods={"DELETE"})
+     * @Route("back-office/notice/{id}", name="notice_paragraph_delete", methods={"DELETE"})
      */
     public function delete(Request $request, NoticeParagraph $noticeParagraph): Response
     {
@@ -72,17 +87,10 @@ class NoticeParagraphController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('notice_paragraph_index', ['slug' => $noticeParagraph->getTool()->getSlug()]);
-    }
-
-    /**
-     * @Route("/{slug}", name="notice_paragraph_index", methods={"GET"})
-     */
-    public function index(NoticeParagraphRepository $noticeParagraphRepository, Tool $tool): Response
-    {
-        return $this->render('notice_paragraph/index.html.twig', [
-            'tool' => $tool,
-            'notice_paragraphs' => $noticeParagraphRepository->findBy(['tool' => $tool]),
+        return $this->redirectToRoute('notice_paragraph_index', [
+            'slug' => $noticeParagraph->getTool()->getCategory()->getSlug(),
+            'themeSlug' => $noticeParagraph->getTool()->getCategory()->getTheme()->getSlug(),
+            'categorySlug' => $noticeParagraph->getTool()->getCategory()->getSlug(),
         ]);
     }
 }

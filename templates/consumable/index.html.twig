@@ -27,7 +27,7 @@
                 <td>{{ consumable.price }}</td>
                 <td>{{ consumable.charge }}</td>
                 <td>
-                    <a href="{{ path('consumable_edit', {'consumable': consumable.id }) }}">edit</a>
+                    <a href="{{ path('consumable_edit', {'consumable': consumable.id, 'themeSlug': consumable.tool.category.theme.slug, 'categorySlug': consumable.tool.category.slug, 'toolSlug': consumable.tool.slug }) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -38,6 +38,6 @@
         </tbody>
     </table>
 
-    <a href="{{ path('consumable_new', {'slug': tool.slug}) }}">Create new</a>
-    <a href="{{ path('tool_index', {'slug': tool.category.slug}) }}">Back to list</a>
+    <a href="{{ path('consumable_new', {'slug': tool.slug, 'themeSlug': tool.category.theme.slug, 'categorySlug': tool.category.slug}) }}">Create new</a>
+    <a href="{{ path('tool_index', {'slug': tool.category.slug, 'themeSlug': tool.category.theme.slug}) }}">Back to list</a>
 {% endblock %}

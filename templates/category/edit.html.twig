@@ -7,6 +7,7 @@
 
     {{ include('category/_form.html.twig', {'button_label': 'Update'}) }}
 
+    
     <a href="{{ path('category_index', {'slug': category.theme.slug}) }}">back to list</a>
 
     {{ include('category/_delete_form.html.twig') }}

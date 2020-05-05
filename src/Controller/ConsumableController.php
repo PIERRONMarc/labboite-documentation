@@ -16,13 +16,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
-/**
- * @Route("/consumable")
- */
 class ConsumableController extends AbstractController
 {
     /**
-     * @Route("/{slug}", name="consumable_index", methods={"GET"})
+     * @Route("back-office/{themeSlug}/{categorySlug}/{slug}/consumable", name="consumable_index", methods={"GET"})
      */
     public function index(ConsumableRepository $consumableRepository, Tool $tool): Response
     {
@@ -33,7 +30,7 @@ class ConsumableController extends AbstractController
     }
     
     /**
-     * @Route("/new/{slug}", name="consumable_new", methods={"GET","POST"})
+     * @Route("back-office/{themeSlug}/{categorySlug}/{slug}/consumable/new", name="consumable_new", methods={"GET","POST"})
      */
     public function new(Request $request, Tool $tool): Response
     {
@@ -75,7 +72,9 @@ class ConsumableController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute('consumable_index',[
-                'slug'=>$consumable->getTool()->getSlug()
+                'slug'=>$consumable->getTool()->getSlug(),
+                'themeSlug' => $consumable->getTool()->getCategory()->getTheme()->getSlug(),
+                'categorySlug' => $consumable->getTool()->getCategory()->getSlug()
             ]);
         }
 
@@ -87,7 +86,7 @@ class ConsumableController extends AbstractController
     }
 
     /**
-     * @Route("/edit/{consumable}", name="consumable_edit", methods={"GET","POST"})
+     * @Route("back-office/{themeSlug}/{categorySlug}/{toolSlug}/consumable/{consumable}/edit", name="consumable_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Consumable $consumable): Response
     {
@@ -124,7 +123,9 @@ class ConsumableController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('consumable_index', [
-                'slug'=>$consumable->getTool()->getSlug()
+                'slug'=>$consumable->getTool()->getSlug(),
+                'themeSlug' => $consumable->getTool()->getCategory()->getTheme()->getSlug(),
+                'categorySlug' => $consumable->getTool()->getCategory()->getSlug()
             ]);
         }
 
@@ -135,7 +136,7 @@ class ConsumableController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="consumable_delete", methods={"DELETE"})
+     * @Route("back-office/consumable/{id}", name="consumable_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Consumable $consumable): Response
     {
@@ -146,7 +147,9 @@ class ConsumableController extends AbstractController
         }
 
         return $this->redirectToRoute('consumable_index', [
-            'slug'=>$consumable->getTool()->getSlug()
+            'slug'=>$consumable->getTool()->getSlug(),
+            'themeSlug' => $consumable->getTool()->getCategory()->getTheme()->getSlug(),
+            'categorySlug' => $consumable->getTool()->getCategory()->getSlug()
         ]);
     }
 }

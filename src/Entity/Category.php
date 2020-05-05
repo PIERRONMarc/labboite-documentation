@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")j
  */
 class Category
 {
@@ -29,7 +29,7 @@ class Category
     private $displayOrder;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Theme", inversedBy="categories")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Theme", inversedBy="categories", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $theme;

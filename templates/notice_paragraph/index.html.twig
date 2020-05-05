@@ -21,7 +21,7 @@
                 <td>{{ notice_paragraph.title }}</td>
                 <td>{{ notice_paragraph.content }}</td>
                 <td>
-                    <a href="{{ path('notice_paragraph_edit', {'id': notice_paragraph.id}) }}">edit</a>
+                    <a href="{{ path('notice_paragraph_edit', {'id': notice_paragraph.id, 'categorySlug': notice_paragraph.tool.category.slug, 'themeSlug': notice_paragraph.tool.category.theme.slug, 'toolSlug': notice_paragraph.tool.slug}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -32,6 +32,6 @@
         </tbody>
     </table>
 
-    <a href="{{ path('notice_paragraph_new', {'slug': tool.slug }) }}">Create new</a>
-    <a href="{{ path('tool_index', {'slug': tool.category.slug }) }}">Back to list</a>
+    <a href="{{ path('notice_paragraph_new', {'slug': tool.slug, 'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug }) }}">Create new</a>
+    <a href="{{ path('tool_index', {'slug': tool.category.slug, 'themeSlug': tool.category.theme.slug }) }}">Back to list</a>
 {% endblock %}

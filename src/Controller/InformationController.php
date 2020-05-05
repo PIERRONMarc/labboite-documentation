@@ -12,13 +12,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
-/**
- * @Route("/information")
- */
+
 class InformationController extends AbstractController
 {
     /**
-     * @Route("/edit/{slug}", name="information_edit", methods={"GET","POST"})
+     * @Route("back-office/{themeSlug}/{categorySlug}/{slug}/information/edit", name="information_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Tool $tool): Response
     {
