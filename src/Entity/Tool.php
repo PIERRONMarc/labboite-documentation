@@ -32,7 +32,7 @@ class Tool
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $picturePath;
+    private $pictureName;
 
     /**
      * @ORM\Column(type="text")
@@ -123,14 +123,14 @@ class Tool
         return $this;
     }
 
-    public function getPicturePath(): ?string
+    public function getPictureName(): ?string
     {
-        return $this->picturePath;
+        return $this->pictureName;
     }
 
-    public function setPicturePath(?string $picturePath): self
+    public function setPictureName(?string $pictureName): self
     {
-        $this->picturePath = $picturePath;
+        $this->pictureName = $pictureName;
 
         return $this;
     }

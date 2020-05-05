@@ -14,7 +14,9 @@ class QuestionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('answer', TextareaType::class, array('attr' => array('class' => 'ckeditor')));
+        $builder
+        ->add('question')
+        ->add('answer', TextareaType::class, array('attr' => array('class' => 'ckeditor')));
     }
 
     public function configureOptions(OptionsResolver $resolver)
