@@ -12,13 +12,21 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/question")
- */
 class QuestionController extends AbstractController
 {
     /**
-     * @Route("/new/{slug}", name="question_new", methods={"GET","POST"})
+     * @Route("{themeSlug}/{categorySlug}/{slug}/faq", name="question_index", methods={"GET"})
+     */
+    public function index(QuestionRepository $questionRepository, Tool $tool): Response
+    {
+        return $this->render('question/index.html.twig', [
+            'tool' => $tool,
+            'questions' => $questionRepository->findBy(['tool' => $tool]),
+        ]);
+    }
+    
+    /**
+     * @Route("back-office/{themeSlug}/{categorySlug}/{slug}/faq/new/", name="question_new", methods={"GET","POST"})
      */
     public function new(Request $request, Tool $tool): Response
     {
@@ -32,7 +40,11 @@ class QuestionController extends AbstractController
             $entityManager->persist($question);
             $entityManager->flush();
 
-            return $this->redirectToRoute('question_index', ['slug' => $tool->getSlug()]);
+            return $this->redirectToRoute('question_index', [
+                'slug' => $tool->getSlug(),
+                'categorySlug' => $tool->getCategory()->getSlug(),
+                'themeSlug' => $tool->getCategory()->getTheme()->getSlug(),
+            ]);
         }
 
         return $this->render('question/new.html.twig', [
@@ -43,7 +55,7 @@ class QuestionController extends AbstractController
     }
    
     /**
-     * @Route("/{id}/edit", name="question_edit", methods={"GET","POST"})
+     * @Route("back-office/{themeSlug}/{categorySlug}/{toolSlug}/faq/{id}/edit", name="question_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Question $question): Response
     {
@@ -53,7 +65,11 @@ class QuestionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('question_index', ['slug' => $question->getTool()->getSlug()]);
+            return $this->redirectToRoute('question_index', [
+                'slug' => $question->getTool()->getSlug(),
+                'categorySlug' => $question->getTool()->getCategory()->getSlug(),
+                'themeSlug' => $question->getTool()->getCategory()->getTheme()->getSlug(),
+            ]);
         }
 
         return $this->render('question/edit.html.twig', [
@@ -63,7 +79,7 @@ class QuestionController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="question_delete", methods={"DELETE"})
+     * @Route("back-office/faq/{id}", name="question_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Question $question): Response
     {
@@ -73,17 +89,10 @@ class QuestionController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('question_index', ['slug' => $question->getTool()->getSlug()]);
-    }
-
-    /**
-     * @Route("/{slug}", name="question_index", methods={"GET"})
-     */
-    public function index(QuestionRepository $questionRepository, Tool $tool): Response
-    {
-        return $this->render('question/index.html.twig', [
-            'tool' => $tool,
-            'questions' => $questionRepository->findBy(['tool' => $tool]),
+        return $this->redirectToRoute('question_index', [
+            'slug' => $question->getTool()->getSlug(),
+            'categorySlug' => $question->getTool()->getCategory()->getSlug(),
+            'themeSlug' => $question->getTool()->getCategory()->getTheme()->getSlug(),
         ]);
     }
 }

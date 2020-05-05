@@ -23,8 +23,8 @@
                 <td>{{ category.displayOrder }}</td>
                 <td>{{ category.thumbnailPath }}</td>
                 <td>
-                    <a href="{{ path('category_edit', {'slug': category.slug}) }}">edit</a>
-                    <a href="{{ path('tool_index', {'slug': category.slug}) }}">see tools</a>
+                    <a href="{{ path('category_edit', {'categorySlug': category.slug, 'themeSlug': category.theme.slug}) }}">edit</a>
+                    <a href="{{ path('tool_index', {'slug': category.slug, 'themeSlug': category.theme.slug}) }}">see tools</a>
                 </td>
             </tr>
         {% else %}

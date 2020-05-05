@@ -8,20 +8,27 @@ use App\Entity\Category;
 use App\Service\FileUploader;
 use Gedmo\Sluggable\Util\Urlizer;
 use App\Repository\ToolRepository;
-use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/**
- * @Route("/tool")
- */
 class ToolController extends AbstractController
 {
     /**
-     * @Route("/new/{slug}", name="tool_new", methods={"GET","POST"})
+     * @Route("{themeSlug}/{slug}/tool", name="tool_index")
+     */
+    public function index(ToolRepository $toolRepository, Category $category): Response
+    {
+        return $this->render('tool/index.html.twig', [
+            'tools' => $toolRepository->findBy(['category' => $category]),
+            'category' => $category
+        ]);
+    }
+    
+    /**
+     * @Route("back-office/{themeSlug}/{slug}/tool/new", name="tool_new", methods={"GET","POST"})
      */
     public function new(Request $request, Category $category, ValidatorInterface $validator): Response
     {
@@ -47,7 +54,7 @@ class ToolController extends AbstractController
             $entityManager->persist($tool);
             $entityManager->flush();
 
-            return $this->redirectToRoute('tool_index', ['slug' => $category->getSlug()]);
+            return $this->redirectToRoute('tool_index', ['slug' => $category->getSlug(), 'themeSlug' => $tool->getCategory()->getTheme()->getSlug()]);
         }
 
         return $this->render('tool/new.html.twig', [
@@ -57,7 +64,7 @@ class ToolController extends AbstractController
     }
 
     /**
-     * @Route("/{slug}/edit", name="tool_edit", methods={"GET","POST"})
+     * @Route("back-office/{themeSlug}/{slug}/tool/edit", name="tool_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Tool $tool): Response
     {
@@ -76,7 +83,7 @@ class ToolController extends AbstractController
             $tool->setSlug(Urlizer::urlize($tool->getName()));
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('tool_index', ['slug' => $tool->getCategory()->getSlug()]);
+            return $this->redirectToRoute('tool_index', ['slug' => $tool->getCategory()->getSlug(), 'themeSlug' => $tool->getCategory()->getTheme()->getSlug()]);
         }
 
         return $this->render('tool/edit.html.twig', [
@@ -86,18 +93,7 @@ class ToolController extends AbstractController
     }
 
     /**
-     * @Route("/{slug}", name="tool_index")
-     */
-    public function index(ToolRepository $toolRepository, Category $category): Response
-    {
-        return $this->render('tool/index.html.twig', [
-            'tools' => $toolRepository->findBy(['category' => $category]),
-            'category' => $category
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="tool_delete", methods={"DELETE"})
+     * @Route("back-office/tool/{id}", name="tool_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Tool $tool): Response
     {
@@ -107,6 +103,6 @@ class ToolController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('tool_index', ['slug' => $tool->getCategory()->getSlug()]);
+        return $this->redirectToRoute('tool_index', ['slug' => $tool->getCategory()->getSlug(), 'themeSlug' => $tool->getCategory()->getTheme()->getSlug()]);
     }
 }
