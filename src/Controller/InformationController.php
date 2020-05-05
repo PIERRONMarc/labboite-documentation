@@ -26,20 +26,20 @@ class InformationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $picturePath = $form->get('information')->get('imageFile')->getData();
+            $pictureName = $form->get('information')->get('imageFile')->getData();
 
             // this condition is needed because the 'brochure' field is not required
             // so the PDF file must be processed only when a file is uploaded
-            if ($picturePath) {
-                $originalFilename = pathinfo($picturePath->getClientOriginalName(), PATHINFO_FILENAME);
+            if ($pictureName) {
+                $originalFilename = pathinfo($pictureName->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
-                $newFilename = Urlizer::urlize($originalFilename).'-'.uniqid().'.'.$picturePath->guessExtension();
+                $newFilename = Urlizer::urlize($originalFilename).'-'.uniqid().'.'.$pictureName->guessExtension();
 
 
                 // Move the file to the directory where brochures are stored
                 try {
-                    $destination = $this->getParameter('kernel.project_dir').'/public/img/informations';
-                    $picturePath->move(
+                    $destination = $this->getParameter('kernel.project_dir').'/public/upload/informations';
+                    $pictureName->move(
                        $destination,
                         $newFilename
 
@@ -50,7 +50,7 @@ class InformationController extends AbstractController
 
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
-                $tool->getInformation()->setPicturePath($newFilename);
+                $tool->getInformation()->setPictureName($newFilename);
             }
 
             $entityManager = $this->getDoctrine()->getManager();

@@ -43,20 +43,20 @@ class ConsumableController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
            
-            $picturePath = $form->get('imageFile')->getData();
+            $pictureName = $form->get('imageFile')->getData();
             
             // this condition is needed because the 'brochure' field is not required
             // so the PDF file must be processed only when a file is uploaded
-            if ($picturePath) {
-                $originalFilename = pathinfo($picturePath->getClientOriginalName(), PATHINFO_FILENAME);
+            if ($pictureName) {
+                $originalFilename = pathinfo($pictureName->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
-                $newFilename = Urlizer::urlize($originalFilename).'-'.uniqid().'.'.$picturePath->guessExtension();
+                $newFilename = Urlizer::urlize($originalFilename).'-'.uniqid().'.'.$pictureName->guessExtension();
 
 
                 // Move the file to the directory where brochures are stored
                 try {
-                    $destination = $this->getParameter('kernel.project_dir').'/public/img/consumables';
-                    $picturePath->move(
+                    $destination = $this->getParameter('kernel.project_dir').'/public/upload/consumables';
+                    $pictureName->move(
                        $destination,
                         $newFilename
                         
@@ -67,7 +67,7 @@ class ConsumableController extends AbstractController
 
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
-                $consumable->setPicturePath($newFilename);
+                $consumable->setPictureName($newFilename);
             }
             $entityManager = $this->getDoctrine()->getManager();
             $consumable->setTool($tool);
@@ -95,20 +95,20 @@ class ConsumableController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $picturePath = $form->get('imageFile')->getData();
+            $pictureName = $form->get('imageFile')->getData();
             
             // this condition is needed because the 'brochure' field is not required
             // so the PDF file must be processed only when a file is uploaded
-            if ($picturePath) {
-                $originalFilename = pathinfo($picturePath->getClientOriginalName(), PATHINFO_FILENAME);
+            if ($pictureName) {
+                $originalFilename = pathinfo($pictureName->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
-                $newFilename = Urlizer::urlize($originalFilename).'-'.uniqid().'.'.$picturePath->guessExtension();
+                $newFilename = Urlizer::urlize($originalFilename).'-'.uniqid().'.'.$pictureName->guessExtension();
 
 
                 // Move the file to the directory where brochures are stored
                 try {
                     $destination = $this->getParameter('kernel.project_dir').'/public/img/consumables';
-                    $picturePath->move(
+                    $pictureName->move(
                        $destination,
                         $newFilename
                         
@@ -119,7 +119,7 @@ class ConsumableController extends AbstractController
 
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
-                $consumable->setPicturePath($newFilename);
+                $consumable->setPictureName($newFilename);
             }
             $this->getDoctrine()->getManager()->flush();
 

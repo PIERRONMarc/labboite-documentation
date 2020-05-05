@@ -37,7 +37,7 @@ class Category
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $thumbnailPath;
+    private $thumbnailName;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Tool", mappedBy="category", cascade={"remove"})
@@ -95,14 +95,14 @@ class Category
         return $this;
     }
 
-    public function getThumbnailPath(): ?string
+    public function getThumbnailName(): ?string
     {
-        return $this->thumbnailPath;
+        return $this->thumbnailName;
     }
 
-    public function setThumbnailPath(?string $thumbnailPath): self
+    public function setThumbnailName(?string $thumbnailName): self
     {
-        $this->thumbnailPath = $thumbnailPath;
+        $this->thumbnailName = $thumbnailName;
 
         return $this;
     }

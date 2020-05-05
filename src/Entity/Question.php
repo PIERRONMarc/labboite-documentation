@@ -27,6 +27,11 @@ class Question
      */
     private $tool;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $question;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +57,18 @@ class Question
     public function setTool(?Tool $tool): self
     {
         $this->tool = $tool;
+
+        return $this;
+    }
+
+    public function getQuestion(): ?string
+    {
+        return $this->question;
+    }
+
+    public function setQuestion(string $question): self
+    {
+        $this->question = $question;
 
         return $this;
     }

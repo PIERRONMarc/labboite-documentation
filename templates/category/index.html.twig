@@ -11,7 +11,7 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>DisplayOrder</th>
-                <th>ThumbnailPath</th>
+                <th>ThumbnailName</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -21,7 +21,7 @@
                 <td>{{ category.id }}</td>
                 <td>{{ category.name }}</td>
                 <td>{{ category.displayOrder }}</td>
-                <td>{{ category.thumbnailPath }}</td>
+                <td>{{ category.thumbnailName }}</td>
                 <td>
                     <a href="{{ path('category_edit', {'slug': category.slug}) }}">edit</a>
                     <a href="{{ path('tool_index', {'slug': category.slug}) }}">see tools</a>

@@ -45,7 +45,7 @@ class AppFixtures extends Fixture
             for ($i=0; $i < 5; $i++) { 
                 $tool = new Tool();
                 $tool->setName($faker->word())
-                    ->setPicturePath('https://via.placeholder.com/150')
+                    ->setPictureName('https://via.placeholder.com/150')
                     ->setDescription($faker->text())
                     ->setType($faker->word())
                     ->setDisplayOrder($i)
