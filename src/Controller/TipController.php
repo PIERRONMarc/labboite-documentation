@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Tip;
+use App\Entity\Tool;
 use App\Form\TipType;
 use App\Repository\TipRepository;
+use App\Repository\ToolRepository;
 use Gedmo\Sluggable\Util\Urlizer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,25 +15,23 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
-/**
- * @Route("/tip")
- */
 class TipController extends AbstractController
 {
     /**
-     * @Route("/", name="tip_index", methods={"GET"})
+     * @Route("back-office/{themeSlug}/{categorySlug}/{slug}/tips", name="tip_index", methods={"GET"})
      */
-    public function index(TipRepository $tipRepository): Response
+    public function index(TipRepository $tipRepository, Tool $tool): Response
     {
         return $this->render('tip/index.html.twig', [
-            'tips' => $tipRepository->findAll(),
+            'tips' => $tipRepository->findBy(['tool' => $tool]),
+            'tool' => $tool
         ]);
     }
 
     /**
-     * @Route("/new", name="tip_new", methods={"GET","POST"})
+     * @Route("back-office/{themeSlug}/{categorySlug}/{slug}/tips/new", name="tip_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Tool $tool): Response
     {
         $tip = new Tip();
         $form = $this->createForm(TipType::class, $tip);
@@ -49,7 +50,7 @@ class TipController extends AbstractController
 
                 // Move the file to the directory where brochures are stored
                 try {
-                    $destination = $this->getParameter('kernel.project_dir').'/public/img/tips';
+                    $destination = $this->getParameter('kernel.project_dir').'/public/upload/tips';
                     $picturePath->move(
                        $destination,
                         $newFilename
@@ -63,31 +64,27 @@ class TipController extends AbstractController
                 // instead of its contents
                 $tip->setPictureName($newFilename);
             }
+            $tip->setTool($tool);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($tip);
             $entityManager->flush();
 
-            return $this->redirectToRoute('tip_index');
+            return $this->redirectToRoute('tip_index', [
+                'slug' => $tool->getSlug(),
+                'categorySlug' => $tool->getCategory()->getSlug(),
+                'themeSlug' => $tool->getCategory()->getTheme()->getSlug()
+            ]);
         }
 
         return $this->render('tip/new.html.twig', [
             'tip' => $tip,
+            'tool' => $tool,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="tip_show", methods={"GET"})
-     */
-    public function show(Tip $tip): Response
-    {
-        return $this->render('tip/show.html.twig', [
-            'tip' => $tip,
-        ]);
-    }
-
-    /**
-     * @Route("/{id}/edit", name="tip_edit", methods={"GET","POST"})
+     * @Route("/back-office/{themeSlug}/{categorySlug}/{slug}/tips/{id}/edit", name="tip_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Tip $tip): Response
     {
@@ -107,7 +104,7 @@ class TipController extends AbstractController
 
                 // Move the file to the directory where brochures are stored
                 try {
-                    $destination = $this->getParameter('kernel.project_dir').'/public/img/tips';
+                    $destination = $this->getParameter('kernel.project_dir').'/public/upload/tips';
                     $picturePath->move(
                        $destination,
                         $newFilename
@@ -123,7 +120,11 @@ class TipController extends AbstractController
             }
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('tip_index');
+            return $this->redirectToRoute('tip_index', [
+                'slug' => $tip->getTool()->getSlug(),
+                'categorySlug' => $tip->getTool()->getCategory()->getSlug(),
+                'themeSlug' => $tip->getTool()->getCategory()->getTheme()->getSlug()
+            ]);
         }
 
         return $this->render('tip/edit.html.twig', [
@@ -133,7 +134,7 @@ class TipController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="tip_delete", methods={"DELETE"})
+     * @Route("/back-office/tips/{id}", name="tip_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Tip $tip): Response
     {
@@ -143,6 +144,10 @@ class TipController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('tip_index');
+        return $this->redirectToRoute('tip_index', [
+            'slug' => $tip->getTool()->getSlug(),
+            'categorySlug' => $tip->getTool()->getCategory()->getSlug(),
+            'themeSlug' => $tip->getTool()->getCategory()->getTheme()->getSlug()
+        ]);
     }
 }
