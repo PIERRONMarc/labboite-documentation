@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tip{% endblock %}
+
+{% block body %}
+    <h1>Tip</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ tip.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ tip.title }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ tip.description }}</td>
+            </tr>
+            <tr>
+                <th>PicturePath</th>
+                <td>{{ tip.picturePath }}</td>
+            </tr>
+            <tr>
+                <th>YoutubeLink</th>
+                <td>{{ tip.youtubeLink }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('tip_index') }}">back to list</a>
+
+    <a href="{{ path('tip_edit', {'id': tip.id}) }}">edit</a>
+
+    {{ include('tip/_delete_form.html.twig') }}
+{% endblock %}

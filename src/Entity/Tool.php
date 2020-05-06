@@ -385,7 +385,7 @@ class Tool
 
         return $this;
     }
-
+    
     public function __toString(){
         // to show the name of the Tool in the select
         return $this->name;

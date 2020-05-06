@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Tip{% endblock %}
+
+{% block body %}
+    <h1>Create new Tip</h1>
+
+    {{ include('tip/_form.html.twig') }}
+
+    <a href="{{ path('tip_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}">back to list</a>
+{% endblock %}

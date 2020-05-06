@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tip index{% endblock %}
+
+{% block body %}
+    <h1>Tip index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>PictureName</th>
+                <th>YoutubeLink</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tip in tips %}
+            <tr>
+                <td>{{ tip.id }}</td>
+                <td>{{ tip.title }}</td>
+                <td>{{ tip.description }}</td>
+                <td>{{ tip.pictureName }}</td>
+                <td>{{ tip.youtubeLink }}</td>
+                <td>
+                    <a href="{{ path('tip_edit', {'id': tip.id, 'categorySlug': tip.tool.category.slug, 'themeSlug': tip.tool.category.theme.slug, 'slug': tip.tool.slug}) }}">edit tips</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('tip_new', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}">Create new tips</a>
+{% endblock %}
