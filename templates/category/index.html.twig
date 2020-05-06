@@ -3,9 +3,59 @@
 {% block title %}Category index{% endblock %}
 
 {% block body %}
-    <h1>Category index</h1>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-nav">
+            <div class="header-logo">
+                <img src="{{ asset('img/graphics/logo.png') }}" alt="Logo de LabBoite" />
+            </div>
+            <div class="header-tabs">
+                <ul class="tabs-container">
+                    {% for theme in themes %}
+                        <li>
+                            <a 
+                                href="{{ path('category_index', {'slug': theme.slug}) }}" 
+                                class="tab-group {{ theme.slug == currentTheme.slug ? "active" : null}}"
+                            >
+                                {{ theme.name }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </header>
 
-    <table class="table">
+    <!-- CONTENT -->
+    <main>
+        <div class="container">
+            <div class="index index-categories">
+                {% for category in categories %}
+                    <article class="category-item">
+                        <div class="card">
+                            <div class="card-img card-img-category">
+                                <a href="{{ path('tool_index', {'themeSlug': category.theme.slug, 'slug': category.slug})}}" class="card-link">
+                                    {% if category.thumbnailName is null %}
+                                        <img src="{{ asset('img/demo-thumb.jpg') }}" alt="Category name">
+                                    {% else %}
+                                        <img src="{{ asset('upload/category/' ~ category.thumbnailName) }}" alt="Category name">
+                                    {% endif %}
+                                </a>
+                            </div>
+                            <div class="card-title card-title-category">
+                                <h2 class="title-category">{{ category.name }}</h2>
+                            </div>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+
+
+
+
+    {# <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
@@ -33,7 +83,7 @@
             </tr>
         {% endfor %}
         </tbody>
-    </table>
+    </table> #}
 
-    <a href="{{ path('category_new', {'slug': theme.slug}) }}">Create new</a>
+    {# <a href="{{ path('category_new', {'slug': theme.slug}) }}">Create new</a> #}
 {% endblock %}
