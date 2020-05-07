@@ -3,6 +3,7 @@
 namespace App\Validator\Constraints;
 
 use App\Entity\Category;
+use Gedmo\Sluggable\Util\Urlizer;
 use App\Repository\CategoryRepository;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -23,7 +24,8 @@ class CategoryIsUniqueValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, Category::class);
         }
 
-        $existingCategory = $this->categoryRepository->findOneBy(['name' => $protocol->getName(), 'theme' => $protocol->getTheme()]);
+        $slug = Urlizer::urlize($protocol->getName());
+        $existingCategory = $this->categoryRepository->findOneBy(['slug' => $slug, 'theme' => $protocol->getTheme()]);
         // si une catégorie du même nom existe pour le thème actuel
         if ($existingCategory) {
             // si la catégorie du même nom n'est pas la catégorie actuelle

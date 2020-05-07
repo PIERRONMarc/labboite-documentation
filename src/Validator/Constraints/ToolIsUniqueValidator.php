@@ -3,6 +3,7 @@
 namespace App\Validator\Constraints;
 
 use App\Entity\Tool;
+use Gedmo\Sluggable\Util\Urlizer;
 use App\Repository\ToolRepository;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -23,7 +24,8 @@ class ToolIsUniqueValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, Tool::class);
         }
 
-        $existingTool = $this->toolRepository->findOneBy(['name' => $protocol->getName(), 'category' => $protocol->getCategory()]);
+        $slug = Urlizer::urlize($protocol->getName());
+        $existingTool = $this->toolRepository->findOneBy(['slug' => $slug, 'category' => $protocol->getCategory()]);
         // si un outil du même nom existe pour la catégorie actuel
         if ($existingTool) {
             // si l'outil du même nom n'est pas la catégorie actuelle
