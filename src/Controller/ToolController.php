@@ -34,6 +34,7 @@ class ToolController extends AbstractController
     {
         
         $tool = new Tool();
+        $tool->setCategory($category);
         $form = $this->createForm(ToolType::class, $tool);
         $form->handleRequest($request);
 
@@ -48,7 +49,7 @@ class ToolController extends AbstractController
             }
 
             $tool->setSlug(Urlizer::urlize($tool->getName()));
-            $tool->setCategory($category);
+            
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($tool);

@@ -34,6 +34,7 @@ class CategoryController extends AbstractController
     public function new(Request $request, Theme $theme): Response
     {
         $category = new Category();
+        $category->setTheme($theme);
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
@@ -66,7 +67,6 @@ class CategoryController extends AbstractController
             }
 
             $category->setSlug(Urlizer::urlize($category->getName()));
-            $category->setTheme($theme);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($category);
             $entityManager->flush();

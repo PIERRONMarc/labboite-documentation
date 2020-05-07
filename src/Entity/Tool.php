@@ -7,13 +7,11 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use App\Validator\Constraints as UserAssert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ToolRepository")
- * @UniqueEntity(
- *     fields={"name"},
- *     message="Tool already exists"
- * )
+ * @UserAssert\ToolIsUnique
  */
 class Tool
 {
@@ -26,6 +24,7 @@ class Tool
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
     private $name;
 
@@ -41,6 +40,7 @@ class Tool
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
     private $type;
 
