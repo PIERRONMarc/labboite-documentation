@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Tool;
 use App\Form\ToolType;
 use App\Entity\Category;
+use App\Repository\ThemeRepository;
 use App\Service\FileUploader;
 use Gedmo\Sluggable\Util\Urlizer;
 use App\Repository\ToolRepository;
@@ -19,10 +20,11 @@ class ToolController extends AbstractController
     /**
      * @Route("{themeSlug}/{slug}/tool", name="tool_index")
      */
-    public function index(ToolRepository $toolRepository, Category $category): Response
+    public function index(ToolRepository $toolRepository, Category $category, ThemeRepository $themeRepository): Response
     {
         return $this->render('tool/index.html.twig', [
             'tools' => $toolRepository->findBy(['category' => $category]),
+            'themes' => $themeRepository->findAll(),
             'category' => $category
         ]);
     }

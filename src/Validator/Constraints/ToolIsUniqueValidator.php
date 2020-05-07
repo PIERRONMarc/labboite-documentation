@@ -26,7 +26,7 @@ class ToolIsUniqueValidator extends ConstraintValidator
 
         $slug = Urlizer::urlize($protocol->getName());
         $existingTool = $this->toolRepository->findOneBy(['slug' => $slug, 'category' => $protocol->getCategory()]);
-        // si un outil du même nom existe pour la catégorie actuel
+        // si un outil du même nom existe pour la catégorie actuelle
         if ($existingTool) {
             // si l'outil du même nom n'est pas la catégorie actuelle
             if (!($existingTool->getId() === $protocol->getId())) {

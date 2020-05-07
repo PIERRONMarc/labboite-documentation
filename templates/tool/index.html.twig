@@ -1,48 +1,73 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Tool index{% endblock %}
-
 {% block body %}
-    <h1>Tool index</h1>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-nav">
+            <div class="header-logo">
+                <img src="{{ asset('img/graphics/logo.png') }}" alt="Logo de LabBoite" />
+            </div>
+            <div class="header-tabs">
+                <ul class="tabs-container">
+                    {% for theme in themes %}
+                        <li>
+                            <a 
+                                href="{{ path('category_index', {'slug': theme.slug}) }}" 
+                                class="tab-group {{ theme.slug == category.theme.slug ? "active" : null}}"
+                            >
+                                {{ theme.name }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="header-section">
+            <div class="header-title-main"><h1>{{ category.name |upper }}</h1></div>
+        </div>
+    </header>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>PictureName</th>
-                <th>Description</th>
-                <th>Type</th>
-                <th>DisplayOrder</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for tool in tools %}
-            <tr>
-                <td>{{ tool.id }}</td>
-                <td>{{ tool.name }}</td>
-                <td>{{ tool.pictureName }}</td>
-                <td>{{ tool.description }}</td>
-                <td>{{ tool.type }}</td>
-                <td>{{ tool.displayOrder }}</td>
-                <td>
-                    <a href="{{ path('tool_edit', {'slug': tool.slug, 'themeSlug': category.theme.slug}) }}">edit</a>
-                    <a href="{{ path('information_edit', {'slug': tool.slug, 'themeSlug': category.theme.slug, 'categorySlug': category.slug}) }}">edit information</a>
-                    <a href="{{ path('consumable_index', {'slug': tool.slug, 'themeSlug': category.theme.slug, 'categorySlug': category.slug}) }}">see consumables</a>
-                    <a href="{{ path('notice_paragraph_index', {'slug': tool.slug, 'themeSlug': category.theme.slug, 'categorySlug': category.slug}) }}">see notice paragraph</a>
-                    <a href="{{ path('question_index', {'slug': tool.slug, 'themeSlug': category.theme.slug, 'categorySlug': category.slug}) }}">see questions</a>
-                    <a href="{{ path('tip_index', {'slug': tool.slug, 'themeSlug': category.theme.slug, 'categorySlug': category.slug}) }}">see tips</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <!-- CONTENT -->
+    <main>
+        <div class="container">
+            <div class="index index-tools">
 
+                {% for tool in tools %}
+                    <article class="tool-item">
+                        <div class="card">
+                            <div class="card-img card-img-tool">
+                                {# TODO: lien vers fiche produit #}
+                                <a href="{{ path('tool_edit', {'slug': tool.slug, 'themeSlug': category.theme.slug}) }}" class="card-link">
+                                    {% if tool.pictureName is null %}
+                                        <img src="{{ asset('img/demo-thumb-2.jpg') }}" alt="Tool name">
+                                    {% else %}
+                                        <img src="{{ asset('upload/tool/' ~ tool.pictureName) }}" alt="Tool name">
+                                    {% endif %}
+                                </a>
+                            </div>
+                            <div class="card-title card-title-tool">
+                                <div><h2 class="title-tool-model">{{ tool.name }}</h2></div>
+                                <div><span class="title-tool-type">{{ tool.type }}</span></div>
+                            </div>
+                        </div>
+                    </article>
+                {% else %}
+                    <p>no records found</p>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+
+
+    {# ---------- LINKS ---------- #}
+
+
+    {# <a href="{{ path('tool_edit', {'slug': tool.slug, 'themeSlug': category.theme.slug}) }}">edit</a>
+    <a href="{{ path('information_edit', {'slug': tool.slug, 'themeSlug': category.theme.slug, 'categorySlug': category.slug}) }}">edit information</a>
+    <a href="{{ path('consumable_index', {'slug': tool.slug, 'themeSlug': category.theme.slug, 'categorySlug': category.slug}) }}">see consumables</a>
+    <a href="{{ path('notice_paragraph_index', {'slug': tool.slug, 'themeSlug': category.theme.slug, 'categorySlug': category.slug}) }}">see notice paragraph</a>
+    <a href="{{ path('question_index', {'slug': tool.slug, 'themeSlug': category.theme.slug, 'categorySlug': category.slug}) }}">see questions</a>
+    <a href="{{ path('tip_index', {'slug': tool.slug, 'themeSlug': category.theme.slug, 'categorySlug': category.slug}) }}">see tips</a>
     <a href="{{ path('tool_new', {'slug': category.slug, 'themeSlug': category.theme.slug}) }}">Create new</a>
-    <a href="{{ path('category_index', {'slug': category.theme.slug}) }}">back to category</a>
+    <a href="{{ path('category_index', {'slug': category.theme.slug}) }}">back to category</a> #}
 {% endblock %}
