@@ -5,11 +5,12 @@ namespace App\Controller;
 use App\Entity\Tool;
 use App\Entity\Consumable;
 use App\Form\ConsumableType;
+use App\Service\FileUploader;
 use App\Form\FinalConsumableType;
 use Gedmo\Sluggable\Util\Urlizer;
 use App\Repository\ToolRepository;
-use App\Repository\ConsumableRepository;
 
+use App\Repository\ConsumableRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -40,31 +41,13 @@ class ConsumableController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
            
-            $pictureName = $form->get('imageFile')->getData();
+            $uploadedFile = $form->get('imageFile')->getData();
             
-            // this condition is needed because the 'brochure' field is not required
-            // so the PDF file must be processed only when a file is uploaded
-            if ($pictureName) {
-                $originalFilename = pathinfo($pictureName->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                $newFilename = Urlizer::urlize($originalFilename).'-'.uniqid().'.'.$pictureName->guessExtension();
-
-
-                // Move the file to the directory where brochures are stored
-                try {
-                    $destination = $this->getParameter('kernel.project_dir').'/public/upload/consumable';
-                    $pictureName->move(
-                       $destination,
-                        $newFilename
-                        
-                    );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                }
-
-                // updates the 'brochureFilename' property to store the PDF file name
-                // instead of its contents
-                $consumable->setPictureName($newFilename);
+            if ($uploadedFile) {
+                $destination = $this->getParameter('kernel.project_dir').'/public/upload/consumable';
+                $fileUploader = new FileUploader($destination);
+                $newFileName = $fileUploader->upload($uploadedFile);
+                $consumable->setPictureName($newFileName);
             }
             $entityManager = $this->getDoctrine()->getManager();
             $consumable->setTool($tool);
@@ -94,31 +77,13 @@ class ConsumableController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $pictureName = $form->get('imageFile')->getData();
+            $uploadedFile = $form->get('imageFile')->getData();
             
-            // this condition is needed because the 'brochure' field is not required
-            // so the PDF file must be processed only when a file is uploaded
-            if ($pictureName) {
-                $originalFilename = pathinfo($pictureName->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                $newFilename = Urlizer::urlize($originalFilename).'-'.uniqid().'.'.$pictureName->guessExtension();
-
-
-                // Move the file to the directory where brochures are stored
-                try {
-                    $destination = $this->getParameter('kernel.project_dir').'/public/upload/consumable';
-                    $pictureName->move(
-                       $destination,
-                        $newFilename
-                        
-                    );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                }
-
-                // updates the 'brochureFilename' property to store the PDF file name
-                // instead of its contents
-                $consumable->setPictureName($newFilename);
+            if ($uploadedFile) {
+                $destination = $this->getParameter('kernel.project_dir').'/public/upload/consumable';
+                $fileUploader = new FileUploader($destination);
+                $newFileName = $fileUploader->upload($uploadedFile);
+                $consumable->setPictureName($newFileName);
             }
             $this->getDoctrine()->getManager()->flush();
 
