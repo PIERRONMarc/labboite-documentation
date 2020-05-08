@@ -81,6 +81,7 @@ class TipController extends AbstractController
                 $destination = $this->getParameter('kernel.project_dir').'/public/upload/tips';
                 $fileUploader = new FileUploader($destination);
                 $newFileName = $fileUploader->upload($uploadedFile);
+                $fileUploader->deleteFile($tip->getPictureName());
                 $tip->setPictureName($newFileName);
             }
             $this->getDoctrine()->getManager()->flush();

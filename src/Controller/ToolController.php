@@ -81,6 +81,7 @@ class ToolController extends AbstractController
                 $destination = $this->getParameter('kernel.project_dir').'/public/upload/tool';
                 $fileUploader = new FileUploader($destination);
                 $newFileName = $fileUploader->upload($uploadedFile);
+                $fileUploader->deleteFile($tool->getPictureName());
                 $tool->setPictureName($newFileName);
             }
             $tool->setSlug(Urlizer::urlize($tool->getName()));

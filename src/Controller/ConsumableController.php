@@ -83,6 +83,7 @@ class ConsumableController extends AbstractController
                 $destination = $this->getParameter('kernel.project_dir').'/public/upload/consumable';
                 $fileUploader = new FileUploader($destination);
                 $newFileName = $fileUploader->upload($uploadedFile);
+                $fileUploader->deleteFile($consumable->getPictureName());
                 $consumable->setPictureName($newFileName);
             }
             $this->getDoctrine()->getManager()->flush();

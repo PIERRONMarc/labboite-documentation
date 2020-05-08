@@ -31,6 +31,7 @@ class InformationController extends AbstractController
                 $destination = $this->getParameter('kernel.project_dir').'/public/upload/informations';
                 $fileUploader = new FileUploader($destination);
                 $newFileName = $fileUploader->upload($uploadedFile);
+                $fileUploader->deleteFile($tool->getInformation()->getPictureName());
                 $tool->getInformation()->setPictureName($newFileName);
             }
 

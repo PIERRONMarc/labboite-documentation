@@ -82,6 +82,7 @@ class CategoryController extends AbstractController
                 $destination = $this->getParameter('kernel.project_dir').'/public/upload/category';
                 $fileUploader = new FileUploader($destination);
                 $newFileName = $fileUploader->upload($uploadedFile);
+                $fileUploader->deleteFile($category->getThumbnailName());
                 $category->setThumbnailName($newFileName);
             }
             $category->setSlug(Urlizer::urlize($category->getName()));
