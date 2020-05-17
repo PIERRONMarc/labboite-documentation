@@ -17,4 +17,9 @@
 
 ###> docker ###
 .data
-###> docker ###
+.unison*
+###< docker ###
+
+###> macOS ###
+*DS_Store*
+###< macOS ###
