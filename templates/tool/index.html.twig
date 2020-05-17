@@ -37,7 +37,7 @@
                         <div class="card">
                             <div class="card-img card-img-tool">
                                 {# TODO: lien vers fiche produit #}
-                                <a href="{{ path('tool_edit', {'slug': tool.slug, 'themeSlug': category.theme.slug}) }}" class="card-link">
+                                <a href="{{ path('information_index', {'slug': tool.slug, 'themeSlug': category.theme.slug, 'categorySlug': category.slug}) }}" class="card-link">
                                     {% if tool.pictureName is null %}
                                         <img src="{{ asset('img/demo-thumb-2.jpg') }}" alt="Tool name">
                                     {% else %}
