@@ -1,43 +1,54 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Consumable index{% endblock %}
-
 {% block body %}
-    <h1>Consumable index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>PictureName</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Charge</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for consumable in consumables %}
-            <tr>
-                <td>{{ consumable.id }}</td>
-                <td>{{ consumable.name }}</td>
-                <td>{{ consumable.pictureName }}</td>
-                <td>{{ consumable.description }}</td>
-                <td>{{ consumable.price }}</td>
-                <td>{{ consumable.charge }}</td>
-                <td>
-                    <a href="{{ path('consumable_edit', {'consumable': consumable.id, 'themeSlug': consumable.tool.category.theme.slug, 'categorySlug': consumable.tool.category.slug, 'toolSlug': consumable.tool.slug }) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+{% include "tool/header.html.twig" %}
 
-    <a href="{{ path('consumable_new', {'slug': tool.slug, 'themeSlug': tool.category.theme.slug, 'categorySlug': tool.category.slug}) }}">Create new</a>
-    <a href="{{ path('tool_index', {'slug': tool.category.slug, 'themeSlug': tool.category.theme.slug}) }}">Back to list</a>
+<!-- CONTENT -->
+<main>
+    <div class="container">
+        <div class="datasheet">
+            <div class="datasheet-core">
+                {% for consumable in tool.consumable %}
+                    <!-- Consumable item -->
+                    <article class="tool-consumable box box-p box-mb">
+                        <div class="consumable-head box-part">
+                            <div class="consumable-thumb">
+                                <img src="{{ asset('img/demo-tool-consumable.jpg')}}" alt="Consommable" />
+                            </div>
+                            <div class="consumable-title">
+                                <h2>{{ consumable.name}}</h2>
+                            </div>
+                        </div>
+                        <div class="box-part">
+                            <p>{{ consumable.description }}</p>
+                        </div>
+                        <div class="box-part">
+                            <div class="consumable-data">
+                                <div>
+                                    <span class="icon icon-price consumable-icon"></span>
+                                </div>
+                                <div>
+                                    <p>{{ consumable.price }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-part">
+                            <div class="consumable-data">
+                                <div>
+                                    <span class="icon icon-burden consumable-icon"></span>
+                                </div>
+                                <div>
+                                    <p>{{ consumable.charge }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</main>
+
 {% endblock %}
+

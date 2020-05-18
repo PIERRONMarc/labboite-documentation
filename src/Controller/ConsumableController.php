@@ -11,6 +11,7 @@ use Gedmo\Sluggable\Util\Urlizer;
 use App\Repository\ToolRepository;
 
 use App\Repository\ConsumableRepository;
+use App\Repository\ThemeRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,13 +21,14 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 class ConsumableController extends AbstractController
 {
     /**
-     * @Route("back-office/{themeSlug}/{categorySlug}/{slug}/consumable", name="consumable_index", methods={"GET"})
+     * @Route("{themeSlug}/{categorySlug}/{slug}/consumable", name="consumable_index", methods={"GET"})
      */
-    public function index(ConsumableRepository $consumableRepository, Tool $tool): Response
+    public function index(ConsumableRepository $consumableRepository, Tool $tool, ThemeRepository $themeRepository): Response
     {
         return $this->render('consumable/index.html.twig', [
             'consumables' => $consumableRepository->findBy(['tool'=>$tool]),
-            'tool' => $tool
+            'tool' => $tool,
+            'themes' => $themeRepository->findAll()
         ]);
     }
     

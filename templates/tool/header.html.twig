@@ -1,0 +1,35 @@
+<!-- HEADER -->
+<header class="header">
+    <div class="header-nav">
+        <div class="header-logo">
+            <img src="{{ asset('img/graphics/logo.png') }}" alt="Logo de LabBoite" />
+        </div>
+        <div class="header-tabs">
+            <ul class="tabs-container">
+                {% for theme in themes %}
+                    <li>
+                        <a 
+                            href="{{ path('category_index', {'slug': theme.slug}) }}" 
+                            class="tab-group {{ theme.slug == tool.category.theme.slug ? "active" : null}}"
+                        >
+                            {{ theme.name }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="header-section">
+        <div class="header-title-sub"><p>{{ tool.type }}</p></div>
+        <div class="header-title-main"><h1>{{ tool.name }}</h1></div>
+        <nav class="header-section-nav">
+            <ul class="tool-nav-container">
+                <li><a href="#"><span class="icon icon-info tool-nav-icon tool-nav-link {{ app.request.attributes.get('_route') == '' ? 'tool-nav-active' : null}}"></span></a></li>
+                <li><a href="tool-notice.html"><span class="icon icon-notice tool-nav-icon tool-nav-link {{ app.request.attributes.get('_route') == '' ? 'tool-nav-active' : null}}"></span></a></li>
+                <li><a href="#"><span class="icon icon-consumables tool-nav-icon tool-nav-link {{ app.request.attributes.get('_route') == 'consumable_index' ? 'tool-nav-active' : null}}"></span></a></li>
+                <li><a href="tool-help.html"><span class="icon icon-faq tool-nav-icon tool-nav-link {{ app.request.attributes.get('_route') == '' ? 'tool-nav-active' : null}}"></span></a></li>
+                <li><a href="tool-tips.html"><span class="icon icon-tips tool-nav-icon tool-nav-link {{ app.request.attributes.get('_route') == '' ? 'tool-nav-active' : null}}"></span></a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
