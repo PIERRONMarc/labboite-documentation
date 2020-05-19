@@ -95,6 +95,11 @@ class Tool
      */
     private $slug;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Resource", mappedBy="tool", orphanRemoval=true, cascade={"persist", "remove"})
+     */
+    private $resources;
+
     public function __construct()
     {
         $this->tips = new ArrayCollection();
@@ -104,6 +109,7 @@ class Tool
         $this->characteristic = new ArrayCollection();
         $this->relation = new ArrayCollection();
         $this->consumable = new ArrayCollection();
+        $this->resources = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -401,6 +407,37 @@ class Tool
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Resource[]
+     */
+    public function getResources(): Collection
+    {
+        return $this->resources;
+    }
+
+    public function addResource(Resource $resource): self
+    {
+        if (!$this->resources->contains($resource)) {
+            $this->resources[] = $resource;
+            $resource->setTool($this);
+        }
+
+        return $this;
+    }
+
+    public function removeResource(Resource $resource): self
+    {
+        if ($this->resources->contains($resource)) {
+            $this->resources->removeElement($resource);
+            // set the owning side to null (unless already changed)
+            if ($resource->getTool() === $this) {
+                $resource->setTool(null);
+            }
+        }
 
         return $this;
     }

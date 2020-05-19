@@ -43,8 +43,11 @@
                         <div class="box-section">
                             <h2>Ressources</h2>
                             <ul class="ressources-list">
-                                <li><a href="#">Ressource 1</a></li>
-                                <li><a href="#">Ressource 2</a></li>
+                                {% for resource in tool.resources %}
+                                    <li><a href="{{ resource.link }}">{{ resource.name }}</a></li></li>
+                                {% else %}
+                                    <li>Aucune caractéristique trouvée</li>
+                                {% endfor %}
                             </ul>
                         </div>
                     </div>
