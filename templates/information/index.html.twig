@@ -15,15 +15,15 @@
                 <section class="tool-info">
                     <!-- Poster -->
                     <div>
-                        {% if tool.information is not null %}
-                            <img class="tool-info-poster" src="{{ asset('img/information/' ~ tool.information.pictureName) }}" alt="Image de l'outil" />
+                        {% if tool.information is not null and tool.information.pictureName is not null %}
+                            <img class="tool-info-poster" src="{{ asset('upload/informations/' ~ tool.information.pictureName) }}" alt="Image de l'outil" />
                         {% else %}
                             <img class="tool-info-poster" src="{{ asset('img/demo-tool-poster.jpg') }}" alt="Image de l'outil" />
                         {% endif %}
                     </div>
                     <div class="box box-mb box-p">
                         <!-- Description -->
-                        {% if tool.information is not null %}
+                        {% if tool.information is not null and tool.information.content is not null %}
                             <div class="box-section">
                                 <p>{{ tool.information.content }}</p>
                             </div>
@@ -46,7 +46,7 @@
                                 {% for resource in tool.resources %}
                                     <li><a href="{{ resource.link }}">{{ resource.name }}</a></li></li>
                                 {% else %}
-                                    <li>Aucune caractéristique trouvée</li>
+                                    <li>Aucune ressources trouvée</li>
                                 {% endfor %}
                             </ul>
                         </div>
