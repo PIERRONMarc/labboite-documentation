@@ -7,6 +7,12 @@
     <div class="delete_characteristic">
 </li>
 {% endmacro %}
+{% macro resource(resource) %}
+<li>
+    {{ form_row(resource)}}
+    <div class="delete_resource">
+</li>
+{% endmacro %}
 
 {% block title %}Edit Information{% endblock %}
 
@@ -20,6 +26,12 @@
          <ul class="characteristics" data-prototype="{{ renderJobMacro.characteristic(form.characteristic.vars.prototype)|e }}">
             {% for characteristic in form.characteristic %}
             {{ renderJobMacro.characteristic(characteristic)}}
+            {% endfor %}
+        </ul>
+        <h2>Resources</h2>
+         <ul class="resources" data-prototype="{{ renderJobMacro.resource(form.resources.vars.prototype)|e }}">
+            {% for resource in form.resources %}
+            {{ renderJobMacro.resource(resource)}}
             {% endfor %}
         </ul>
         <button class="btn">{{ button_label|default('Save') }}</button>
@@ -39,30 +51,45 @@
 
 <script>
     var $collectionHolder;
+    var $resourceHolder;
 
     // setup an "add a tag" link
     var $addCharacButton = $('<button type="button" class="add_charac_link">Add a characteristic</button>');
+    var $addResourceButton = $('<button type="button" class="add_resource_link">Add a resource</button>');
     var $newLinkLi = $('<li></li>').append($addCharacButton);
+    var $newResourceLinkLi = $('<li></li>').append($addResourceButton);
 
     jQuery(document).ready(function() {
         // Get the ul that holds the collection of tags
         $collectionHolder = $('ul.characteristics');
+        $resourcesHolder = $('ul.resources');
 
         // add a delete link to all of the existing tag form li elements
         $collectionHolder.find('li').each(function() {
             addTagFormDeleteLink($(this));
         });
+        $resourcesHolder.find('li').each(function() {
+            addTagFormDeleteLink($(this));
+        });
+
 
         // add the "add a tag" anchor and li to the tags ul
         $collectionHolder.append($newLinkLi);
+        $resourcesHolder.append($newResourceLinkLi);
+        
 
         // count the current form inputs we have (e.g. 2), use that as the new
         // index when inserting a new item (e.g. 2)
         $collectionHolder.data('index', $collectionHolder.find('input').length);
+        $resourcesHolder.data('index', $resourcesHolder.find('input').length);
 
         $addCharacButton.on('click', function(e) {
             // add a new tag form (see next code block)
             addTagForm($collectionHolder, $newLinkLi);
+        });
+        $addResourceButton.on('click', function(e) {
+            // add a new tag form (see next code block)
+            addTagForm($resourcesHolder, $newResourceLinkLi);
         });
     });
 

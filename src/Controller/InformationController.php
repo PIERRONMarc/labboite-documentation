@@ -6,6 +6,7 @@ use App\Entity\Tool;
 use App\Service\FileUploader;
 use Gedmo\Sluggable\Util\Urlizer;
 use App\Form\FinalInformationType;
+use App\Repository\ThemeRepository;
 use App\Repository\ToolRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,6 +49,16 @@ class InformationController extends AbstractController
         return $this->render('information/edit.html.twig', [
             'tool' => $tool,
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("{themeSlug}/{categorySlug}/{slug}/information", name="information_index", methods={"GET"})
+     */
+    public function index(Tool $tool, ThemeRepository $themeRepository) {
+        return $this->render('information/index.html.twig', [
+            'tool' => $tool,
+            'themes' => $themeRepository->findAll()
         ]);
     }
 }

@@ -26,6 +26,14 @@ class FinalInformationType extends AbstractType
                 'allow_delete' => true,
                 'label' => false
             ])
+            ->add('resources', CollectionType::class, [
+                'entry_type' => ResourceType::class,
+                'entry_options' => ['label' => false],
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'label' => false
+            ])
         ;
     }
 
