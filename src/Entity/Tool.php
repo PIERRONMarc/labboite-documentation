@@ -56,12 +56,12 @@ class Tool
     private $category;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Tip", mappedBy="tool", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Tip", mappedBy="tool", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $tips;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="tool", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="tool", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $question;
 
@@ -71,7 +71,7 @@ class Tool
     private $tutorial;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\NoticeParagraph", mappedBy="tool", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\NoticeParagraph", mappedBy="tool", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $noticeParagraph;
 
@@ -81,7 +81,7 @@ class Tool
     private $characteristic;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Consumable", mappedBy="tool", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Consumable", mappedBy="tool", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $consumable;
 
