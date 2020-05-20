@@ -1,37 +1,53 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Question index{% endblock %}
-
 {% block body %}
-    <h1>Question index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Question</th>
-                <th>Answer</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for question in questions %}
-            <tr>
-                <td>{{ question.id }}</td>
-                <td>{{ question.question }}</td>
-                <td>{{ question.answer }}</td>
-                <td>
-                    <a href="{{ path('question_edit', {'id': question.id, 'themeSlug': tool.category.theme.slug, 'categorySlug': tool.category.slug, 'toolSlug': tool.slug}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% include "tool/header.html.twig" %}
 
+     <!-- CONTENT -->
+    <main>
+        <div class="container">
+            <div class="datasheet">
+                <div class="datasheet-core">
+                    <div class="accordion-list">
+
+                        {% for faq in tool.question %}
+                            <!-- Question item -->
+                            <article class="tool-help-item box box-mb accordion-item">
+                                <a href="#" class="tool-help-head accordion-trigger">
+                                    <div class="help-head-container box-p">
+                                        <div>{{ faq.question}}</div>
+                                        <div><span class="icon icon-more tool-head-icon"></span></div>
+                                    </div>
+                                </a>
+                                <div class="tool-help-body box-p text-format accordion-content" style="display: none;">
+                                    <p>{{ faq.answer|raw }}</p>
+                                    {# <ul class="tool-help-list">
+                                        <li>List item</li>
+                                        <li>List item</li>
+                                    </ul> #}
+                                </div>
+                            </article>
+                        {% endfor %}
+                        
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {# LINKS #}
+    {# <a href="{{ path('question_edit', {'id': question.id, 'themeSlug': tool.category.theme.slug, 'categorySlug': tool.category.slug, 'toolSlug': tool.slug}) }}">edit</a>
     <a href="{{ path('question_new', {'slug': tool.slug, 'themeSlug': tool.category.theme.slug, 'categorySlug': tool.category.slug}) }}">Create new</a>
-    <a href="{{ path('tool_index', {'slug': tool.category.slug, 'themeSlug': tool.category.theme.slug}) }}">Back to list</a>
+    <a href="{{ path('tool_index', {'slug': tool.category.slug, 'themeSlug': tool.category.theme.slug}) }}">Back to list</a> #}
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('javascript/accordion.js')}}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.accordion-list').simpleAccordion();
+        });
+    </script>
 {% endblock %}

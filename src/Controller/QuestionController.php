@@ -7,6 +7,7 @@ use App\Entity\Theme;
 use App\Entity\Tool;
 use App\Form\QuestionType;
 use App\Repository\QuestionRepository;
+use App\Repository\ThemeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,11 +18,12 @@ class QuestionController extends AbstractController
     /**
      * @Route("{themeSlug}/{categorySlug}/{slug}/faq", name="question_index", methods={"GET"})
      */
-    public function index(QuestionRepository $questionRepository, Tool $tool): Response
+    public function index(QuestionRepository $questionRepository, Tool $tool, ThemeRepository $themeRepository): Response
     {
         return $this->render('question/index.html.twig', [
             'tool' => $tool,
             'questions' => $questionRepository->findBy(['tool' => $tool]),
+            'themes' => $themeRepository->findAll()
         ]);
     }
     
