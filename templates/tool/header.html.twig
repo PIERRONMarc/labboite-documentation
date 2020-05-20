@@ -28,7 +28,7 @@
                 <li><a href="tool-notice.html"><span class="icon icon-notice tool-nav-icon tool-nav-link {{ app.request.attributes.get('_route') == '' ? 'tool-nav-active' : null}}"></span></a></li>
                 <li><a href="{{ path('consumable_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}"><span class="icon icon-consumables tool-nav-icon tool-nav-link {{ app.request.attributes.get('_route') == 'consumable_index' ? 'tool-nav-active' : null}}"></span></a></li>
                 <li><a href="{{ path('question_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}"><span class="icon icon-faq tool-nav-icon tool-nav-link {{ app.request.attributes.get('_route') == 'question_index' ? 'tool-nav-active' : null}}"></span></a></li>
-                <li><a href="tool-tips.html"><span class="icon icon-tips tool-nav-icon tool-nav-link {{ app.request.attributes.get('_route') == '' ? 'tool-nav-active' : null}}"></span></a></li>
+                <li><a href="{{ path('tip_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}"><span class="icon icon-tips tool-nav-icon tool-nav-link {{ app.request.attributes.get('_route') == 'tip_index' ? 'tool-nav-active' : null}}"></span></a></li>
             </ul>
         </nav>
     </div>

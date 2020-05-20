@@ -6,6 +6,7 @@ use App\Entity\Tip;
 use App\Entity\Tool;
 use App\Form\TipType;
 use App\Entity\Category;
+use App\Repository\ThemeRepository;
 use App\Service\FileUploader;
 use App\Repository\TipRepository;
 use Gedmo\Sluggable\Util\Urlizer;
@@ -19,13 +20,14 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 class TipController extends AbstractController
 {
     /**
-     * @Route("back-office/{themeSlug}/{categorySlug}/{slug}/tips", name="tip_index", methods={"GET"})
+     * @Route("{themeSlug}/{categorySlug}/{slug}/tips", name="tip_index", methods={"GET"})
      */
-    public function index(TipRepository $tipRepository, Tool $tool): Response
+    public function index(TipRepository $tipRepository, Tool $tool, ThemeRepository $themeRepository): Response
     {
         return $this->render('tip/index.html.twig', [
             'tips' => $tipRepository->findBy(['tool' => $tool]),
-            'tool' => $tool
+            'tool' => $tool,
+            'themes' => $themeRepository->findAll()
         ]);
     }
 
