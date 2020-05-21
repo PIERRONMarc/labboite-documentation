@@ -20,8 +20,8 @@ Tool:
 Information:
     resource: App\Controller\InformationController
     type: annotation
-NoticeParagraph:
-    resource: App\Controller\NoticeParagraphController
+Notice:
+    resource: App\Controller\NoticeController
     type: annotation
 Question:
     resource: App\Controller\QuestionController

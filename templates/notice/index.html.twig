@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% include "tool/header.html.twig" %}
+
+    <!-- CONTENT -->
+    <main>
+        <div class="container">
+            <div class="datasheet">
+                <!-- ToC (LG and XL only) -->
+                <aside class="datasheet-aside">
+                    <nav class="notice-toc-l" id="toStick">
+                        <ul id="toc-placeholder"></ul>
+                    </nav>
+                </aside>
+                <!-- Notice -->
+                <section class="datasheet-core">
+                    <div class="box box-p text-format">
+                        <div class="box-section" id="box-section">
+                            {{ tool.notice.content|raw }}
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    {# LINKS  #}
+    {# <a href="{{ path('notice_paragraph_edit', {'id': notice_paragraph.id, 'categorySlug': notice_paragraph.tool.category.slug, 'themeSlug': notice_paragraph.tool.category.theme.slug, 'toolSlug': notice_paragraph.tool.slug}) }}">edit</a>
+    <a href="{{ path('notice_paragraph_new', {'slug': tool.slug, 'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug }) }}">Create new</a>
+    <a href="{{ path('tool_index', {'slug': tool.category.slug, 'themeSlug': tool.category.theme.slug }) }}">Back to list</a> #}
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        $(function(){
+            $(window).scroll(
+                function () {
+                    if ($(this).scrollTop() > 359) {
+                        $('#toStick').addClass("sticked");
+                    } else {
+                        $('#toStick').removeClass("sticked");
+                    }
+                }
+            );			 
+        });
+
+
+        $(function () {
+            "use strict";
+
+            var $content = $('#box-section'), // where we should look for headers.
+                toc = document.getElementById('toc-placeholder'), // the main "table of contents" element.
+                listStack = [],
+                id = 1;
+
+            // Find all headers first.
+            $content.children('h1, h2, h3, h4, h5, h6').each(function (index, el) {
+                var currentHeader = el,
+                    currentLevel = Number(currentHeader.tagName.substr(1)), // get the level of this header.
+
+                    lastListItem = listStack[listStack.length - 1],
+                    lastListItemLevel = lastListItem ? lastListItem.level : 0, // get the level of the previous header.
+                    ol, li, a;
+
+                // Ensure a new header is on a higher level.
+                // pop while we do not reach the first closest parent header (of the higher level).
+                while (currentLevel <= lastListItemLevel) {
+                    listStack.pop();
+                    lastListItem = listStack[listStack.length - 1];
+                    lastListItemLevel = lastListItem ? lastListItem.level : 0;
+                }
+
+                //  Set up anchor and elements attributes
+                el.setAttribute('id', id);
+                li = document.createElement('li');
+                a = document.createElement('a');
+                a.setAttribute('href', '#' + id);
+                a.innerHTML = currentHeader.innerHTML;
+                li.classList.add('toc-h' + currentLevel);
+                li.appendChild(a);
+
+                if (lastListItem) {
+                    // Append the new child to the current placeholder.
+                    lastListItem.ul.appendChild(li);
+                } else {
+                    // If there were no last item, add the new child on the top level.
+                    toc.appendChild(li);
+                }
+
+                id++;
+            });
+        });
+    </script>
+{% endblock %}

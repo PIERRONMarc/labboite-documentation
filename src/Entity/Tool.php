@@ -71,11 +71,6 @@ class Tool
     private $tutorial;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\NoticeParagraph", mappedBy="tool", orphanRemoval=true, cascade={"persist", "remove"})
-     */
-    private $noticeParagraph;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Characteristic", mappedBy="tool", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $characteristic;
@@ -100,12 +95,16 @@ class Tool
      */
     private $resources;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Notice", inversedBy="tool", cascade={"persist", "remove"})
+     */
+    private $notice;
+
     public function __construct()
     {
         $this->tips = new ArrayCollection();
         $this->question = new ArrayCollection();
         $this->tutorial = new ArrayCollection();
-        $this->noticeParagraph = new ArrayCollection();
         $this->characteristic = new ArrayCollection();
         $this->relation = new ArrayCollection();
         $this->consumable = new ArrayCollection();
@@ -283,37 +282,6 @@ class Tool
     }
 
     /**
-     * @return Collection|NoticeParagraph[]
-     */
-    public function getNoticeParagraph(): Collection
-    {
-        return $this->noticeParagraph;
-    }
-
-    public function addNoticeParagraph(NoticeParagraph $noticeParagraph): self
-    {
-        if (!$this->noticeParagraph->contains($noticeParagraph)) {
-            $this->noticeParagraph[] = $noticeParagraph;
-            $noticeParagraph->setTool($this);
-        }
-
-        return $this;
-    }
-
-    public function removeNoticeParagraph(NoticeParagraph $noticeParagraph): self
-    {
-        if ($this->noticeParagraph->contains($noticeParagraph)) {
-            $this->noticeParagraph->removeElement($noticeParagraph);
-            // set the owning side to null (unless already changed)
-            if ($noticeParagraph->getTool() === $this) {
-                $noticeParagraph->setTool(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Characteristic[]
      */
     public function getCharacteristic(): Collection
@@ -438,6 +406,18 @@ class Tool
                 $resource->setTool(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNotice(): ?Notice
+    {
+        return $this->notice;
+    }
+
+    public function setNotice(?Notice $notice): self
+    {
+        $this->notice = $notice;
 
         return $this;
     }
