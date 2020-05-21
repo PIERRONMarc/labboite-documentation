@@ -30,7 +30,7 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @Route("back-office/{slug}/category/new", name="category_new", methods={"GET","POST"})
+     * @Route("admin/{slug}/category/new", name="category_new", methods={"GET","POST"})
      */
     public function new(Request $request, Theme $theme): Response
     {
@@ -65,7 +65,7 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @Route("back-office/{themeSlug}/{categorySlug}/edit", name="category_edit", methods={"GET","POST"})
+     * @Route("admin/{themeSlug}/{categorySlug}/edit", name="category_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, $themeSlug, $categorySlug, CategoryRepository $categoryRepo): Response
     {
@@ -98,7 +98,7 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @Route("back-office/category/{id}", name="category_delete", methods={"DELETE"})
+     * @Route("admin/category/{id}", name="category_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Category $category): Response
     {

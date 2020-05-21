@@ -32,7 +32,7 @@ class TipController extends AbstractController
     }
 
     /**
-     * @Route("back-office/{themeSlug}/{categorySlug}/{slug}/tips/new", name="tip_new", methods={"GET","POST"})
+     * @Route("admin/{themeSlug}/{categorySlug}/{slug}/tips/new", name="tip_new", methods={"GET","POST"})
      */
     public function new(Request $request, Tool $tool): Response
     {
@@ -69,7 +69,7 @@ class TipController extends AbstractController
     }
 
     /**
-     * @Route("/back-office/{themeSlug}/{categorySlug}/{slug}/tips/{id}/edit", name="tip_edit", methods={"GET","POST"})
+     * @Route("/admin/{themeSlug}/{categorySlug}/{slug}/tips/{id}/edit", name="tip_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Tip $tip): Response
     {
@@ -102,7 +102,7 @@ class TipController extends AbstractController
     }
 
     /**
-     * @Route("/back-office/tips/{id}", name="tip_delete", methods={"DELETE"})
+     * @Route("/admin/tips/{id}", name="tip_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Tip $tip): Response
     {

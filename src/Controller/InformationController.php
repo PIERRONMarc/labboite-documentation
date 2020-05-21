@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 class InformationController extends AbstractController
 {
     /**
-     * @Route("back-office/{themeSlug}/{categorySlug}/{slug}/information/edit", name="information_edit", methods={"GET","POST"})
+     * @Route("admin/{themeSlug}/{categorySlug}/{slug}/information/edit", name="information_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Tool $tool): Response
     {

@@ -25,7 +25,7 @@ class NoticeParagraphController extends AbstractController
     }
     
     /**
-     * @Route("back-office/{themeSlug}/{categorySlug}/{slug}/notice/new", name="notice_paragraph_new", methods={"GET","POST"})
+     * @Route("admin/{themeSlug}/{categorySlug}/{slug}/notice/new", name="notice_paragraph_new", methods={"GET","POST"})
      */
     public function new(Request $request, Tool $tool): Response
     {
@@ -53,7 +53,7 @@ class NoticeParagraphController extends AbstractController
     }
 
     /**
-     * @Route("back-office/{themeSlug}/{categorySlug}/{toolSlug}/notice/{id}/edit", name="notice_paragraph_edit", methods={"GET","POST"})
+     * @Route("admin/{themeSlug}/{categorySlug}/{toolSlug}/notice/{id}/edit", name="notice_paragraph_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, NoticeParagraph $noticeParagraph): Response
     {
@@ -77,7 +77,7 @@ class NoticeParagraphController extends AbstractController
     }
 
     /**
-     * @Route("back-office/notice/{id}", name="notice_paragraph_delete", methods={"DELETE"})
+     * @Route("admin/notice/{id}", name="notice_paragraph_delete", methods={"DELETE"})
      */
     public function delete(Request $request, NoticeParagraph $noticeParagraph): Response
     {

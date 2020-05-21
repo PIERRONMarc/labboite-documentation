@@ -28,7 +28,7 @@ class QuestionController extends AbstractController
     }
     
     /**
-     * @Route("back-office/{themeSlug}/{categorySlug}/{slug}/faq/new/", name="question_new", methods={"GET","POST"})
+     * @Route("admin/{themeSlug}/{categorySlug}/{slug}/faq/new/", name="question_new", methods={"GET","POST"})
      */
     public function new(Request $request, Tool $tool): Response
     {
@@ -57,7 +57,7 @@ class QuestionController extends AbstractController
     }
    
     /**
-     * @Route("back-office/{themeSlug}/{categorySlug}/{toolSlug}/faq/{id}/edit", name="question_edit", methods={"GET","POST"})
+     * @Route("admin/{themeSlug}/{categorySlug}/{toolSlug}/faq/{id}/edit", name="question_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Question $question): Response
     {
@@ -81,7 +81,7 @@ class QuestionController extends AbstractController
     }
 
     /**
-     * @Route("back-office/faq/{id}", name="question_delete", methods={"DELETE"})
+     * @Route("admin/faq/{id}", name="question_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Question $question): Response
     {

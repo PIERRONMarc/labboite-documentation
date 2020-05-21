@@ -30,7 +30,7 @@ class ToolController extends AbstractController
     }
     
     /**
-     * @Route("back-office/{themeSlug}/{slug}/tool/new", name="tool_new", methods={"GET","POST"})
+     * @Route("admin/{themeSlug}/{slug}/tool/new", name="tool_new", methods={"GET","POST"})
      */
     public function new(Request $request, Category $category, ValidatorInterface $validator): Response
     {
@@ -67,7 +67,7 @@ class ToolController extends AbstractController
     }
 
     /**
-     * @Route("back-office/{themeSlug}/{slug}/tool/edit", name="tool_edit", methods={"GET","POST"})
+     * @Route("admin/{themeSlug}/{slug}/tool/edit", name="tool_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Tool $tool): Response
     {
@@ -97,7 +97,7 @@ class ToolController extends AbstractController
     }
 
     /**
-     * @Route("back-office/tool/{id}", name="tool_delete", methods={"DELETE"})
+     * @Route("admin/tool/{id}", name="tool_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Tool $tool): Response
     {

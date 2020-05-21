@@ -33,7 +33,7 @@ class ConsumableController extends AbstractController
     }
     
     /**
-     * @Route("back-office/{themeSlug}/{categorySlug}/{slug}/consumable/new", name="consumable_new", methods={"GET","POST"})
+     * @Route("admin/{themeSlug}/{categorySlug}/{slug}/consumable/new", name="consumable_new", methods={"GET","POST"})
      */
     public function new(Request $request, Tool $tool): Response
     {
@@ -71,7 +71,7 @@ class ConsumableController extends AbstractController
     }
 
     /**
-     * @Route("back-office/{themeSlug}/{categorySlug}/{toolSlug}/consumable/{consumable}/edit", name="consumable_edit", methods={"GET","POST"})
+     * @Route("admin/{themeSlug}/{categorySlug}/{toolSlug}/consumable/{consumable}/edit", name="consumable_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Consumable $consumable): Response
     {
@@ -104,7 +104,7 @@ class ConsumableController extends AbstractController
     }
 
     /**
-     * @Route("back-office/consumable/{id}", name="consumable_delete", methods={"DELETE"})
+     * @Route("admin/consumable/{id}", name="consumable_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Consumable $consumable): Response
     {
