@@ -27,7 +27,7 @@ class NoticeController extends AbstractController
     }
 
     /**
-     * @Route("back-office/{themeSlug}/{categorySlug}/{slug}/notice/edit", name="notice_edit", methods={"GET","POST"})
+     * @Route("admin/{themeSlug}/{categorySlug}/{slug}/notice/edit", name="notice_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Tool $tool): Response
     {

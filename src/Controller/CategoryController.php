@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class CategoryController extends AbstractController
 {
@@ -22,10 +21,24 @@ class CategoryController extends AbstractController
      */
     public function index(CategoryRepository $categoryRepository, ThemeRepository $themeRepository, Theme $theme): Response
     {
-        return $this->render('category/index.html.twig', [
+        return $this->render('category/public/index.html.twig', [
             'categories' => $categoryRepository->findBy(['theme' => $theme]),
             'currentTheme' => $theme,
-            'themes' => $themeRepository->findAll()
+            'themes' => $themeRepository->findAll(),
+            'actualTheme' => $theme
+        ]);
+    }
+
+    /**
+     * @Route("admin/{slug}/category", name="admin_category_index", methods={"GET"})
+     */
+    public function adminIndex(CategoryRepository $categoryRepository, ThemeRepository $themeRepository, Theme $theme): Response
+    {
+        return $this->render('category/admin/index.html.twig', [
+            'categories' => $categoryRepository->findBy(['theme' => $theme]),
+            'currentTheme' => $theme,
+            'themes' => $themeRepository->findAll(),
+            'actualTheme' => $theme
         ]);
     }
 
@@ -54,10 +67,10 @@ class CategoryController extends AbstractController
             $entityManager->persist($category);
             $entityManager->flush();
 
-            return $this->redirectToRoute('category_index', ['slug' => $theme->getSlug()]);
+            return $this->redirectToRoute('admin_category_index', ['slug' => $theme->getSlug()]);
         }
 
-        return $this->render('category/new.html.twig', [
+        return $this->render('category/admin/new.html.twig', [
             'category' => $category,
             'theme' => $theme,
             'form' => $form->createView(),
@@ -88,10 +101,10 @@ class CategoryController extends AbstractController
             $category->setSlug(Urlizer::urlize($category->getName()));
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('category_index', ['slug' => $category->getTheme()->getSlug()]);
+            return $this->redirectToRoute('admin_category_index', ['slug' => $category->getTheme()->getSlug()]);
         }
 
-        return $this->render('category/edit.html.twig', [
+        return $this->render('category/admin/edit.html.twig', [
             'category' => $category,
             'form' => $form->createView(),
         ]);
@@ -108,6 +121,6 @@ class CategoryController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('category_index', ['slug' => $category->getTheme()->getSlug()]);
+        return $this->redirectToRoute('admin_category_index', ['slug' => $category->getTheme()->getSlug()]);
     }
 }

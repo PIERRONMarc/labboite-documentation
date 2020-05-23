@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <!-- HEADER -->
+    {% include "header/admin/header.html.twig" %}
+
+    <!-- CONTENT -->
+    <main>
+        <div class="container">
+            <div class="index index-categories">
+                <!-- Add an item -->
+                <article class="category-item">
+                    <div class="card">
+                        <div class="card-img card-img-category">
+                            <a href="{{ path('category_new', {'slug': actualTheme.slug}) }}" class="additem-link">
+                                <div class="additem-icon-container">
+                                    <div class="additem-icon-img"><span class="icon icon-more additem-icon"></span></div>
+                                    <div class="additem-icon-label">Ajouter une catégorie</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Existing items -->
+                {% for category in categories %}
+                    <article class="category-item">
+                        <div class="card">
+                            <div class="card-img card-img-category">
+                                <a href="{{ path('tool_index', {'themeSlug': category.theme.slug, 'slug': category.slug})}}" class="card-link">
+                                    {% if category.thumbnailName is null %}
+                                        <img src="{{ asset('img/demo-thumb.jpg') }}" alt="Category name">
+                                    {% else %}
+                                        <img src="{{ asset('upload/category/' ~ category.thumbnailName) }}" alt="Category name">
+                                    {% endif %}
+                                </a>
+                            </div>
+                            <div class="card-title card-title-category">
+                                <h2 class="title-category">{{ category.name }}</h2>
+                            </div>
+                            <div class="card-controls">
+                                <ul class="card-controls-container">
+                                    <li><a href="{{ path('category_edit', {'categorySlug': category.slug, 'themeSlug': category.theme.slug}) }}"><span class="icon icon-edit card-controls-icon"></span></a></li>
+                                    <li>
+                                        <form method="post" action="{{ path('category_delete', {'id': category.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette catégorie ?');">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ category.id) }}">
+                                            <button class="delete-btn"><span class="icon icon-delete card-controls-icon"></span></button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </article>
+                {% else %}
+                    <p>no records found</p>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+
+
+    {# --------- LINKS --------- #}
+
+    {# <a href="{{ path('category_edit', {'categorySlug': category.slug, 'themeSlug': category.theme.slug}) }}">edit</a>
+    <a href="{{ path('tool_index', {'slug': category.slug, 'themeSlug': category.theme.slug}) }}">see tools</a>
+    <a href="{{ path('category_new', {'slug': theme.slug}) }}">Create new</a> #}
+{% endblock %}

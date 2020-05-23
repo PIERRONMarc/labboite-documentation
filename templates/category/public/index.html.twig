@@ -2,27 +2,7 @@
 
 {% block body %}
     <!-- HEADER -->
-    <header class="header">
-        <div class="header-nav">
-            <div class="header-logo">
-                <img src="{{ asset('img/graphics/logo.png') }}" alt="Logo de LabBoite" />
-            </div>
-            <div class="header-tabs">
-                <ul class="tabs-container">
-                    {% for theme in themes %}
-                        <li>
-                            <a 
-                                href="{{ path('category_index', {'slug': theme.slug}) }}" 
-                                class="tab-group {{ theme.slug == currentTheme.slug ? "active" : null}}"
-                            >
-                                {{ theme.name }}
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-    </header>
+    {% include "header/public/header.html.twig" %}
 
     <!-- CONTENT -->
     <main>

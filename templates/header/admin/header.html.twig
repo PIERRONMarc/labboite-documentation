@@ -1,0 +1,31 @@
+<!-- HEADER -->
+<header class="header">
+    <div class="header-admin">
+        <div class="header-admin-title">Administration</div>
+        <div class="header-admin-nav">
+            <ul class="admin-nav-container">
+                <li><a href="#"><span class="icon icon-users admin-nav-icon admin-nav-link"></span></a></li>
+                <li><a href="#"><span class="icon icon-profile admin-nav-icon admin-nav-link"></span></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="header-nav">
+        <div class="header-logo">
+            <img src="{{ asset('img/graphics/logo.png') }}" alt="Logo de LabBoite" />
+        </div>
+        <div class="header-tabs">
+            <ul class="tabs-container">
+                {% for theme in themes %}
+                    <li>
+                        <a 
+                            href="{{ path('admin_category_index', {'slug': theme.slug}) }}" 
+                            class="tab-group {{ theme.slug == actualTheme.slug ? "active" : null}}"
+                        >
+                            {{ theme.name }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</header>

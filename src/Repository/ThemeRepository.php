@@ -56,4 +56,12 @@ class ThemeRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
+
+    public function findFirst() {
+        return $this->createQueryBuilder('c')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }

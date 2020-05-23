@@ -1,0 +1,5 @@
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+<a href="{{ path('app_logout') }}">Déconnexion</a>
+{% else %}
+<a href="{{ path('app_login') }}">Connexion</a>
+{% endif %}

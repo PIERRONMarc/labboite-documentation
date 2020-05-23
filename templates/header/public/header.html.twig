@@ -10,7 +10,7 @@
                     <li>
                         <a 
                             href="{{ path('category_index', {'slug': theme.slug}) }}" 
-                            class="tab-group {{ theme.slug == category.theme.slug ? "active" : null}}"
+                            class="tab-group {{ theme.slug == actualTheme.slug ? "active" : null}}"
                         >
                             {{ theme.name }}
                         </a>

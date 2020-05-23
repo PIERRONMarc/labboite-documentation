@@ -7,10 +7,20 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}LabBoîte documentation{% endblock %}</title>
         <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/scrolltabs.css') }}">
         {% block stylesheets %}{% endblock %}
     </head>
-    <body>
+    {% set splittedUrl = app.request.pathInfo|split('/') %}
+    {% if splittedUrl[1] is defined %}
+        <body class="{{ splittedUrl[1] == 'admin' ? 'website-admin' : 'website-public'}}">
+    {% else %}
+        <body>
+    {% endif %}
         {% block body %}{% endblock %}
+
+        <!-- FOOTER -->
+        {% include "footer/public/footer.html.twig" %}
+        
         <!-- SCRIPTS -->
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
         <script type="text/javascript" src="{{ asset('javascript/tabs.js') }}"></script>
