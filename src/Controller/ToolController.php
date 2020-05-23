@@ -22,10 +22,23 @@ class ToolController extends AbstractController
      */
     public function index(ToolRepository $toolRepository, Category $category, ThemeRepository $themeRepository): Response
     {
-        return $this->render('tool/index.html.twig', [
+        return $this->render('tool/public/index.html.twig', [
             'tools' => $toolRepository->findBy(['category' => $category]),
             'themes' => $themeRepository->findAll(),
             'category' => $category
+        ]);
+    }
+
+    /**
+     * @Route("admin/{themeSlug}/{slug}/tool", name="admin_tool_index")
+     */
+    public function adminIndex(ToolRepository $toolRepository, Category $category, ThemeRepository $themeRepository): Response
+    {
+        return $this->render('tool/admin/index.html.twig', [
+            'tools' => $toolRepository->findBy(['category' => $category]),
+            'themes' => $themeRepository->findAll(),
+            'category' => $category,
+            'actualTheme' => $category->getTheme()
         ]);
     }
     
@@ -57,10 +70,10 @@ class ToolController extends AbstractController
             $entityManager->persist($tool);
             $entityManager->flush();
 
-            return $this->redirectToRoute('tool_index', ['slug' => $category->getSlug(), 'themeSlug' => $tool->getCategory()->getTheme()->getSlug()]);
+            return $this->redirectToRoute('admin_tool_index', ['slug' => $category->getSlug(), 'themeSlug' => $tool->getCategory()->getTheme()->getSlug()]);
         }
 
-        return $this->render('tool/new.html.twig', [
+        return $this->render('tool/admin/new.html.twig', [
             'category' => $category,
             'form' => $form->createView(),
         ]);
@@ -87,10 +100,10 @@ class ToolController extends AbstractController
             $tool->setSlug(Urlizer::urlize($tool->getName()));
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('tool_index', ['slug' => $tool->getCategory()->getSlug(), 'themeSlug' => $tool->getCategory()->getTheme()->getSlug()]);
+            return $this->redirectToRoute('admin_tool_index', ['slug' => $tool->getCategory()->getSlug(), 'themeSlug' => $tool->getCategory()->getTheme()->getSlug()]);
         }
 
-        return $this->render('tool/edit.html.twig', [
+        return $this->render('tool/admin/edit.html.twig', [
             'tool' => $tool,
             'form' => $form->createView(),
         ]);
@@ -107,6 +120,6 @@ class ToolController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('tool_index', ['slug' => $tool->getCategory()->getSlug(), 'themeSlug' => $tool->getCategory()->getTheme()->getSlug()]);
+        return $this->redirectToRoute('admin_tool_index', ['slug' => $tool->getCategory()->getSlug(), 'themeSlug' => $tool->getCategory()->getTheme()->getSlug()]);
     }
 }

@@ -5,9 +5,9 @@
 {% block body %}
     <h1>Edit Tool</h1>
 
-    {{ include('tool/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('tool/admin/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('tool_index', {'slug': tool.category.slug, 'themeSlug': tool.category.theme.slug}) }}">Back to list</a>
 
-    {{ include('tool/_delete_form.html.twig') }}
+    {{ include('tool/admin/_delete_form.html.twig') }}
 {% endblock %}
