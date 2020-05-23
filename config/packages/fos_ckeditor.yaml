@@ -1,0 +1,22 @@
+# Read the documentation: https://symfony.com/doc/current/bundles/FOSCKEditorBundle/index.html
+
+twig:
+    form_themes:
+        - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
+fos_ck_editor:
+    configs:
+        main_config:
+            extraPlugins: ['wordcount', 'youtube']
+            toolbar:
+                - { name: "styles", items: ['Bold', 'Italic', 'Underline', 'Strike', 'Blockquote', '-', 'Link', '-', '-', 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'Image', 'Youtube', 'Table', 'SpecialChar', '-', 'Styles', 'Format','Font','FontSize', '-', 'TextColor', 'BGColor'],  }
+            filebrowserBrowseRoute: elfinder
+            filebrowserBrowseRouteParameters: []
+            removePlugins: elementspath,
+            language: fr
+    plugins:
+        wordcount:
+            path:     "bundles/fosckeditor/plugins/wordcount/wordcount/" # with trailing slash
+            filename: "plugin.js"
+        youtube:
+            path:     "bundles/fosckeditor/plugins/youtube/youtube/" # with trailing slash
+            filename: "plugin.js"
