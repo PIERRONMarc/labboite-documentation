@@ -15,13 +15,15 @@
                     </nav>
                 </aside>
                 <!-- Notice -->
-                <section class="datasheet-core">
-                    <div class="box box-p text-format">
-                        <div class="box-section" id="box-section">
-                            {{ tool.notice.content|raw }}
+                {% if tool.notice is not null %}
+                    <section class="datasheet-core">
+                        <div class="box box-p text-format">
+                            <div class="box-section" id="box-section">
+                                {{ tool.notice.content|raw }}
+                            </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
+                {% endif %}
             </div>
         </div>
     </main>

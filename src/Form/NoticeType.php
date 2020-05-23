@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Notice;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -13,7 +14,9 @@ class NoticeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('content', TextareaType::class, array('attr' => array('class' => 'ckeditor')))
+            ->add('content', CKEditorType::class, [
+                'config_name' => 'main_config',
+            ])
         ;
     }
 
@@ -21,6 +24,7 @@ class NoticeType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Notice::class,
+            'csrf_protection' => false
         ]);
     }
 }

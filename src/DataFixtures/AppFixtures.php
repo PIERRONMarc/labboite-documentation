@@ -8,6 +8,7 @@ use App\Entity\Category;
 use App\Entity\Characteristic;
 use App\Entity\Consumable;
 use App\Entity\Information;
+use App\Entity\Notice;
 use App\Entity\NoticeParagraph;
 use App\Entity\Question;
 use App\Entity\Resource;
@@ -59,6 +60,8 @@ class AppFixtures extends Fixture
                     ->setCategory($category)
                 ;
 
+                $notice = new Notice();
+                $notice->setContent('<h1>Title</h1><p>' . $faker->paragraph() . '</p>');
                 $information = new Information();
                 $information->setContent($faker->paragraph());
                 $resource = new Resource();
@@ -83,22 +86,18 @@ class AppFixtures extends Fixture
                         ->setCharge($faker->paragraph())
                         ->setDescription($faker->paragraph())
                     ;
-                    $noticeParagraph = new NoticeParagraph();
-                    $noticeParagraph->setTitle($faker->sentence())
-                        ->setContent($faker->paragraph())
-                    ;
                     $characteristic = new Characteristic();
                     $characteristic->setContent($faker->sentence());
-                    $tool->addNoticeParagraph($noticeParagraph)
-                        ->addQuestion($faq)
+                    $tool->addQuestion($faq)
                         ->addConsumable($consumable)
                         ->addTip($tip)
                         ->addCharacteristic($characteristic)
                     ;
                 }
 
-                
-                $tool->setInformation($information);
+                $tool->setInformation($information) 
+                    ->setNotice($notice)
+                ;
                 $manager->persist($tool);
             }
         }
