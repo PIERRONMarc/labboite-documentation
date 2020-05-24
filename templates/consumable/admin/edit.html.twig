@@ -5,9 +5,9 @@
 {% block body %}
     <h1>Edit Consumable</h1>
 
-    {{ include('consumable/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('consumable/admin/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('consumable_index' ,{'slug': consumable.tool.slug, 'themeSlug': consumable.tool.category.theme.slug, 'categorySlug': consumable.tool.category.slug})  }}">back to list</a>
 
-    {{ include('consumable/_delete_form.html.twig') }}
+    {{ include('consumable/admin/_delete_form.html.twig') }}
 {% endblock %}

@@ -25,7 +25,19 @@ class ConsumableController extends AbstractController
      */
     public function index(ConsumableRepository $consumableRepository, Tool $tool, ThemeRepository $themeRepository): Response
     {
-        return $this->render('consumable/index.html.twig', [
+        return $this->render('consumable/public/index.html.twig', [
+            'consumables' => $consumableRepository->findBy(['tool'=>$tool]),
+            'tool' => $tool,
+            'themes' => $themeRepository->findAll()
+        ]);
+    }
+    
+    /**
+     * @Route("admin/{themeSlug}/{categorySlug}/{slug}/consumable", name="admin_consumable_index", methods={"GET"})
+     */
+    public function adminIndex(ConsumableRepository $consumableRepository, Tool $tool, ThemeRepository $themeRepository): Response
+    {
+        return $this->render('consumable/admin/index.html.twig', [
             'consumables' => $consumableRepository->findBy(['tool'=>$tool]),
             'tool' => $tool,
             'themes' => $themeRepository->findAll()
@@ -56,14 +68,14 @@ class ConsumableController extends AbstractController
             $entityManager->persist($consumable);
             $entityManager->flush();
 
-            return $this->redirectToRoute('consumable_index',[
+            return $this->redirectToRoute('admin_consumable_index',[
                 'slug'=>$consumable->getTool()->getSlug(),
                 'themeSlug' => $consumable->getTool()->getCategory()->getTheme()->getSlug(),
                 'categorySlug' => $consumable->getTool()->getCategory()->getSlug()
             ]);
         }
 
-        return $this->render('consumable/new.html.twig', [
+        return $this->render('consumable/admin/new.html.twig', [
             'consumable' => $consumable,
             'form' => $form->createView(),
             'tool' => $tool
@@ -90,14 +102,14 @@ class ConsumableController extends AbstractController
             }
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('consumable_index', [
+            return $this->redirectToRoute('admin_consumable_index', [
                 'slug'=>$consumable->getTool()->getSlug(),
                 'themeSlug' => $consumable->getTool()->getCategory()->getTheme()->getSlug(),
                 'categorySlug' => $consumable->getTool()->getCategory()->getSlug()
             ]);
         }
 
-        return $this->render('consumable/edit.html.twig', [
+        return $this->render('consumable/admin/edit.html.twig', [
             'consumable' => $consumable,
             'form' => $form->createView()
         ]);
@@ -114,7 +126,7 @@ class ConsumableController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('consumable_index', [
+        return $this->redirectToRoute('admin_consumable_index', [
             'slug'=>$consumable->getTool()->getSlug(),
             'themeSlug' => $consumable->getTool()->getCategory()->getTheme()->getSlug(),
             'categorySlug' => $consumable->getTool()->getCategory()->getSlug()

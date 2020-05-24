@@ -14,7 +14,11 @@
                     <article class="tool-consumable box box-p box-mb">
                         <div class="consumable-head box-part">
                             <div class="consumable-thumb">
-                                <img src="{{ asset('img/demo-tool-consumable.jpg')}}" alt="Consommable" />
+                                {% if consumable.pictureName is not null %}
+                                    <img src="{{ asset('upload/consumable/' ~ consumable.pictureName)}}" alt="Consommable">
+                                {% else %}
+                                    <img src="{{ asset('img/demo-tool-consumable.jpg')}}" alt="Consommable" />
+                                {% endif %}
                             </div>
                             <div class="consumable-title">
                                 <h2>{{ consumable.name}}</h2>

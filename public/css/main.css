@@ -1832,3 +1832,5 @@ li.toc-h3 {
   padding: 0px;
   border: none;
 }
+
+.delete-btn:focus {outline:0;}
