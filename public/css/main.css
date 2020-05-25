@@ -2489,3 +2489,14 @@ textarea.form-element {
 
 .icon-users::before {
   content: "\ea0e"; }
+
+/* CUSTOM */
+
+.delete-btn {
+  background: none;
+  padding: 0px;
+  border: none;
+}
+
+.delete-btn:focus {outline:0;}
+
