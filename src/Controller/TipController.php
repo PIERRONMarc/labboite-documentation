@@ -6,6 +6,7 @@ use App\Entity\Tip;
 use App\Entity\Tool;
 use App\Form\TipType;
 use App\Entity\Category;
+use App\Entity\Theme;
 use App\Repository\ThemeRepository;
 use App\Service\FileUploader;
 use App\Repository\TipRepository;
@@ -47,7 +48,7 @@ class TipController extends AbstractController
     /**
      * @Route("admin/{themeSlug}/{categorySlug}/{slug}/tips/new", name="tip_new", methods={"GET","POST"})
      */
-    public function new(Request $request, Tool $tool): Response
+    public function new(Request $request, Tool $tool, ThemeRepository $themeRepository): Response
     {
         $tip = new Tip();
         $form = $this->createForm(TipType::class, $tip);
@@ -78,13 +79,16 @@ class TipController extends AbstractController
             'tip' => $tip,
             'tool' => $tool,
             'form' => $form->createView(),
+            'themes' => $themeRepository->findAll(),
+            'actualTheme' => $tool->getCategory()->getTheme()
+
         ]);
     }
 
     /**
      * @Route("/admin/{themeSlug}/{categorySlug}/{slug}/tips/{id}/edit", name="tip_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Tip $tip): Response
+    public function edit(Request $request, Tip $tip, ThemeRepository $themeRepository): Response
     {
         $form = $this->createForm(TipType::class, $tip);
         $form->handleRequest($request);
@@ -111,6 +115,9 @@ class TipController extends AbstractController
         return $this->render('tip/admin/edit.html.twig', [
             'tip' => $tip,
             'form' => $form->createView(),
+            'themes' =>$themeRepository->findAll(),
+            'actualTheme' => $tip->getTool()->getCategory()->getTheme(),
+            'tool' => $tip->getTool()
         ]);
     }
 

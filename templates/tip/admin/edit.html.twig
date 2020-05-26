@@ -1,13 +1,54 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Tip{% endblock %}
 
 {% block body %}
-    <h1>Edit Tip</h1>
+    {% include "header/admin/tool-header.html.twig" %}
 
-    {{ include('tip/admin/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('tip_index', {'categorySlug': tip.tool.category.slug, 'themeSlug': tip.tool.category.theme.slug, 'slug': tip.tool.slug}) }}">back to list</a>
+    <!-- CONTENT -->
+        <main>
+            <div class="container">
+                <div class="form">
+                    <div class="form-nav">
+                        <a href="{{ path('admin_tip_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}">retour</a>
+                    </div>
+                    <div class="form-box">
+                        <div class="form-head">
+                            <h1>Modifier astuce</h1>
+                        </div>
+                        <div class="form-body">
+                                 {{ include('tip/admin/_form.html.twig') }}
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+   
 
-    
+    <a href="{{ path('tip_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}">back to list</a>
+{% endblock %}
+{% block javascripts %}
+    <!-- SCRIPTS -->
+        <script type="text/javascript" src="{{asset('javascript/jquery.toggle-visibility.js')}}"></script>
+        <script type="text/javascript">
+            $(function() {
+                $('[data-toggle-element]').toggleVisibility();
+            });
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#imgPreview').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#tip_imageFile").change(function(){
+                readURL(this);
+            });
+        </script>
 {% endblock %}
