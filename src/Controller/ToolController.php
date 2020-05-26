@@ -45,7 +45,7 @@ class ToolController extends AbstractController
     /**
      * @Route("admin/{themeSlug}/{slug}/tool/new", name="tool_new", methods={"GET","POST"})
      */
-    public function new(Request $request, Category $category, ValidatorInterface $validator): Response
+    public function new(Request $request, Category $category, ValidatorInterface $validator, ThemeRepository $themeRepository): Response
     {
         
         $tool = new Tool();
@@ -76,13 +76,15 @@ class ToolController extends AbstractController
         return $this->render('tool/admin/new.html.twig', [
             'category' => $category,
             'form' => $form->createView(),
+            'themes' => $themeRepository->findAll(),
+            'actualTheme' => $category->getTheme()
         ]);
     }
 
     /**
      * @Route("admin/{themeSlug}/{slug}/tool/edit", name="tool_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Tool $tool): Response
+    public function edit(Request $request, Tool $tool, ThemeRepository $themeRepository): Response
     {
         $form = $this->createForm(ToolType::class, $tool);
         $form->handleRequest($request);
@@ -103,9 +105,18 @@ class ToolController extends AbstractController
             return $this->redirectToRoute('admin_tool_index', ['slug' => $tool->getCategory()->getSlug(), 'themeSlug' => $tool->getCategory()->getTheme()->getSlug()]);
         }
 
+        if ($tool->getPictureName()) {
+            $imgRelativeUrl = 'upload/tool/' . $tool->getPictureName();
+        } else {
+            $imgRelativeUrl = null;
+        }
+
         return $this->render('tool/admin/edit.html.twig', [
             'tool' => $tool,
             'form' => $form->createView(),
+            'themes' => $themeRepository->findAll(),
+            'actualTheme' => $tool->getCategory()->getTheme(),
+            'imgRelativeUrl' => $imgRelativeUrl
         ]);
     }
 

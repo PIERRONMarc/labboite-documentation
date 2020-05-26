@@ -1,4 +1,52 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+    <div class="form-group form-mb-l">
+        {{ form_label(form.name) }}
+        {{ form_widget(form.name, {'attr': { 'class': "form-element" ~ (form.name.vars.valid == false ? ' has-error')}}) }}
+        {{ form_errors(form.name) }}
+    </div>
+
+    <div class="form-group form-mb-l">
+        {{ form_label(form.description) }}
+        {{ form_widget(form.description, {'attr': { 'class': "form-element" ~ (form.description.vars.valid == false ? ' has-error')}}) }}
+        {{ form_errors(form.description) }}
+    </div>
+
+    <div class="form-group form-mb-l">
+        {{ form_label(form.type) }}
+        {{ form_widget(form.type, {'attr': { 'class': "form-element" ~ (form.type.vars.valid == false ? ' has-error')}}) }}
+        {{ form_errors(form.type) }}
+    </div>
+
+    <div class="form-group form-mb-l">
+        {{ form_label(form.displayOrder) }}
+        {{ form_widget(form.displayOrder, {'attr': { 'class': "form-element" ~ (form.displayOrder.vars.valid == false ? ' has-error')}}) }}
+        {{ form_errors(form.displayOrder) }}
+    </div>
+    
+    <div class="form-group form-mb-l">
+        <label for="category_imageFile">Vignette</label>
+        <div class="form-file-preview">
+            <div class="form-imgprev">
+                {% if imgRelativeUrl is defined and imgRelativeUrl is not null %}
+                    <img src="{{ asset(imgRelativeUrl) }}" alt="Thumb" id="imgPreview">
+                {% else %}
+                    <img src="{{ asset('img/demo-thumb.jpg')}}" alt="Thumb" id="imgPreview">
+                {% endif %}
+            </div>
+        </div>
+        <div class="form-file-button">
+            {{ form_widget(form.imageFile, {'attr': { 'class': 'form-control-file'}}) }}
+        </div>
+        {{ form_errors(form.imageFile) }}
+    </div>
+
+    <div class="form-action">
+        <button type="submit" class="button button-submit">Valider</button>
+    </div>
+
+    
+
+
+    {# <button class="btn">{{ button_label|default('Save') }}</button> #}
 {{ form_end(form) }}
