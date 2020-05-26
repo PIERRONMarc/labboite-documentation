@@ -24,7 +24,20 @@ class TipController extends AbstractController
      */
     public function index(TipRepository $tipRepository, Tool $tool, ThemeRepository $themeRepository): Response
     {
-        return $this->render('tip/index.html.twig', [
+        return $this->render('tip/public/index.html.twig', [
+            'tips' => $tipRepository->findBy(['tool' => $tool]),
+            'tool' => $tool,
+            'themes' => $themeRepository->findAll()
+        ]);
+    }
+
+
+      /**
+     * @Route("admin/{themeSlug}/{categorySlug}/{slug}/tips", name="admin_tip_index", methods={"GET"})
+     */
+    public function adminIndex(TipRepository $tipRepository, Tool $tool, ThemeRepository $themeRepository): Response
+    {
+        return $this->render('tip/admin/index.html.twig', [
             'tips' => $tipRepository->findBy(['tool' => $tool]),
             'tool' => $tool,
             'themes' => $themeRepository->findAll()
@@ -54,14 +67,14 @@ class TipController extends AbstractController
             $entityManager->persist($tip);
             $entityManager->flush();
 
-            return $this->redirectToRoute('tip_index', [
+            return $this->redirectToRoute('admin_tip_index', [
                 'slug' => $tool->getSlug(),
                 'categorySlug' => $tool->getCategory()->getSlug(),
                 'themeSlug' => $tool->getCategory()->getTheme()->getSlug()
             ]);
         }
 
-        return $this->render('tip/new.html.twig', [
+        return $this->render('tip/admin/new.html.twig', [
             'tip' => $tip,
             'tool' => $tool,
             'form' => $form->createView(),
@@ -88,14 +101,14 @@ class TipController extends AbstractController
             }
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('tip_index', [
+            return $this->redirectToRoute('admin_tip_index', [
                 'slug' => $tip->getTool()->getSlug(),
                 'categorySlug' => $tip->getTool()->getCategory()->getSlug(),
                 'themeSlug' => $tip->getTool()->getCategory()->getTheme()->getSlug()
             ]);
         }
 
-        return $this->render('tip/edit.html.twig', [
+        return $this->render('tip/admin/edit.html.twig', [
             'tip' => $tip,
             'form' => $form->createView(),
         ]);
@@ -112,7 +125,7 @@ class TipController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('tip_index', [
+        return $this->redirectToRoute('admin_tip_index', [
             'slug' => $tip->getTool()->getSlug(),
             'categorySlug' => $tip->getTool()->getCategory()->getSlug(),
             'themeSlug' => $tip->getTool()->getCategory()->getTheme()->getSlug()

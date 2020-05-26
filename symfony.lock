@@ -114,6 +114,9 @@
     "gedmo/doctrine-extensions": {
         "version": "v2.4.39"
     },
+    "guzzle/guzzle": {
+        "version": "v3.8.1"
+    },
     "helios-ag/fm-elfinder-bundle": {
         "version": "10.0",
         "recipe": {
@@ -129,6 +132,9 @@
     },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
+    },
+    "mikemccabe/json-patch-php": {
+        "version": "0.1.0"
     },
     "monolog/monolog": {
         "version": "1.25.3"
