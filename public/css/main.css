@@ -2500,3 +2500,12 @@ textarea.form-element {
 
 .delete-btn:focus {outline:0;}
 
+.has-error {
+  border: 1px solid #f5c6cb !important;
+}
+
+.form-error {
+  color: #C0576B;
+  font-size: 0.8em;
+}
+

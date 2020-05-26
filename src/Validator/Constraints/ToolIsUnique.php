@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class ToolIsUnique extends Constraint
 {
-    public $message = 'Un item du même nom existe déjà pour ce thème.';
+    public $message = 'Un item du même nom existe déjà pour ce thème';
 
     public function getTargets()
     {
