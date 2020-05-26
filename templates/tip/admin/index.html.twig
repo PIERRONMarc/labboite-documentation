@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% include "header/admin/tool-header.html.twig" %}
+
+     <!-- CONTENT -->
+        <main>
+            <div class="container">
+                <div class="datasheet">
+                    <div class="datasheet-core">
+
+                        <!-- Add an item -->
+                        <article class="tool-consumable box box-mb">
+                            <a href="{{ path('tip_new', {'slug': tool.slug, 'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug})}}" class="additem-link">
+                                <div class="additem-icon-container box-p">
+                                    <div class="additem-icon-img"><span class="icon icon-more additem-icon"></span></div>
+                                    <div class="additem-icon-label">Ajouter une astuce</div>
+                                </div>
+                            </a>
+                        </article>
+                        {% for tip in tool.tips %}
+                       
+                     {% if tip.pictureName is not null %}
+                            <!-- Tip item -->
+                            
+                            <article class="tool-tip box-mb">
+                                <div class="box-controls">
+                                    <ul class="box-controls-container">
+                                            <li><a href="{{ path('tip_edit', {'id': tip.id, 'categorySlug': tip.tool.category.slug, 'themeSlug': tip.tool.category.theme.slug, 'slug': tip.tool.slug}) }}"><span class="icon icon-edit box-controls-icon"></span></a></li>
+                                            <li>
+                                                <form method="post" action="{{ path('tip_delete', {'id': tip.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette astuce ?');">
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ tip.id) }}">
+                                                    <button class="delete-btn"><span class="icon icon-delete box-controls-icon"></span></button>
+                                                </form>
+                                            </li>
+                                    </ul>
+                                </div>
+                                <div class="box box-bg box-p text-format">
+                                    <h2>{{ tip.title }}</h2>
+                                    <img class="box-image" src="{{ asset('upload/tips/' ~ tip.pictureName) }}" alt="Astuce" />
+                                    <p>{{ tip.description }}</p>
+                                </div>
+                            </article>
+                        {% endif %}
+
+                        {% if tip.youtubeLink is not null %}
+                            <!-- Tip item -->
+                            <article class="tool-tip box-mb">
+                            <div class="box-controls">
+                                    <ul class="box-controls-container">
+                                            <li><a href="{{ path('tip_edit', {'id': tip.id, 'categorySlug': tip.tool.category.slug, 'themeSlug': tip.tool.category.theme.slug, 'slug': tip.tool.slug}) }}"><span class="icon icon-edit box-controls-icon"></span></a></li>
+                                            <li>
+                                                <form method="post" action="{{ path('tip_delete', {'id': tip.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette astuce ?');">
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ tip.id) }}">
+                                                    <button class="delete-btn"><span class="icon icon-delete box-controls-icon"></span></button>
+                                                </form>
+                                            </li>
+                                    </ul>
+                                </div>
+                                <div class="box box-bg box-p text-format">
+                                    <h2>{{ tip.title }}</h2>
+                                    <div class="box-video">
+                                        <iframe src="{{ tip.youtubeLink }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    </div>
+                                    <p>{{ tip.description }}</p>
+                                </div>
+                            </article>
+                        {% endif %}
+
+                        {% if tip.youtubeLink is null and tip.pictureName is null %}
+                            <!-- Tip item -->
+                            <article class="tool-tip box-mb">
+                            <div class="box-controls">
+                                    <ul class="box-controls-container">
+                                            <li><a href="{{ path('tip_edit', {'id': tip.id, 'categorySlug': tip.tool.category.slug, 'themeSlug': tip.tool.category.theme.slug, 'slug': tip.tool.slug}) }}"><span class="icon icon-edit box-controls-icon"></span></a></li>
+                                            <li>
+                                                <form method="post" action="{{ path('tip_delete', {'id': tip.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette astuce ?');">
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ tip.id) }}">
+                                                    <button class="delete-btn"><span class="icon icon-delete box-controls-icon"></span></button>
+                                                </form>
+                                            </li>
+                                    </ul>
+                                </div>
+                                <div class="box box-bg box-p text-format">
+                                    <h2>{{ tip.title }}</h2>
+                                    <p>{{ tip.description }}</p>
+                                </div>
+                            </article>
+                        {% endif %}
+                       
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </main>
+    
+    
+{% endblock %}
