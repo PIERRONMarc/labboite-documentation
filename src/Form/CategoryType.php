@@ -8,16 +8,25 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class CategoryType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('displayOrder')
+            ->add('name', TextType::class, [
+                'label' => 'Titre*',
+            ])
+            ->add('displayOrder', IntegerType::class, [
+                'label' => 'Ordre*',
+                'attr' => [
+                    'min' => 1
+                ],
+            ])
             ->add('imageFile',FileType::class, [
-                'label' => 'image',
+                'label' => 'Vignette',
 
                 // unmapped means that this field is not associated to any entity property
                 'mapped' => false,

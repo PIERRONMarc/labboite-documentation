@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\File;
 
 class CategoryController extends AbstractController
 {
@@ -45,7 +46,7 @@ class CategoryController extends AbstractController
     /**
      * @Route("admin/{slug}/category/new", name="category_new", methods={"GET","POST"})
      */
-    public function new(Request $request, Theme $theme): Response
+    public function new(Request $request, Theme $theme, ThemeRepository $themeRepository): Response
     {
         $category = new Category();
         $category->setTheme($theme);
@@ -74,13 +75,15 @@ class CategoryController extends AbstractController
             'category' => $category,
             'theme' => $theme,
             'form' => $form->createView(),
+            'themes' => $themeRepository->findAll(),
+            'actualTheme' => $theme
         ]);
     }
 
     /**
      * @Route("admin/{themeSlug}/{categorySlug}/edit", name="category_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, $themeSlug, $categorySlug, CategoryRepository $categoryRepo): Response
+    public function edit(Request $request, $themeSlug, $categorySlug, CategoryRepository $categoryRepo, ThemeRepository $themeRepository): Response
     {
         $category = $categoryRepo->findBySlugs($categorySlug, $themeSlug);
         $form = $this->createForm(CategoryType::class, $category);
@@ -102,11 +105,19 @@ class CategoryController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('admin_category_index', ['slug' => $category->getTheme()->getSlug()]);
-        }
+        } 
 
+        if ($category->getThumbnailName()) {
+            $imgRelativeUrl = 'upload/category/' . $category->getThumbnailName();
+        } else {
+            $imgPreviewUrl = null;
+        }
         return $this->render('category/admin/edit.html.twig', [
             'category' => $category,
             'form' => $form->createView(),
+            'themes' => $themeRepository->findAll(),
+            'actualTheme' => $category->getTheme(),
+            'imgPreviewUrl' => $imgPreviewUrl
         ]);
     }
 
