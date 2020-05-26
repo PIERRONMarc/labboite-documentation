@@ -28,8 +28,8 @@
         <label for="category_imageFile">Vignette</label>
         <div class="form-file-preview">
             <div class="form-imgprev">
-                {% if imgRelativeUrl is defined and imgRelativeUrl is not null %}
-                    <img src="{{ asset(imgRelativeUrl) }}" alt="Thumb" id="imgPreview">
+                {% if form.vars.value is not null and form.vars.value.pictureName is not null %}
+                    <img src="{{ asset('upload/tool/' ~ form.vars.value.pictureName) }}" alt="Thumb" id="imgPreview">
                 {% else %}
                     <img src="{{ asset('img/demo-thumb.jpg')}}" alt="Thumb" id="imgPreview">
                 {% endif %}

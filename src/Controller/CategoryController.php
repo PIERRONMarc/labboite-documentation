@@ -107,17 +107,11 @@ class CategoryController extends AbstractController
             return $this->redirectToRoute('admin_category_index', ['slug' => $category->getTheme()->getSlug()]);
         } 
 
-        if ($category->getThumbnailName()) {
-            $imgRelativeUrl = 'upload/category/' . $category->getThumbnailName();
-        } else {
-            $imgPreviewUrl = null;
-        }
         return $this->render('category/admin/edit.html.twig', [
             'category' => $category,
             'form' => $form->createView(),
             'themes' => $themeRepository->findAll(),
             'actualTheme' => $category->getTheme(),
-            'imgPreviewUrl' => $imgPreviewUrl
         ]);
     }
 
