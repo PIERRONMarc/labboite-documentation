@@ -11,8 +11,8 @@
         {% block stylesheets %}{% endblock %}
     </head>
     {% set splittedUrl = app.request.pathInfo|split('/') %}
-    {% if splittedUrl[1] is defined %}
-        <body class="{{ splittedUrl[1] == 'admin' ? 'website-admin' : 'website-public'}}">
+    {% if splittedUrl[1] is defined  %}
+        <body class="{{ splittedUrl[1] == 'admin' or splittedUrl[1] == 'login' ? 'website-admin' : 'website-public'}}">
     {% else %}
         <body>
     {% endif %}

@@ -9,7 +9,3 @@
 {% else %}
     <a href="{{ app.request.schemeAndHttpHost ~ app.request.baseUrl ~ '/admin/' ~ splittedUrl|slice(1)|join('/') }}">voir back-office</a>
 {% endif %}
-
-{# <pre>
-    {{ dump(app.request.schemeAndHttpHost ~ app.request.baseUrl ~ '/admin/'  ~ splittedUrl|slice(1)|join('/')) }}
-</pre> #}
