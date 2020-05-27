@@ -47,7 +47,7 @@ class ConsumableController extends AbstractController
     /**
      * @Route("admin/{themeSlug}/{categorySlug}/{slug}/consumable/new", name="consumable_new", methods={"GET","POST"})
      */
-    public function new(Request $request, Tool $tool): Response
+    public function new(Request $request, Tool $tool, ThemeRepository $themeRepository): Response
     {
         $consumable = new Consumable();
         $form = $this->createForm(ConsumableType::class, $consumable);
@@ -78,14 +78,16 @@ class ConsumableController extends AbstractController
         return $this->render('consumable/admin/new.html.twig', [
             'consumable' => $consumable,
             'form' => $form->createView(),
-            'tool' => $tool
+            'tool' => $tool,
+            'themes' => $themeRepository->findAll(),
+            'actualTheme' => $tool->getCategory()->getTheme()
         ]);
     }
 
     /**
      * @Route("admin/{themeSlug}/{categorySlug}/{toolSlug}/consumable/{consumable}/edit", name="consumable_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Consumable $consumable): Response
+    public function edit(Request $request, Consumable $consumable, ThemeRepository $themeRepository): Response
     {
         $form = $this->createForm(ConsumableType::class, $consumable);
         $form->handleRequest($request);
@@ -111,7 +113,10 @@ class ConsumableController extends AbstractController
 
         return $this->render('consumable/admin/edit.html.twig', [
             'consumable' => $consumable,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'themes' =>$themeRepository->findAll(),
+            'actualTheme' => $consumable->getTool()->getCategory()->getTheme(),
+            'tool' => $consumable->getTool()
         ]);
     }
 
