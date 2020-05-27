@@ -36,7 +36,7 @@ class UserController extends AbstractController
     /**
      * @Route("/new", name="user_new")
      */
-    public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder, ThemeRepository $themeRepository): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -69,13 +69,15 @@ class UserController extends AbstractController
 
         return $this->render('user/registration.html.twig', [
             'registrationForm' => $form->createView(),
+            'themes' => $themeRepository->findAll(),
+            'actualTheme' => $themeRepository->findFirst()
         ]);
     }
 
     /**
      * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, User $user): Response
+    public function edit(Request $request, User $user, ThemeRepository $themeRepository): Response
     {
         if (in_array('ROLE_SUPER-ADMIN', $user->getRoles())) {
             $user->setIsSuperAdmin(true);
@@ -104,6 +106,8 @@ class UserController extends AbstractController
 
         return $this->render('user/edit.html.twig', [
             'userForm' => $form->createView(),
+            'themes' => $themeRepository->findAll(),
+            'actualTheme' => $themeRepository->findFirst()
         ]);
     }
 
