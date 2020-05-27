@@ -25,16 +25,8 @@
                             </div>
                         </div>
                     </article>
-                {% else %}
-                    <p>no records found</p>
                 {% endfor %}
             </div>
         </div>
     </main>
-
-    {# --------- LINKS --------- #}
-
-    {# <a href="{{ path('category_edit', {'categorySlug': category.slug, 'themeSlug': category.theme.slug}) }}">edit</a>
-    <a href="{{ path('tool_index', {'slug': category.slug, 'themeSlug': category.theme.slug}) }}">see tools</a>
-    <a href="{{ path('category_new', {'slug': theme.slug}) }}">Create new</a> #}
 {% endblock %}
