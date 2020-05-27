@@ -9,7 +9,7 @@
                 {% for theme in themes %}
                     <li>
                         <a 
-                            href="{{ path('category_index', {'slug': theme.slug}) }}" 
+                            href="{{ path('admin_category_index', {'slug': theme.slug}) }}" 
                             class="tab-group {{ theme.slug == tool.category.theme.slug ? "active" : null}}"
                         >
                             {{ theme.name }}
@@ -24,7 +24,7 @@
         <div class="header-title-main"><h1>{{ tool.name }}</h1></div>
         <nav class="header-section-nav">
             <ul class="tool-nav-container">
-                <li><a href="{{ path('information_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}"><span class="icon icon-info tool-nav-icon tool-nav-link {{ app.request.attributes.get('_route') == 'information_index' ? 'tool-nav-active' : null}}"></span></a></li>
+                <li><a href="{{ path('admin_information_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}"><span class="icon icon-info tool-nav-icon tool-nav-link {{ app.request.attributes.get('_route') == 'admin_information_index' ? 'tool-nav-active' : null}}"></span></a></li>
                 <li><a href="{{ path('notice_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}"><span class="icon icon-notice tool-nav-icon tool-nav-link {{ app.request.attributes.get('_route') == 'notice_index' ? 'tool-nav-active' : null}}"></span></a></li>
                 <li><a href="{{ path('admin_consumable_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}"><span class="icon icon-consumables tool-nav-icon tool-nav-link {{ app.request.attributes.get('_route') == 'admin_consumable_index' ? 'tool-nav-active' : null}}"></span></a></li>
                 <li><a href="{{ path('question_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}"><span class="icon icon-faq tool-nav-icon tool-nav-link {{ app.request.attributes.get('_route') == 'question_index' ? 'tool-nav-active' : null}}"></span></a></li>
