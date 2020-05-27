@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% include "header/admin/tool-header.html.twig" %}
+
+    {# <h1>Edit Notice</h1> #}
+
+    {# {{ include('notice/_form.html.twig', {'button_label': 'Update'}) }} #}
+
+    {# <a href="{{ path('notice_index') }}">back to list</a> #}
+
+    <!-- CONTENT -->
+    <main>
+        <div class="container">
+            <div class="form">
+                <div class="form-box">
+                    <div class="form-body">
+                        {{ form_start(form) }}
+                            <div class="form-group form-mb-l">
+                                {{ form_label(form.content) }}
+                                {{ form_widget(form.content, {'attr': { 'class': "form-element" ~ (form.content.vars.valid == false ? ' has-error')}}) }}
+                                {{ form_errors(form.content) }}
+                            </div>
+                            <div class="form-action">
+                                <button type="submit" class="button button-submit">Valider</button>
+                            </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+{% endblock %}

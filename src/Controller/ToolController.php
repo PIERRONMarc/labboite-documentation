@@ -105,18 +105,11 @@ class ToolController extends AbstractController
             return $this->redirectToRoute('admin_tool_index', ['slug' => $tool->getCategory()->getSlug(), 'themeSlug' => $tool->getCategory()->getTheme()->getSlug()]);
         }
 
-        if ($tool->getPictureName()) {
-            $imgRelativeUrl = 'upload/tool/' . $tool->getPictureName();
-        } else {
-            $imgRelativeUrl = null;
-        }
-
         return $this->render('tool/admin/edit.html.twig', [
             'tool' => $tool,
             'form' => $form->createView(),
             'themes' => $themeRepository->findAll(),
             'actualTheme' => $tool->getCategory()->getTheme(),
-            'imgRelativeUrl' => $imgRelativeUrl
         ]);
     }
 

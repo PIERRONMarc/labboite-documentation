@@ -24,7 +24,8 @@ class FinalInformationType extends AbstractType
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,
-                'label' => false
+                'label' => false,
+                'block_name' => 'characteristic_list'
             ])
             ->add('resources', CollectionType::class, [
                 'entry_type' => ResourceType::class,

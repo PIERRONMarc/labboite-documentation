@@ -6,6 +6,7 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,12 +15,15 @@ class UserEditionFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username')
+            ->add('username', TextType::class, [
+                'label' => "Nom d'utilisateur*"
+            ])
             ->add('isSuperAdmin', CheckboxType::class, [
-                'required' => false
+                'required' => false,
+                'label' => 'Super admin'
             ])
             ->add('mail', EmailType::class, [
-                'required' => false
+                'label' => 'Courriel*'
             ])
         ;
     }
@@ -28,6 +32,7 @@ class UserEditionFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'validation_groups' => ['edition']
         ]);
     }
 }

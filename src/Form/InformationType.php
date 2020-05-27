@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class InformationType extends AbstractType
 {
@@ -15,7 +16,7 @@ class InformationType extends AbstractType
     {
         $builder
         ->add('imageFile',FileType::class, [
-            'label' => 'image',
+            'label' => 'Illustration',
 
             // unmapped means that this field is not associated to any entity property
             'mapped' => false,
@@ -38,8 +39,9 @@ class InformationType extends AbstractType
                 ])
             ],
         ])
-            ->add('content')
-            // ->add('tool')
+            ->add('content', TextareaType::class, [
+                'label' => 'Description'
+            ])
         ;
     }
 
