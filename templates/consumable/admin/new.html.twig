@@ -1,11 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Consumable{% endblock %}
+
 
 {% block body %}
-    <h1>Create new Consumable</h1>
+     {% include "header/admin/tool-header.html.twig" %}
 
-    {{ include('consumable/admin/_form.html.twig') }}
+    
+    <!-- CONTENT -->
+        <main>
+            <div class="container">
+                <div class="form">
+                    <div class="form-nav">
+                        <a href="{{ path('admin_consumable_index', {'slug': tool.slug, 'themeSlug': tool.category.theme.slug, 'categorySlug': tool.category.slug}) }}">retour</a>
+                    </div>
+                    <div class="form-box">
+                        <div class="form-head">
+                            <h1>Nouveau consommable</h1>
+                        </div>
+                        <div class="form-body">
+                        {{ include('consumable/admin/_form.html.twig') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+   
+{% endblock %}
+{% block javascripts %}
+    <!-- SCRIPTS -->
+        
+        <script type="text/javascript">
+           
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
 
-    <a href="{{ path('consumable_index', {'slug': tool.slug, 'themeSlug': tool.category.theme.slug, 'categorySlug': tool.category.slug}) }}">back to list</a>
+                    reader.onload = function (e) {
+                        $('#imgPreview').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#consumable_imageFile").change(function(){
+                readURL(this);
+            });
+        </script>
 {% endblock %}
