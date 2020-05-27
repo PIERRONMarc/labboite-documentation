@@ -3,19 +3,7 @@
 {% block title %}Register User{% endblock %}
 
 {% block body %}
-    {# <h1>Register User</h1>
-
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.username) }}
-        {{ form_row(registrationForm.mail) }}
-        {{ form_row(registrationForm.plainPassword) }}
-        {{ form_row(registrationForm.confirmPassword) }}
-        {{ form_row(registrationForm.superAdmin) }}
-
-        <button class="btn">Register</button>
-    {{ form_end(registrationForm) }}
-
-    <a href="{{ path('user_index') }}">back to list</a> #}
+   
     {% include "header/admin/header.html.twig" %}
 
     <!-- CONTENT -->
@@ -33,22 +21,22 @@
                         {{ form_start(registrationForm) }}
                             <div class="form-group form-mb-l">
                                 {{ form_label(registrationForm.username) }}
-                                {{ form_widget(registrationForm.username, {'attr': {'class': 'form-element'}}) }}
+                                {{ form_widget(registrationForm.username, {'attr': {'class': "form-element" ~ (registrationForm.username.vars.valid == false ? ' has-error')}}) }}
                                 {{ form_errors(registrationForm.username) }}
                             </div>
                             <div class="form-group form-mb-l">
                                 {{ form_label(registrationForm.mail) }}
-                                {{ form_widget(registrationForm.mail, {'attr': {'class': 'form-element'}}) }}
+                                {{ form_widget(registrationForm.mail, {'attr': {'class': "form-element" ~ (registrationForm.mail.vars.valid == false ? ' has-error')}}) }}
                                 {{ form_errors(registrationForm.mail) }}
                             </div>
                             <div class="form-group form-mb-l">
                                 {{ form_label(registrationForm.plainPassword) }}
-                                {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-element'}}) }}
+                                {{ form_widget(registrationForm.plainPassword, {'attr': {'class': "form-element" ~ (registrationForm.plainPassword.vars.valid == false ? ' has-error')}}) }}
                                 {{ form_errors(registrationForm.plainPassword) }}
                             </div>
                             <div class="form-group form-mb-l">
                                 {{ form_label(registrationForm.confirmPassword) }}
-                                {{ form_widget(registrationForm.confirmPassword, {'attr': {'class': 'form-element'}}) }}
+                                {{ form_widget(registrationForm.confirmPassword, {'attr': {'class': "form-element" ~ (registrationForm.confirmPassword.vars.valid == false ? ' has-error')}}) }}
                                 {{ form_errors(registrationForm.confirmPassword) }}
                             </div>
                             <div class="form-group form-mb-l form-inline">

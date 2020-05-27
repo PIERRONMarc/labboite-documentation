@@ -19,12 +19,12 @@
                         {{ form_start(userForm) }}
                             <div class="form-group form-mb-l">
                                 {{ form_label(userForm.username) }}
-                                {{ form_widget(userForm.username, {'attr': {'class': 'form-element'}}) }}
+                                {{ form_widget(userForm.username, {'attr': {'class': 'form-element' ~ (userForm.username.vars.valid == false ? ' has-error')}}) }}
                                 {{ form_errors(userForm.username) }}
                             </div>
                             <div class="form-group form-mb-l">
                                 {{ form_label(userForm.mail) }}
-                                {{ form_widget(userForm.mail, {'attr': {'class': 'form-element'}}) }}
+                                {{ form_widget(userForm.mail, {'attr': {'class': 'form-element' ~ (userForm.mail.vars.valid == false ? ' has-error')}}) }}
                                 {{ form_errors(userForm.mail) }}
                             </div>
                             <div class="form-group form-mb-l form-inline">

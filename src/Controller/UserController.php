@@ -29,7 +29,6 @@ class UserController extends AbstractController
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findAll(),
             'themes' => $themeRepository->findAll(),
-            'actualTheme' => $themeRepository->findFirst()
         ]);
     }
 
@@ -70,7 +69,6 @@ class UserController extends AbstractController
         return $this->render('user/registration.html.twig', [
             'registrationForm' => $form->createView(),
             'themes' => $themeRepository->findAll(),
-            'actualTheme' => $themeRepository->findFirst()
         ]);
     }
 
@@ -107,14 +105,13 @@ class UserController extends AbstractController
         return $this->render('user/edit.html.twig', [
             'userForm' => $form->createView(),
             'themes' => $themeRepository->findAll(),
-            'actualTheme' => $themeRepository->findFirst()
         ]);
     }
 
     /**
      * @Route("/{id}/change-password", name="user_change_password", methods={"GET", "POST"})
      */
-    public function changePassword(Request $request, User $user, UserPasswordEncoderInterface $passwordEncoder) {
+    public function changePassword(Request $request, User $user, UserPasswordEncoderInterface $passwordEncoder, ThemeRepository $themeRepository) {
 
         $form = $this->createForm(ChangePasswordType::class, $user);
         $form->handleRequest($request);
@@ -143,7 +140,8 @@ class UserController extends AbstractController
 
         return $this->render('user/changePassword.html.twig', [
             'passwordForm' => $form->createView(),
-            'user' => $user
+            'user' => $user,
+            'themes' => $themeRepository->findAll(),
         ]);
     }
 

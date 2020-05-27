@@ -21,7 +21,7 @@
                     <li>
                         <a 
                             href="{{ path('admin_category_index', {'slug': theme.slug}) }}" 
-                            class="tab-group {{ theme.slug == actualTheme.slug ? "active" : null}}"
+                            class="tab-group {{ actualTheme is defined and theme.slug == actualTheme.slug ? "active" : null}}"
                         >
                             {{ theme.name }}
                         </a>
