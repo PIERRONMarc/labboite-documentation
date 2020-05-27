@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\ChangePasswordType;
 use App\Form\UserEditionFormType;
 use App\Form\RegistrationFormType;
+use App\Repository\ThemeRepository;
 use App\Repository\UserRepository;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,10 +24,12 @@ class UserController extends AbstractController
     /**
      * @Route("/", name="user_index", methods={"GET"})
      */
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository, ThemeRepository $themeRepository): Response
     {
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findAll(),
+            'themes' => $themeRepository->findAll(),
+            'actualTheme' => $themeRepository->findFirst()
         ]);
     }
 
