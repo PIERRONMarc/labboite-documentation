@@ -18,9 +18,9 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 class InformationController extends AbstractController
 {
     /**
-     * @Route("admin/{themeSlug}/{categorySlug}/{slug}/information/edit", name="information_edit", methods={"GET","POST"})
+     * @Route("admin/{themeSlug}/{categorySlug}/{slug}/information", name="admin_information_index", methods={"GET","POST"})
      */
-    public function edit(Request $request, Tool $tool): Response
+    public function edit(Request $request, Tool $tool, ThemeRepository $themeRepository): Response
     {
         $form = $this->createForm(FinalInformationType::class, $tool);
         $form->handleRequest($request);
@@ -40,15 +40,17 @@ class InformationController extends AbstractController
             $entityManager->persist($tool);
             $entityManager->flush();
 
-            return $this->redirectToRoute('tool_index', [
+            return $this->redirectToRoute('admin_tool_index', [
                     'slug' => $tool->getCategory()->getSlug(),
                     'themeSlug' => $tool->getCategory()->getTheme()->getSlug()
                 ]);
         }
 
-        return $this->render('information/edit.html.twig', [
+        return $this->render('information/admin/index.html.twig', [
             'tool' => $tool,
             'form' => $form->createView(),
+            'themes' => $themeRepository->findAll(),
+            'actualTheme' => $tool->getCategory()->getTheme()
         ]);
     }
 
@@ -56,7 +58,7 @@ class InformationController extends AbstractController
      * @Route("{themeSlug}/{categorySlug}/{slug}/information", name="information_index", methods={"GET"})
      */
     public function index(Tool $tool, ThemeRepository $themeRepository) {
-        return $this->render('information/index.html.twig', [
+        return $this->render('information/public/index.html.twig', [
             'tool' => $tool,
             'themes' => $themeRepository->findAll()
         ]);

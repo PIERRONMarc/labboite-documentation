@@ -1,0 +1,60 @@
+{% extends "base.html.twig" %}
+
+
+{% set category = tool.category %}
+
+{% block body %}
+
+{% include "header/public/tool-header.html.twig" %}
+
+<!-- CONTENT -->
+<main>
+    <div class="container">
+        <div class="datasheet">
+            <div class="datasheet-core">
+                <section class="tool-info">
+                    <!-- Poster -->
+                    <div>
+                        {% if tool.information is not null and tool.information.pictureName is not null %}
+                            <img class="tool-info-poster" src="{{ asset('upload/informations/' ~ tool.information.pictureName) }}" alt="Image de l'outil" />
+                        {% else %}
+                            <img class="tool-info-poster" src="{{ asset('img/demo-tool-poster.jpg') }}" alt="Image de l'outil" />
+                        {% endif %}
+                    </div>
+                    <div class="box box-mb box-p">
+                        <!-- Description -->
+                        {% if tool.information is not null and tool.information.content is not null %}
+                            <div class="box-section">
+                                <p>{{ tool.information.content }}</p>
+                            </div>
+                        {% endif %}
+                        <!-- Specs -->
+                        <div class="box-section">
+                            <h2>Caractéristiques</h2>
+                            <ul class="specs-list">
+                                {% for carac in tool.characteristic %}
+                                    <li>{{ carac.content }}</li>
+                                {% else %}
+                                    <li>Aucune caractéristique trouvée</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <!-- Ressources -->
+                        <div class="box-section">
+                            <h2>Ressources</h2>
+                            <ul class="ressources-list">
+                                {% for resource in tool.resources %}
+                                    <li><a href="{{ resource.link }}">{{ resource.name }}</a></li></li>
+                                {% else %}
+                                    <li>Aucune ressource trouvée</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

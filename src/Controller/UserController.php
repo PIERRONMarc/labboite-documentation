@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\ChangePasswordType;
 use App\Form\UserEditionFormType;
 use App\Form\RegistrationFormType;
+use App\Repository\ThemeRepository;
 use App\Repository\UserRepository;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,17 +24,18 @@ class UserController extends AbstractController
     /**
      * @Route("/", name="user_index", methods={"GET"})
      */
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository, ThemeRepository $themeRepository): Response
     {
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findAll(),
+            'themes' => $themeRepository->findAll(),
         ]);
     }
 
     /**
      * @Route("/new", name="user_new")
      */
-    public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder, ThemeRepository $themeRepository): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -66,13 +68,14 @@ class UserController extends AbstractController
 
         return $this->render('user/registration.html.twig', [
             'registrationForm' => $form->createView(),
+            'themes' => $themeRepository->findAll(),
         ]);
     }
 
     /**
      * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, User $user): Response
+    public function edit(Request $request, User $user, ThemeRepository $themeRepository): Response
     {
         if (in_array('ROLE_SUPER-ADMIN', $user->getRoles())) {
             $user->setIsSuperAdmin(true);
@@ -101,13 +104,14 @@ class UserController extends AbstractController
 
         return $this->render('user/edit.html.twig', [
             'userForm' => $form->createView(),
+            'themes' => $themeRepository->findAll(),
         ]);
     }
 
     /**
      * @Route("/{id}/change-password", name="user_change_password", methods={"GET", "POST"})
      */
-    public function changePassword(Request $request, User $user, UserPasswordEncoderInterface $passwordEncoder) {
+    public function changePassword(Request $request, User $user, UserPasswordEncoderInterface $passwordEncoder, ThemeRepository $themeRepository) {
 
         $form = $this->createForm(ChangePasswordType::class, $user);
         $form->handleRequest($request);
@@ -136,7 +140,8 @@ class UserController extends AbstractController
 
         return $this->render('user/changePassword.html.twig', [
             'passwordForm' => $form->createView(),
-            'user' => $user
+            'user' => $user,
+            'themes' => $themeRepository->findAll(),
         ]);
     }
 

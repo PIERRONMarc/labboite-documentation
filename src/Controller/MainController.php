@@ -13,6 +13,10 @@ class MainController extends AbstractController
      */
     public function index(ThemeRepository $themeRepository)
     {
-        return $this->redirectToRoute('category_index', ['slug' => $themeRepository->findFirstRecord()->getSlug()]);
+        if ($themeRepository->findFirstRecord()) {
+            return $this->redirectToRoute('category_index', ['slug' => $themeRepository->findFirstRecord()->getSlug()]);
+        } else {
+            return $this->render('main/empty.html.twig');
+        }
     }
 }

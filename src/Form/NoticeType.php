@@ -16,6 +16,7 @@ class NoticeType extends AbstractType
         $builder
             ->add('content', CKEditorType::class, [
                 'config_name' => 'main_config',
+                'label' => 'Notice'
             ])
         ;
     }

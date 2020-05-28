@@ -9,7 +9,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity(fields={"username"}, message="There is already an account with this username")
+ * @UniqueEntity(fields={"username"}, message="Un utilisateur possède déjà ce nom", groups={"register", "edition"})
  */
 class User implements UserInterface
 {
@@ -37,14 +37,14 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @Assert\EqualTo(propertyPath="plainPassword", message="passwords doest not match", groups={"register", "changePassword"})
+     * @Assert\EqualTo(propertyPath="plainPassword", message="Les mots de passe ne correspondent pas", groups={"register", "changePassword"})
      * @Assert\NotBlank(groups={"changePassword"})
      * @Assert\Length(min="6", max="4096")
      */
     public $confirmPassword;
 
     /**
-     * @Assert\EqualTo(propertyPath="confirmPassword", message="passwords doest not match", groups={"changePassword"})
+     * @Assert\EqualTo(propertyPath="confirmPassword", message="Les mots de passe ne correspondent pas", groups={"changePassword"})
      * @Assert\NotBlank(groups={"register", "changePassword"})
      * @Assert\Length(min="6", max="4096")
      */

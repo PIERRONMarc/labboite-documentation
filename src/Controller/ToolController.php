@@ -23,7 +23,7 @@ class ToolController extends AbstractController
     public function index(ToolRepository $toolRepository, Category $category, ThemeRepository $themeRepository): Response
     {
         return $this->render('tool/public/index.html.twig', [
-            'tools' => $toolRepository->findBy(['category' => $category]),
+            'tools' => $toolRepository->findBy(['category' => $category], ['displayOrder' => 'ASC']),
             'themes' => $themeRepository->findAll(),
             'category' => $category
         ]);
@@ -35,7 +35,7 @@ class ToolController extends AbstractController
     public function adminIndex(ToolRepository $toolRepository, Category $category, ThemeRepository $themeRepository): Response
     {
         return $this->render('tool/admin/index.html.twig', [
-            'tools' => $toolRepository->findBy(['category' => $category]),
+            'tools' => $toolRepository->findBy(['category' => $category], ['displayOrder' => 'ASC']),
             'themes' => $themeRepository->findAll(),
             'category' => $category,
             'actualTheme' => $category->getTheme()
