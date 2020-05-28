@@ -23,7 +23,7 @@ class CategoryController extends AbstractController
     public function index(CategoryRepository $categoryRepository, ThemeRepository $themeRepository, Theme $theme): Response
     {
         return $this->render('category/public/index.html.twig', [
-            'categories' => $categoryRepository->findBy(['theme' => $theme]),
+            'categories' => $categoryRepository->findBy(['theme' => $theme], ['displayOrder' => 'ASC']),
             'currentTheme' => $theme,
             'themes' => $themeRepository->findAll(),
             'actualTheme' => $theme
@@ -36,7 +36,7 @@ class CategoryController extends AbstractController
     public function adminIndex(CategoryRepository $categoryRepository, ThemeRepository $themeRepository, Theme $theme): Response
     {
         return $this->render('category/admin/index.html.twig', [
-            'categories' => $categoryRepository->findBy(['theme' => $theme]),
+            'categories' => $categoryRepository->findBy(['theme' => $theme], ['displayOrder' => 'ASC']),
             'currentTheme' => $theme,
             'themes' => $themeRepository->findAll(),
             'actualTheme' => $theme
