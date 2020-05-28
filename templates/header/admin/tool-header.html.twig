@@ -37,11 +37,31 @@
         <div class="header-title-main"><h1>{{ tool.name }}</h1></div>
         <nav class="header-section-nav">
             <ul class="tool-nav-container">
-                <li><a href="{{ path('admin_information_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}" title="Information"><span class="icon icon-info tool-nav-icon tool-nav-link {{ currentRoute == 'admin_information_index' ? 'tool-nav-active' : null}}"></span></a></li>
-                <li><a href="{{ path('admin_notice_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}" title="Notice"><span class="icon icon-notice tool-nav-icon tool-nav-link {{ currentRoute == 'admin_notice_index' ? 'tool-nav-active' : null}}"></span></a></li>
-                <li><a href="{{ path('admin_consumable_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}" title="Consommable"><span class="icon icon-consumables tool-nav-icon tool-nav-link {{ currentRoute == 'admin_consumable_index' or currentRoute == 'consumable_new' or currentRoute == 'consumable_edit' ? 'tool-nav-active' : null}}"></span></a></li>
-                <li><a href="{{ path('question_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}" title="Aide"><span class="icon icon-faq tool-nav-icon tool-nav-link {{ currentRoute == 'question_index' ? 'tool-nav-active' : null}}"></span></a></li>
-                <li><a href="{{ path('admin_tip_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}" title="Astuce"><span class="icon icon-tips tool-nav-icon tool-nav-link {{ currentRoute == 'admin_tip_index' or currentRoute == 'tip_new' or currentRoute == 'tip_edit' ? 'tool-nav-active' : null}}"></span></a></li>
+                <li>
+                    <a href="{{ path('admin_information_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}" title="Information">
+                        <span class="icon icon-info tool-nav-icon tool-nav-link {{ currentRoute == 'admin_information_index' ? 'tool-nav-active' : null}}"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('admin_notice_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}" title="Notice">
+                        <span class="icon icon-notice tool-nav-icon tool-nav-link {{ currentRoute == 'admin_notice_index' ? 'tool-nav-active' : null}}"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('admin_consumable_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}" title="Consommable">
+                        <span class="icon icon-consumables tool-nav-icon tool-nav-link {{ currentRoute == 'admin_consumable_index' or currentRoute == 'consumable_new' or currentRoute == 'consumable_edit' ? 'tool-nav-active' : null}}"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('question_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}" title="Aide">
+                        <span class="icon icon-faq tool-nav-icon tool-nav-link {{ currentRoute == 'question_index' or currentRoute == 'question_new' or currentRoute == 'question_edit' ? 'tool-nav-active' : null}}"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('admin_tip_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}" title="Astuce">
+                        <span class="icon icon-tips tool-nav-icon tool-nav-link {{ currentRoute == 'admin_tip_index' or currentRoute == 'tip_new' or currentRoute == 'tip_edit' ? 'tool-nav-active' : null}}"></span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>

@@ -30,7 +30,7 @@ class QuestionController extends AbstractController
     /**
      * @Route("admin/{themeSlug}/{categorySlug}/{slug}/faq/new/", name="question_new", methods={"GET","POST"})
      */
-    public function new(Request $request, Tool $tool): Response
+    public function new(Request $request, Tool $tool, ThemeRepository $themeRepository): Response
     {
         $question = new Question();
         $form = $this->createForm(QuestionType::class, $question);
@@ -53,13 +53,14 @@ class QuestionController extends AbstractController
             'tool' => $tool,
             'question' => $question,
             'form' => $form->createView(),
+            'themes' => $themeRepository->findAll(),
         ]);
     }
    
     /**
      * @Route("admin/{themeSlug}/{categorySlug}/{toolSlug}/faq/{id}/edit", name="question_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Question $question): Response
+    public function edit(Request $request, Question $question, ThemeRepository $themeRepository): Response
     {
         $form = $this->createForm(QuestionType::class, $question);
         $form->handleRequest($request);
@@ -77,6 +78,8 @@ class QuestionController extends AbstractController
         return $this->render('question/edit.html.twig', [
             'question' => $question,
             'form' => $form->createView(),
+            'themes' => $themeRepository->findAll(),
+            'tool' => $question->getTool()
         ]);
     }
 

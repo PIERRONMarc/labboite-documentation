@@ -1,4 +1,15 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <div class="form-group form-mb-l">
+        {{ form_label(form.question) }}
+        {{ form_widget(form.question, {'attr': { 'class': "form-element" ~ (form.question.vars.valid == false ? ' has-error')}}) }}
+        {{ form_errors(form.question) }}
+    </div>
+    <div class="form-group form-mb-l">
+        {{ form_label(form.answer) }}
+        {{ form_widget(form.answer, {'attr': { 'class': "form-element" ~ (form.answer.vars.valid == false ? ' has-error')}}) }}
+        {{ form_errors(form.answer) }}
+    </div>
+    <div class="form-action">
+        <button type="submit" class="button button-submit">Valider</button>
+    </div>
 {{ form_end(form) }}
