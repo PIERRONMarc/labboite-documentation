@@ -53,7 +53,7 @@ class QuestionController extends AbstractController
             $entityManager->persist($question);
             $entityManager->flush();
 
-            return $this->redirectToRoute('question_index', [
+            return $this->redirectToRoute('admin_question_index', [
                 'slug' => $tool->getSlug(),
                 'categorySlug' => $tool->getCategory()->getSlug(),
                 'themeSlug' => $tool->getCategory()->getTheme()->getSlug(),
@@ -79,7 +79,7 @@ class QuestionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('question_index', [
+            return $this->redirectToRoute('admin_question_index', [
                 'slug' => $question->getTool()->getSlug(),
                 'categorySlug' => $question->getTool()->getCategory()->getSlug(),
                 'themeSlug' => $question->getTool()->getCategory()->getTheme()->getSlug(),
@@ -105,7 +105,7 @@ class QuestionController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('question_index', [
+        return $this->redirectToRoute('admin_question_index', [
             'slug' => $question->getTool()->getSlug(),
             'categorySlug' => $question->getTool()->getCategory()->getSlug(),
             'themeSlug' => $question->getTool()->getCategory()->getTheme()->getSlug(),

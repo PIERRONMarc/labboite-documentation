@@ -53,8 +53,8 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ path('question_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}" title="Aide">
-                        <span class="icon icon-faq tool-nav-icon tool-nav-link {{ currentRoute == 'question_index' or currentRoute == 'question_new' or currentRoute == 'question_edit' ? 'tool-nav-active' : null}}"></span>
+                    <a href="{{ path('admin_question_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}" title="Aide">
+                        <span class="icon icon-faq tool-nav-icon tool-nav-link {{ currentRoute == 'admin_question_index' or currentRoute == 'question_new' or currentRoute == 'question_edit' ? 'tool-nav-active' : null}}"></span>
                     </a>
                 </li>
                 <li>
