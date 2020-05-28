@@ -20,13 +20,24 @@ class QuestionController extends AbstractController
      */
     public function index(QuestionRepository $questionRepository, Tool $tool, ThemeRepository $themeRepository): Response
     {
-        return $this->render('question/index.html.twig', [
+        return $this->render('question/public/index.html.twig', [
             'tool' => $tool,
             'questions' => $questionRepository->findBy(['tool' => $tool]),
             'themes' => $themeRepository->findAll()
         ]);
     }
-    
+
+     /**
+     * @Route("admin/{themeSlug}/{categorySlug}/{slug}/faq", name="admin_question_index", methods={"GET"})
+     */
+    public function indexAdmin(QuestionRepository $questionRepository, Tool $tool, ThemeRepository $themeRepository): Response
+    {
+        return $this->render('question/admin/index.html.twig', [
+            'tool' => $tool,
+            'questions' => $questionRepository->findBy(['tool' => $tool]),
+            'themes' => $themeRepository->findAll()
+        ]);
+    }
     /**
      * @Route("admin/{themeSlug}/{categorySlug}/{slug}/faq/new/", name="question_new", methods={"GET","POST"})
      */
@@ -49,7 +60,7 @@ class QuestionController extends AbstractController
             ]);
         }
 
-        return $this->render('question/new.html.twig', [
+        return $this->render('question/admin/new.html.twig', [
             'tool' => $tool,
             'question' => $question,
             'form' => $form->createView(),
@@ -74,7 +85,7 @@ class QuestionController extends AbstractController
             ]);
         }
 
-        return $this->render('question/edit.html.twig', [
+        return $this->render('question/admin/edit.html.twig', [
             'question' => $question,
             'form' => $form->createView(),
         ]);
