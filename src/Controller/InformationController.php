@@ -4,15 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Tool;
 use App\Service\FileUploader;
-use Gedmo\Sluggable\Util\Urlizer;
 use App\Form\FinalInformationType;
 use App\Repository\ThemeRepository;
-use App\Repository\ToolRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 
 class InformationController extends AbstractController
@@ -40,10 +37,6 @@ class InformationController extends AbstractController
             $entityManager->persist($tool);
             $entityManager->flush();
 
-            return $this->redirectToRoute('admin_tool_index', [
-                    'slug' => $tool->getCategory()->getSlug(),
-                    'themeSlug' => $tool->getCategory()->getTheme()->getSlug()
-                ]);
         }
 
         return $this->render('information/admin/index.html.twig', [

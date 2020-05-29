@@ -48,29 +48,35 @@
                                     <h2>{{ consumable.name}}</h2>
                                 </div>
                             </div>
-                            <div class="box-part">
-                                <p>{{ consumable.description }}</p>
-                            </div>
-                            <div class="box-part">
-                                <div class="consumable-data">
-                                    <div>
-                                        <span class="icon icon-price consumable-icon"></span>
-                                    </div>
-                                    <div>
-                                        <p>{{ consumable.price }}</p>
+                            {% if consumable.description is not null %}
+                                <div class="box-part">
+                                    <p>{{ consumable.description }}</p>
+                                </div>
+                            {% endif %}
+                            {% if consumable.price is not null %}
+                                <div class="box-part">
+                                    <div class="consumable-data">
+                                        <div>
+                                            <span class="icon icon-price consumable-icon"></span>
+                                        </div>
+                                        <div>
+                                            <p>{{ consumable.price }}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="box-part">
-                                <div class="consumable-data">
-                                    <div>
-                                        <span class="icon icon-burden consumable-icon"></span>
-                                    </div>
-                                    <div>
-                                        <p>{{ consumable.charge }}</p>
+                            {% endif %}
+                            {% if consumable.charge %}
+                                <div class="box-part">
+                                    <div class="consumable-data">
+                                        <div>
+                                            <span class="icon icon-burden consumable-icon"></span>
+                                        </div>
+                                        <div>
+                                            <p>{{ consumable.charge }}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            {% endif %}
                         </div>
                     </article>
                 {% endfor %}

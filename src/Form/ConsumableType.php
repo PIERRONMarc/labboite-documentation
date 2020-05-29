@@ -9,15 +9,18 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class ConsumableType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
+            ->add('name', TextType::class, [
+                'label' => 'Nom*'
+            ])
             ->add('imageFile',FileType::class, [
-                'label' => 'image',
+                'label' => 'Vignette',
 
                 // unmapped means that this field is not associated to any entity property
                 'mapped' => false,
@@ -40,9 +43,18 @@ class ConsumableType extends AbstractType
                     ])
                 ],
             ])
-            ->add('description')
-            ->add('price')
-            ->add('charge')
+            ->add('description', TextType::class, [
+                'label' => 'Description',
+                'required' => false
+            ])
+            ->add('price', TextType::class, [
+                'label' => 'Prix indicatif',
+                'required' => false
+            ])
+            ->add('charge', TextType::class, [
+                'label' => 'Charge',
+                'required' => false
+            ])
             
         ;
     }
