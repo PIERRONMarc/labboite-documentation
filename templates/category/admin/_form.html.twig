@@ -8,7 +8,7 @@
     
     <div class="form-group form-mb-l">
         {{ form_label(form.displayOrder) }}
-        {{ mainform_widget(form.displayOrder, {'attr': { 'class': "form-element" ~ (form.displayOrder.vars.valid == false ? ' has-error')}}) }}
+        {{ form_widget(form.displayOrder, {'attr': { 'class': "form-element" ~ (form.displayOrder.vars.valid == false ? ' has-error')}}) }}
         {{ form_errors(form.displayOrder) }}
     </div> 
 
