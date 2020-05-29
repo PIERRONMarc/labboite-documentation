@@ -29,7 +29,7 @@
                             <div class="card-img card-img-category">
                                 <a href="{{ path('admin_tool_index', {'themeSlug': category.theme.slug, 'slug': category.slug})}}" class="card-link">
                                     {% if category.thumbnailName is null %}
-                                        <img src="{{ asset('img/demo-thumb.jpg') }}" alt="Category name">
+                                        <img src="{{ asset('img/default.png') }}" alt="Category name">
                                     {% else %}
                                         <img src="{{ asset('upload/category/' ~ category.thumbnailName) }}" alt="Category name">
                                     {% endif %}

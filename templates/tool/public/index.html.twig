@@ -17,7 +17,7 @@
                             <div class="card-img card-img-tool">
                                 <a href="{{ path('information_index', {'slug': tool.slug, 'themeSlug': category.theme.slug, 'categorySlug': category.slug}) }}" class="card-link">
                                     {% if tool.pictureName is null %}
-                                        <img src="{{ asset('img/demo-thumb-2.jpg') }}" alt="Tool name">
+                                        <img src="{{ asset('img/default.png') }}" alt="Tool name">
                                     {% else %}
                                         <img src="{{ asset('upload/tool/' ~ tool.pictureName) }}" alt="Tool name">
                                     {% endif %}

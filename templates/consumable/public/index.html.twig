@@ -17,36 +17,42 @@
                                 {% if consumable.pictureName is not null %}
                                     <img src="{{ asset('upload/consumable/' ~ consumable.pictureName)}}" alt="Consommable">
                                 {% else %}
-                                    <img src="{{ asset('img/demo-tool-consumable.jpg')}}" alt="Consommable" />
+                                    <img src="{{ asset('img/default.png')}}" alt="Consommable" />
                                 {% endif %}
                             </div>
                             <div class="consumable-title">
                                 <h2>{{ consumable.name}}</h2>
                             </div>
                         </div>
-                        <div class="box-part">
-                            <p>{{ consumable.description }}</p>
-                        </div>
-                        <div class="box-part">
-                            <div class="consumable-data">
-                                <div>
-                                    <span class="icon icon-price consumable-icon"></span>
+                        {% if consumable.description is not null %}
+                                <div class="box-part">
+                                    <p>{{ consumable.description }}</p>
                                 </div>
-                                <div>
-                                    <p>{{ consumable.price }}</p>
+                            {% endif %}
+                            {% if consumable.price is not null %}
+                                <div class="box-part">
+                                    <div class="consumable-data">
+                                        <div>
+                                            <span class="icon icon-price consumable-icon"></span>
+                                        </div>
+                                        <div>
+                                            <p>{{ consumable.price }}</p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="box-part">
-                            <div class="consumable-data">
-                                <div>
-                                    <span class="icon icon-burden consumable-icon"></span>
+                            {% endif %}
+                            {% if consumable.charge %}
+                                <div class="box-part">
+                                    <div class="consumable-data">
+                                        <div>
+                                            <span class="icon icon-burden consumable-icon"></span>
+                                        </div>
+                                        <div>
+                                            <p>{{ consumable.charge }}</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div>
-                                    <p>{{ consumable.charge }}</p>
-                                </div>
-                            </div>
-                        </div>
+                            {% endif %}
                     </article>
                 {% endfor %}
             </div>

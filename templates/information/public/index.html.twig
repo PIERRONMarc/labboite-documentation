@@ -18,7 +18,7 @@
                         {% if tool.information is not null and tool.information.pictureName is not null %}
                             <img class="tool-info-poster" src="{{ asset('upload/informations/' ~ tool.information.pictureName) }}" alt="Image de l'outil" />
                         {% else %}
-                            <img class="tool-info-poster" src="{{ asset('img/demo-tool-poster.jpg') }}" alt="Image de l'outil" />
+                            <img class="tool-info-poster" src="{{ asset('img/default.png') }}" alt="Image de l'outil" />
                         {% endif %}
                     </div>
                     <div class="box box-mb box-p">
