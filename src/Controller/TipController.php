@@ -55,7 +55,6 @@ class TipController extends AbstractController
         $tip = new Tip();
         $form = $this->createForm(TipType::class, $tip);
         $form->handleRequest($request);
-        $violations = array();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $uploadedFile = $form->get('imageFile')->getData();
@@ -68,10 +67,11 @@ class TipController extends AbstractController
             }
 
             if ($tip->getPictureName() && $tip->getYoutubeLink()) {
-                array_push($violations, 'Vous ne pouvez pas insérer une image et une vidéo en même temps !');
+                $violation = true;
+                $this->addFlash('danger', 'Vous ne pouvez pas insérer une image et une vidéo en même temps !');
             }
 
-            if (0 === count($violations)) {
+            if (!isset($violation)) {
                 $tip->setTool($tool);
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($tip);
@@ -92,8 +92,6 @@ class TipController extends AbstractController
             'form' => $form->createView(),
             'themes' => $themeRepository->findAll(),
             'actualTheme' => $tool->getCategory()->getTheme(),
-            'violations' => $violations
-
         ]);
     }
 
@@ -104,7 +102,6 @@ class TipController extends AbstractController
     {
         $form = $this->createForm(TipType::class, $tip);
         $form->handleRequest($request);
-        $violations = array();
 
         if ($form->isSubmitted()) {
             if ($form->get('youtubeLink')->getData()) {
@@ -128,11 +125,12 @@ class TipController extends AbstractController
             }
 
             if ($uploadedFile && $tip->getYoutubeLink()) {
-                array_push($violations, 'Vous ne pouvez pas insérer une image et une vidéo en même temps !');
+                $violation = true;
+                $this->addFlash('danger', 'Vous ne pouvez pas insérer une image et une vidéo en même temps !');
                 $tip->setPictureName(null);
             }
 
-            if (0 === count($violations)) { 
+            if (!isset($violation)) { 
                 $this->getDoctrine()->getManager()->flush();
                 return $this->redirectToRoute('admin_tip_index', [
                     'slug' => $tip->getTool()->getSlug(),
@@ -140,7 +138,6 @@ class TipController extends AbstractController
                     'themeSlug' => $tip->getTool()->getCategory()->getTheme()->getSlug()
                 ]);
             }
-
         }
 
         return $this->render('tip/admin/edit.html.twig', [
@@ -149,7 +146,6 @@ class TipController extends AbstractController
             'themes' =>$themeRepository->findAll(),
             'actualTheme' => $tip->getTool()->getCategory()->getTheme(),
             'tool' => $tip->getTool(),
-            'violations' => $violations
         ]);
     }
 

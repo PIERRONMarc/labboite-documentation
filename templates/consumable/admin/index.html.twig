@@ -20,9 +20,9 @@
                     </a>
                 </article>
                         
+                <!-- Existing item -->
                 {% for consumable in tool.consumable %}
-                    <!-- Consumable item -->
-                    <article class="tool-consumable box box-p box-mb">
+                    <article class="tool-consumable box-mb">
                         <div class="box-controls">
                             <ul class="box-controls-container">
                                 <li><a href="{{ path('consumable_edit', {'toolSlug': tool.slug, 'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'consumable': consumable.id})}}"><span class="icon icon-edit box-controls-icon"></span></a></li>

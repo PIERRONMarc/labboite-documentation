@@ -2610,8 +2610,11 @@ textarea.form-element {
   margin-top: 15px;
 }
 
-.alert-danger {
+.alert-danger, .alert-danger p {
   color: #721c24;
+}
+
+.alert-danger {
   background-color: #f8d7da;
   border-color: #f5c6cb;
 }

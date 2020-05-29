@@ -1,11 +1,11 @@
 {{ form_start(form) }}
        
-    {% for violation in violations %}
-        <div class="alert alert-danger">{{ violation }}</div>
-    {% endfor %}
-
-    {% for errors in form.vars.errors %}
-        <div class="alert alert-danger">{{ errors.message }}</div>
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class=" alert alert-{{ label }}">
+                <p>{{ message }}</p> 
+            </div>
+        {% endfor %}
     {% endfor %}
 
     <div class="form-group form-mb-l">
