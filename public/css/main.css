@@ -1860,6 +1860,97 @@ table {
   .table-sidecontrols {
     margin-bottom: 20px; } }
 
+/*-- ERROR --*/
+.message {
+  text-align: center; }
+
+@media screen and (max-width: 574.98px) {
+  .message-logo {
+    margin-bottom: 25px; } }
+
+@media screen and (min-width: 575px) and (max-width: 767.98px) {
+  .message-logo {
+    margin-bottom: 25px; } }
+
+@media screen and (min-width: 768px) and (max-width: 991.98px) {
+  .message-logo {
+    margin-bottom: 25px; } }
+
+@media screen and (min-width: 992px) and (max-width: 1199.98px) {
+  .message-logo {
+    margin-bottom: 30px; } }
+
+@media screen and (min-width: 1200px) {
+  .message-logo {
+    margin-bottom: 30px; } }
+
+.message-logo img {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  width: auto; }
+  @media screen and (max-width: 574.98px) {
+    .message-logo img {
+      height: 40px; } }
+  @media screen and (min-width: 575px) and (max-width: 767.98px) {
+    .message-logo img {
+      height: 40px; } }
+  @media screen and (min-width: 768px) and (max-width: 991.98px) {
+    .message-logo img {
+      height: 42px; } }
+  @media screen and (min-width: 992px) and (max-width: 1199.98px) {
+    .message-logo img {
+      height: 45px; } }
+  @media screen and (min-width: 1200px) {
+    .message-logo img {
+      height: 45px; } }
+
+@media screen and (max-width: 574.98px) {
+  .message-content {
+    margin-bottom: 12.5px; } }
+
+@media screen and (min-width: 575px) and (max-width: 767.98px) {
+  .message-content {
+    margin-bottom: 12.5px; } }
+
+@media screen and (min-width: 768px) and (max-width: 991.98px) {
+  .message-content {
+    margin-bottom: 12.5px; } }
+
+@media screen and (min-width: 992px) and (max-width: 1199.98px) {
+  .message-content {
+    margin-bottom: 15px; } }
+
+@media screen and (min-width: 1200px) {
+  .message-content {
+    margin-bottom: 15px; } }
+
+.message-content h1 {
+  font-family: "OpenSans", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 0; }
+  @media screen and (max-width: 574.98px) {
+    .message-content h1 {
+      font-size: 1.25rem;
+      margin-bottom: 0.625rem; } }
+  @media screen and (min-width: 575px) and (max-width: 767.98px) {
+    .message-content h1 {
+      font-size: 1.25rem;
+      margin-bottom: 0.625rem; } }
+  @media screen and (min-width: 768px) and (max-width: 991.98px) {
+    .message-content h1 {
+      font-size: 1.25rem;
+      margin-bottom: 0.625rem; } }
+  @media screen and (min-width: 992px) and (max-width: 1199.98px) {
+    .message-content h1 {
+      font-size: 1.375rem;
+      margin-bottom: 0.6875rem; } }
+  @media screen and (min-width: 1200px) {
+    .message-content h1 {
+      font-size: 1.375rem;
+      margin-bottom: 0.6875rem; } }
+
 /*--- FORMS ---*/
 .form {
   display: grid;
@@ -2231,7 +2322,7 @@ table {
     pointer-events: none;
     opacity: .5; }
 
-.button-submit {
+.button-default, .button-submit {
   font-weight: 600;
   font-size: 1rem;
   padding: 0.5rem 0.75rem; }
@@ -2288,13 +2379,13 @@ textarea.form-element {
 .website-public .form-element:focus {
   border-color: #E1580A; }
 
-.website-public .button-submit, .website-public .button-small {
+.website-public .button-default, .website-public .button-submit, .website-public .button-small {
   border-color: #E1580A;
   background-color: #E1580A;
   color: #FFF; }
-  .website-public .button-submit:hover, .website-public .button-small:hover {
+  .website-public .button-default:hover, .website-public .button-submit:hover, .website-public .button-small:hover {
     background-color: #c94e09; }
-  .website-public .button-submit:active, .website-public .button-small:active {
+  .website-public .button-default:active, .website-public .button-submit:active, .website-public .button-small:active {
     background-color: #b04508; }
 
 .website-public .form-nav a {
@@ -2303,6 +2394,9 @@ textarea.form-element {
     color: #b04508; }
 
 .website-public .form-list h2 {
+  color: #E1580A; }
+
+.website-public .message-content h1 {
   color: #E1580A; }
 
 .website-admin h2, .website-admin h3 {
@@ -2349,13 +2443,13 @@ textarea.form-element {
 .website-admin .form-element:focus {
   border-color: #58BAAB; }
 
-.website-admin .button-submit, .website-admin .button-small {
+.website-admin .button-default, .website-admin .button-submit, .website-admin .button-small {
   border-color: #58BAAB;
   background-color: #58BAAB;
   color: #FFF; }
-  .website-admin .button-submit:hover, .website-admin .button-small:hover {
+  .website-admin .button-default:hover, .website-admin .button-submit:hover, .website-admin .button-small:hover {
     background-color: #49b0a0; }
-  .website-admin .button-submit:active, .website-admin .button-small:active {
+  .website-admin .button-default:active, .website-admin .button-submit:active, .website-admin .button-small:active {
     background-color: #419e90; }
 
 .website-admin .form-nav a {
@@ -2364,6 +2458,9 @@ textarea.form-element {
     color: #419e90; }
 
 .website-admin .form-list h2 {
+  color: #58BAAB; }
+
+.website-admin .message-content h1 {
   color: #58BAAB; }
 
 @font-face {
@@ -2490,7 +2587,7 @@ textarea.form-element {
 .icon-users::before {
   content: "\ea0e"; }
 
-/* CUSTOM */
+  /* CUSTOM */
 
 .delete-btn {
   background: none;
@@ -2525,11 +2622,4 @@ textarea.form-element {
   margin-bottom: 1rem;
   border: 1px solid transparent;
   border-radius: .25rem;
-}
-
-
-
-
-
-
 }
