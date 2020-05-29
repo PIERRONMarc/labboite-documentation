@@ -4,7 +4,6 @@
 {% block body %}
     {% include "header/admin/tool-header.html.twig" %}
 
-
     <!-- CONTENT -->
         <main>
             <div class="container">
@@ -17,8 +16,7 @@
                             <h1>Nouvelle astuce</h1>
                         </div>
                         <div class="form-body">
-                                 {{ include('tip/admin/_form.html.twig') }}
-                           
+                            {{ include('tip/admin/_form.html.twig') }}
                         </div>
                     </div>
                 </div>
@@ -35,6 +33,18 @@
             $(function() {
                 $('[data-toggle-element]').toggleVisibility();
             });
+
+            const baseUrlImgPreview = $('#imgPreview').attr('src');
+
+            $('input[type=radio][name=tipMedia]').change(function() {
+                if (this.value == 'youtube') {
+                    $('#tip_imageFile').val(null);
+                } else {
+                    $('#tip_youtubeLink').val(null);
+                    $('#imgPreview').attr('src', baseUrlImgPreview);
+                }
+            });
+
             function readURL(input) {
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();

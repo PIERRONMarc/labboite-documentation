@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use ApiPlatform\Core\Bridge\Symfony\Validator\Validator;
 use App\Entity\Tip;
 use App\Entity\Tool;
 use App\Form\TipType;
@@ -17,6 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class TipController extends AbstractController
 {
@@ -48,11 +50,12 @@ class TipController extends AbstractController
     /**
      * @Route("admin/{themeSlug}/{categorySlug}/{slug}/tips/new", name="tip_new", methods={"GET","POST"})
      */
-    public function new(Request $request, Tool $tool, ThemeRepository $themeRepository): Response
+    public function new(Request $request, Tool $tool, ThemeRepository $themeRepository, ValidatorInterface $validator): Response
     {
         $tip = new Tip();
         $form = $this->createForm(TipType::class, $tip);
         $form->handleRequest($request);
+        $violations = array();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $uploadedFile = $form->get('imageFile')->getData();
@@ -63,16 +66,24 @@ class TipController extends AbstractController
                 $newFileName = $fileUploader->upload($uploadedFile);
                 $tip->setPictureName($newFileName);
             }
-            $tip->setTool($tool);
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($tip);
-            $entityManager->flush();
 
-            return $this->redirectToRoute('admin_tip_index', [
-                'slug' => $tool->getSlug(),
-                'categorySlug' => $tool->getCategory()->getSlug(),
-                'themeSlug' => $tool->getCategory()->getTheme()->getSlug()
-            ]);
+            if ($tip->getPictureName() && $tip->getYoutubeLink()) {
+                array_push($violations, 'Vous ne pouvez pas insérer une image et une vidéo en même temps !');
+            }
+
+            if (0 === count($violations)) {
+                $tip->setTool($tool);
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($tip);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('admin_tip_index', [
+                    'slug' => $tool->getSlug(),
+                    'categorySlug' => $tool->getCategory()->getSlug(),
+                    'themeSlug' => $tool->getCategory()->getTheme()->getSlug()
+                ]);
+            } 
+
         }
 
         return $this->render('tip/admin/new.html.twig', [
@@ -80,7 +91,8 @@ class TipController extends AbstractController
             'tool' => $tool,
             'form' => $form->createView(),
             'themes' => $themeRepository->findAll(),
-            'actualTheme' => $tool->getCategory()->getTheme()
+            'actualTheme' => $tool->getCategory()->getTheme(),
+            'violations' => $violations
 
         ]);
     }
@@ -88,13 +100,24 @@ class TipController extends AbstractController
     /**
      * @Route("/admin/{themeSlug}/{categorySlug}/{slug}/tips/{id}/edit", name="tip_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Tip $tip, ThemeRepository $themeRepository): Response
+    public function edit(Request $request, Tip $tip, ThemeRepository $themeRepository, ValidatorInterface $validator): Response
     {
         $form = $this->createForm(TipType::class, $tip);
         $form->handleRequest($request);
+        $violations = array();
+
+        if ($form->isSubmitted()) {
+            if ($form->get('youtubeLink')->getData()) {
+                $tip->setPictureName(null);
+            }
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $uploadedFile = $form->get('imageFile')->getData();
+
+            if ($tip->getPictureName() && $tip->getYoutubeLink()) {
+                $tip->setPictureName(null);
+            }
 
             if ($uploadedFile) {
                 $destination = $this->getParameter('kernel.project_dir').'/public/upload/tips';
@@ -103,13 +126,21 @@ class TipController extends AbstractController
                 $fileUploader->deleteFile($tip->getPictureName());
                 $tip->setPictureName($newFileName);
             }
-            $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('admin_tip_index', [
-                'slug' => $tip->getTool()->getSlug(),
-                'categorySlug' => $tip->getTool()->getCategory()->getSlug(),
-                'themeSlug' => $tip->getTool()->getCategory()->getTheme()->getSlug()
-            ]);
+            if ($uploadedFile && $tip->getYoutubeLink()) {
+                array_push($violations, 'Vous ne pouvez pas insérer une image et une vidéo en même temps !');
+                $tip->setPictureName(null);
+            }
+
+            if (0 === count($violations)) { 
+                $this->getDoctrine()->getManager()->flush();
+                return $this->redirectToRoute('admin_tip_index', [
+                    'slug' => $tip->getTool()->getSlug(),
+                    'categorySlug' => $tip->getTool()->getCategory()->getSlug(),
+                    'themeSlug' => $tip->getTool()->getCategory()->getTheme()->getSlug()
+                ]);
+            }
+
         }
 
         return $this->render('tip/admin/edit.html.twig', [
@@ -117,7 +148,8 @@ class TipController extends AbstractController
             'form' => $form->createView(),
             'themes' =>$themeRepository->findAll(),
             'actualTheme' => $tip->getTool()->getCategory()->getTheme(),
-            'tool' => $tip->getTool()
+            'tool' => $tip->getTool(),
+            'violations' => $violations
         ]);
     }
 

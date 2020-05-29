@@ -1,5 +1,13 @@
 {{ form_start(form) }}
        
+    {% for violation in violations %}
+        <div class="alert alert-danger">{{ violation }}</div>
+    {% endfor %}
+
+    {% for errors in form.vars.errors %}
+        <div class="alert alert-danger">{{ errors.message }}</div>
+    {% endfor %}
+
     <div class="form-group form-mb-l">
         {{ form_label(form.title) }}
         {{ form_widget(form.title, {'attr': { 'class': "form-element" ~ (form.title.vars.valid == false ? ' has-error')}}) }}
