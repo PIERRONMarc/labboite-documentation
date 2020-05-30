@@ -12,6 +12,7 @@ use App\Repository\ToolRepository;
 
 use App\Repository\ConsumableRepository;
 use App\Repository\ThemeRepository;
+use App\Service\HeaderHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,12 +24,15 @@ class ConsumableController extends AbstractController
     /**
      * @Route("{themeSlug}/{categorySlug}/{slug}/consumable", name="consumable_index", methods={"GET"})
      */
-    public function index(ConsumableRepository $consumableRepository, Tool $tool, ThemeRepository $themeRepository): Response
+    public function index(ConsumableRepository $consumableRepository, Tool $tool, ThemeRepository $themeRepository, HeaderHelper $headerHelper): Response
     {
+        $header = $headerHelper->getToolHeader($tool);
+        
         return $this->render('consumable/public/index.html.twig', [
             'consumables' => $consumableRepository->findBy(['tool'=>$tool]),
             'tool' => $tool,
-            'themes' => $themeRepository->findAll()
+            'themes' => $themeRepository->findAll(),
+            'header' => $header
         ]);
     }
     

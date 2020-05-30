@@ -2619,10 +2619,24 @@ textarea.form-element {
   border-color: #f5c6cb;
 }
 
+.alert-primary, .alert-primary p {
+  color: #004085;
+}
+
+.alert-primary {
+  color: #004085;
+  background-color: #cce5ff;
+  border-color: #b8daff;
+}
+
 .alert {
   position: relative;
   padding: .75rem 1.25rem;
   margin-bottom: 1rem;
   border: 1px solid transparent;
   border-radius: .25rem;
+}
+
+.text-center {
+  text-align: center;
 }

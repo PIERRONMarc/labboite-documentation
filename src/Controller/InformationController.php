@@ -6,6 +6,7 @@ use App\Entity\Tool;
 use App\Service\FileUploader;
 use App\Form\FinalInformationType;
 use App\Repository\ThemeRepository;
+use App\Service\HeaderHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -50,10 +51,14 @@ class InformationController extends AbstractController
     /**
      * @Route("{themeSlug}/{categorySlug}/{slug}/information", name="information_index", methods={"GET"})
      */
-    public function index(Tool $tool, ThemeRepository $themeRepository) {
+    public function index(Tool $tool, ThemeRepository $themeRepository, HeaderHelper $headerHelper)
+    {
+        $header = $headerHelper->getToolHeader($tool);
+        
         return $this->render('information/public/index.html.twig', [
             'tool' => $tool,
-            'themes' => $themeRepository->findAll()
+            'themes' => $themeRepository->findAll(),
+            'header' => $header
         ]);
     }
 }

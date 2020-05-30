@@ -2,22 +2,17 @@
 
 namespace App\Controller;
 
-use ApiPlatform\Core\Bridge\Symfony\Validator\Validator;
 use App\Entity\Tip;
 use App\Entity\Tool;
 use App\Form\TipType;
-use App\Entity\Category;
-use App\Entity\Theme;
 use App\Repository\ThemeRepository;
 use App\Service\FileUploader;
 use App\Repository\TipRepository;
-use Gedmo\Sluggable\Util\Urlizer;
-use App\Repository\ToolRepository;
+use App\Service\HeaderHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class TipController extends AbstractController
@@ -25,12 +20,15 @@ class TipController extends AbstractController
     /**
      * @Route("{themeSlug}/{categorySlug}/{slug}/tips", name="tip_index", methods={"GET"})
      */
-    public function index(TipRepository $tipRepository, Tool $tool, ThemeRepository $themeRepository): Response
+    public function index(TipRepository $tipRepository, Tool $tool, ThemeRepository $themeRepository, HeaderHelper $headerHelper): Response
     {
+        $header = $headerHelper->getToolHeader($tool);
+        
         return $this->render('tip/public/index.html.twig', [
             'tips' => $tipRepository->findBy(['tool' => $tool]),
             'tool' => $tool,
-            'themes' => $themeRepository->findAll()
+            'themes' => $themeRepository->findAll(),
+            'header' => $header
         ]);
     }
 

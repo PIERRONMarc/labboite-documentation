@@ -4,13 +4,12 @@
 
     {% include "header/public/tool-header.html.twig" %}
 
-     <!-- CONTENT -->
+    <!-- CONTENT -->
     <main>
         <div class="container">
             <div class="datasheet">
                 <div class="datasheet-core">
                     <div class="accordion-list">
-
                         {% for faq in tool.question %}
                             <!-- Question item -->
                             <article class="tool-help-item box box-mb accordion-item">
@@ -22,25 +21,16 @@
                                 </a>
                                 <div class="tool-help-body box-p text-format accordion-content" style="display: none;">
                                     <p>{{ faq.answer|raw }}</p>
-                                    {# <ul class="tool-help-list">
-                                        <li>List item</li>
-                                        <li>List item</li>
-                                    </ul> #}
                                 </div>
                             </article>
+                        {% else %}
+                            <p class="text-center">Il n'y a aucune aide pour le moment</p>
                         {% endfor %}
-                        
-
                     </div>
                 </div>
             </div>
         </div>
     </main>
-
-    {# LINKS #}
-    {# <a href="{{ path('question_edit', {'id': question.id, 'themeSlug': tool.category.theme.slug, 'categorySlug': tool.category.slug, 'toolSlug': tool.slug}) }}">edit</a>
-    <a href="{{ path('question_new', {'slug': tool.slug, 'themeSlug': tool.category.theme.slug, 'categorySlug': tool.category.slug}) }}">Create new</a>
-    <a href="{{ path('tool_index', {'slug': tool.category.slug, 'themeSlug': tool.category.theme.slug}) }}">Back to list</a> #}
 {% endblock %}
 
 {% block javascripts %}

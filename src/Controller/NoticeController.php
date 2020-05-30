@@ -7,6 +7,7 @@ use App\Entity\Tool;
 use App\Form\NoticeType;
 use App\Repository\NoticeRepository;
 use App\Repository\ThemeRepository;
+use App\Service\HeaderHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,12 +18,15 @@ class NoticeController extends AbstractController
     /**
      * @Route("{themeSlug}/{categorySlug}/{slug}/notice", name="notice_index", methods={"GET"})
      */
-    public function index(NoticeRepository $noticeRepository, ThemeRepository $themeRepository, Tool $tool): Response
+    public function index(NoticeRepository $noticeRepository, ThemeRepository $themeRepository, Tool $tool, HeaderHelper $headerHelper): Response
     {
+        $header = $headerHelper->getToolHeader($tool);
+        
         return $this->render('notice/public/index.html.twig', [
             'notices' => $noticeRepository->findAll(),
             'themes' => $themeRepository->findAll(),
-            'tool' => $tool
+            'tool' => $tool,
+            'header' => $header
         ]);
     }
 

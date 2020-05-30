@@ -1,12 +1,52 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
+{% if app.user %}
+
 <!-- HEADER -->
 <header class="header">
+    <div class="header-admin">
+        <div class="header-admin-title">Administration</div>
+        <div class="header-admin-nav">
+            <ul class="admin-nav-container">
+                {% if 'ROLE_SUPER-ADMIN' in app.user.roles %}
+                    <li><a href="{{ path('user_index') }}"><span class="icon icon-users admin-nav-icon admin-nav-link"></span></a></li>
+                {% endif %}
+                <li><a href="{{ path('app_logout') }}"><span class="icon icon-logout admin-nav-icon admin-nav-link"></span></a></li>
+            </ul>
+        </div>
+    </div>
     <div class="header-nav">
         <div class="header-logo">
             <img src="{{ asset('img/graphics/logo.png') }}" alt="Logo de LabBoite" />
         </div>
     </div>
 </header>
+
+{% else %}
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-nav">
+            <div class="header-logo">
+                <img src="{{ asset('img/graphics/logo.png') }}" alt="Logo de LabBoite" />
+            </div>
+        </div>
+    </header>
+{% endif %}
+
+
+
+
+<!-- CONTENT -->
+<main>
+    <div class="container">
+        {% if app.user %}
+            <p class="text-center">Il n'existe aucun theme actuellement. Veuillez contacter l'administrateur du site.</p>
+        {% else %}
+            <p class="text-center">Patience, le site sera bientôt prêt</p>
+        {% endif %}
+        
+    </div>
+</main>
 {% endblock %}

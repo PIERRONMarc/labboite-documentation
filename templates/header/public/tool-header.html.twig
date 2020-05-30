@@ -24,31 +24,41 @@
         <div class="header-title-main"><h1>{{ tool.name }}</h1></div>
         <nav class="header-section-nav">
             <ul class="tool-nav-container">
-                <li>
-                    <a title="Information" href="{{ path('information_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}">
-                        <span class="icon icon-info tool-nav-icon tool-nav-link {{ app.request.attributes.get('_route') == 'information_index' ? 'tool-nav-active' : null}}"></span>
-                    </a>
-                </li>
-                <li>
-                    <a title="Notice" href="{{ path('notice_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}">
-                        <span class="icon icon-notice tool-nav-icon tool-nav-link {{ app.request.attributes.get('_route') == 'notice_index' ? 'tool-nav-active' : null}}"></span>
-                    </a>
-                </li>
-                <li>
-                    <a title="Consommable" href="{{ path('consumable_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}">
-                        <span class="icon icon-consumables tool-nav-icon tool-nav-link {{ app.request.attributes.get('_route') == 'consumable_index' ? 'tool-nav-active' : null}}"></span>
-                    </a>
-                </li>
-                <li>
-                    <a title="Aide" href="{{ path('question_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}">
-                        <span class="icon icon-faq tool-nav-icon tool-nav-link {{ app.request.attributes.get('_route') == 'question_index' ? 'tool-nav-active' : null}}"></span>
-                    </a>
-                </li>
-                <li>
-                    <a title="Astuce" href="{{ path('tip_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}">
-                        <span class="icon icon-tips tool-nav-icon tool-nav-link {{ app.request.attributes.get('_route') == 'tip_index' ? 'tool-nav-active' : null}}"></span>
-                    </a>
-                </li>
+                {% if 'information' in header %}
+                    <li>
+                        <a title="Information" href="{{ path('information_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}">
+                            <span class="icon icon-info tool-nav-icon tool-nav-link {{ app.request.attributes.get('_route') == 'information_index' ? 'tool-nav-active' : null}}"></span>
+                        </a>
+                    </li>
+                {% endif %}
+                {% if 'notice' in header %}
+                    <li>
+                        <a title="Notice" href="{{ path('notice_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}">
+                            <span class="icon icon-notice tool-nav-icon tool-nav-link {{ app.request.attributes.get('_route') == 'notice_index' ? 'tool-nav-active' : null}}"></span>
+                        </a>
+                    </li>
+                {% endif %}
+                {% if 'consumable' in header %}
+                    <li>
+                        <a title="Consommable" href="{{ path('consumable_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}">
+                            <span class="icon icon-consumables tool-nav-icon tool-nav-link {{ app.request.attributes.get('_route') == 'consumable_index' ? 'tool-nav-active' : null}}"></span>
+                        </a>
+                    </li>
+                {% endif %}
+                {% if 'question' in header %}
+                    <li>
+                        <a title="Aide" href="{{ path('question_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}">
+                            <span class="icon icon-faq tool-nav-icon tool-nav-link {{ app.request.attributes.get('_route') == 'question_index' ? 'tool-nav-active' : null}}"></span>
+                        </a>
+                    </li>
+                {% endif %}
+                {% if 'tip' in header %}
+                    <li>
+                        <a title="Astuce" href="{{ path('tip_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}">
+                            <span class="icon icon-tips tool-nav-icon tool-nav-link {{ app.request.attributes.get('_route') == 'tip_index' ? 'tool-nav-active' : null}}"></span>
+                        </a>
+                    </li>
+                {% endif %}
             </ul>
         </nav>
     </div>
