@@ -1,4 +1,4 @@
-**#INSTALLATION **
+**INSTALLATION**
 1. Clone the projet in your repository with git clone
 2. Install the dependancy with composer install
 3. Edit line 37 in the .env file with your database settings
