@@ -7,7 +7,9 @@
 5. Migrate the migrations in your database with the cmd :
 - php bin/console doctrine:database:create
 
-**Docs for the CKEDITOR bundle : **
+
+- **Docs for the CKEDITOR bundle :**
 https://ckeditor.com/docs/ckeditor4/latest/
-**Docs for the ELFINDER bundle :**
+
+- **Docs for the ELFINDER bundle :**
 https://github.com/Studio-42/elFinder
