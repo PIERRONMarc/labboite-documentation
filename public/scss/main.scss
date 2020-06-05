@@ -1,0 +1,1915 @@
+@mixin responsive-XS {
+    @media screen and (max-width: map-get($breakpoints-max, XS)){
+        @content;
+    }
+}
+
+@mixin responsive-SM {
+    @media screen and (min-width: map-get($breakpoints-min, SM)) and (max-width: map-get($breakpoints-max, SM)){
+        @content;
+    }
+}
+
+@mixin responsive-MD {
+    @media screen and (min-width: map-get($breakpoints-min, MD)) and (max-width: map-get($breakpoints-max, MD)){
+        @content;
+    }
+}
+
+@mixin responsive-LG {
+    @media screen and (min-width: map-get($breakpoints-min, LG)) and (max-width: map-get($breakpoints-max, LG)){
+        @content;
+    }
+}
+
+@mixin responsive-XL {
+    @media screen and (min-width: map-get($breakpoints-min, XL)){
+        @content;
+    }
+}
+
+
+/*--- HEADINGS ---*/
+
+.header-admin {
+    background-color: $admin;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    box-sizing: border-box;
+    @include responsive-XS{
+        padding: $header-spacing-XS / 2;
+    }
+    @include responsive-SM{
+        padding: $header-spacing-SM / 2;
+    }
+    @include responsive-MD{
+        padding: $header-spacing-MD / 2;
+    }
+    @include responsive-LG{
+        padding: $header-spacing-LG / 2;
+    }
+    @include responsive-XL{
+        padding: $header-spacing-XL / 2;
+    }
+}
+
+.header-admin-title {
+    font-family: $font-family;
+    font-weight: 600;
+    color: $white;
+}
+
+.admin-nav-container {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.admin-nav-container li {
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    @include responsive-XS{
+        margin-right: 10px;
+    }
+    @include responsive-SM{
+        margin-right: 10px;
+    }
+    @include responsive-MD{
+        margin-right: 12px;
+    }
+    @include responsive-LG{
+        margin-right: 15px;
+    }
+    @include responsive-XL{
+        margin-right: 15px;
+    }
+}
+
+.admin-nav-container li:last-child {
+    margin-right: 0;
+}
+
+.admin-nav-icon {
+    @include responsive-XS{
+        font-size: 1.4rem;
+    }
+    @include responsive-SM{
+        font-size: 1.4rem;
+    }
+    @include responsive-MD{
+        font-size: 1.4rem;
+    }
+    @include responsive-LG{
+        font-size: 1.4rem;
+    }
+    @include responsive-XL{
+        font-size: 1.4rem;
+    }
+}
+
+.admin-nav-link {
+    opacity: .8;
+    color: $white;
+    cursor: pointer;
+}
+
+.admin-nav-link:hover {
+    opacity: 1;
+    color: $white;
+}
+
+
+.header-nav {
+    background-color: $white;
+    box-sizing: border-box;
+    width: 100vw;
+    @include responsive-XS{
+        padding-top: $header-spacing-XS;
+        padding-bottom: $header-spacing-XS;
+    }
+    @include responsive-SM{
+        padding-top: $header-spacing-SM;
+        padding-bottom: $header-spacing-SM;
+    }
+    @include responsive-MD{
+        padding-top: $header-spacing-MD;
+        padding-bottom: $header-spacing-MD;
+    }
+    @include responsive-LG{
+        padding-top: $header-spacing-LG;
+        padding-bottom: $header-spacing-LG;
+    }
+    @include responsive-XL{
+        padding-top: $header-spacing-XL;
+        padding-bottom: $header-spacing-XL;
+    }
+}
+
+.header-logo {
+    @include responsive-XS{
+        margin-bottom: 15px;
+    }
+    @include responsive-SM{
+        margin-bottom: 15px;
+    }
+    @include responsive-MD{
+        margin-bottom: 17px;
+    }
+    @include responsive-LG{
+        margin-bottom: 20px;
+    }
+    @include responsive-XL{
+        margin-bottom: 20px;
+    }
+}
+
+.header-logo img {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    width: auto;
+    @include responsive-XS{
+        height: 40px;
+    }
+    @include responsive-SM{
+        height: 40px;
+    }
+    @include responsive-MD{
+        height: 42px;
+    }
+    @include responsive-LG{
+        height: 45px;
+    }
+    @include responsive-XL{
+        height: 45px;
+    }
+}
+
+.header-tabs {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    white-space: nowrap;
+    overflow-x: auto;
+    overflow-y: none;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
+}
+
+.header-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.tabs-container {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.tabs-container li {
+    margin: 0;
+    @include responsive-XS{
+        margin-right: 10px;
+    }
+    @include responsive-SM{
+        margin-right: 10px;
+    }
+    @include responsive-MD{
+        margin-right: 12px;
+    }
+    @include responsive-LG{
+        margin-right: 15px;
+    }
+    @include responsive-XL{
+        margin-right: 15px;
+    }
+}
+
+.tabs-container li:last-child {
+    margin-right: 0;
+}
+
+a.tab-group {
+    display: block;
+    background-color: $grey-1;
+    font-family: $font-family;
+    font-weight: 600;
+    color: $grey-9;
+    text-decoration: none;
+    border-radius: 50px;
+    white-space: nowrap;
+    @include responsive-XS{
+        font-size: 0.875rem;
+        padding: 7px 15px;
+    }
+    @include responsive-SM{
+        font-size: 0.875rem;
+        padding: 7px 15px;
+    }
+    @include responsive-MD{
+        font-size: 0.9375rem;
+        padding: 7px 15px;
+    }
+    @include responsive-LG{
+        font-size: 1rem;
+        padding: 7px 15px;
+    }
+    @include responsive-XL{
+        font-size: 1rem;
+        padding: 7px 15px;
+    }
+}
+
+a.tab-group:hover, a.tab-group:focus {
+    background-color: darken($grey-1, 3%);
+    text-decoration: none;
+}
+
+a.tab-group.active {
+    text-decoration: none;
+}
+
+.header-section {
+    width: 100vw;
+    background-color: $white;
+    border-top: 2px solid $grey-1b;
+    @include responsive-XS{
+        padding-top: $header-spacing-XS;
+        padding-bottom: $header-spacing-XS;
+    }
+    @include responsive-SM{
+        padding-top: $header-spacing-SM;
+        padding-bottom: $header-spacing-SM;
+    }
+    @include responsive-MD{
+        padding-top: $header-spacing-MD;
+        padding-bottom: $header-spacing-MD;
+    }
+    @include responsive-LG{
+        padding-top: $header-spacing-LG;
+        padding-bottom: $header-spacing-LG;
+    }
+    @include responsive-XL{
+        padding-top: $header-spacing-XL;
+        padding-bottom: $header-spacing-XL;
+    }
+}
+
+.header-title-main h1 {
+    font-family: $font-family;
+    font-weight: 800;
+    text-align: center;
+    margin: 0;
+    @include responsive-XS{
+        font-size: $h1-XS;
+    }
+    @include responsive-SM{
+        font-size: $h1-SM;
+    }
+    @include responsive-MD{
+        font-size: $h1-MD;
+    }
+    @include responsive-LG{
+        font-size: $h1-LG;
+    }
+    @include responsive-XL{
+        font-size: $h1-XL;
+    }
+}
+
+.header-title-sub p {
+    font-family: $font-family;
+    font-weight: 600;
+    font-size: 1.8rem;
+    text-align: center;
+    margin: 0;
+    @include responsive-XS{
+        font-size: 1.1875rem;
+    }
+    @include responsive-SM{
+        font-size: 1.1875rem;
+    }
+    @include responsive-MD{
+        font-size: 1.375rem;
+    }
+    @include responsive-LG{
+        font-size: 1.5625rem;
+    }
+    @include responsive-XL{
+        font-size: 1.5625rem;
+    }
+}
+
+.header-section-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    @include responsive-XS{
+        margin-top: $header-spacing-XS / 2;
+    }
+    @include responsive-SM{
+        margin-top: $header-spacing-SM / 2;
+    }
+    @include responsive-MD{
+        margin-top: $header-spacing-MD / 2;
+    }
+    @include responsive-LG{
+        margin-top: $header-spacing-LG / 2;
+    }
+    @include responsive-XL{
+        margin-top: $header-spacing-XL / 2;
+    }
+}
+
+.tool-nav-container {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.tool-nav-container li {
+    margin: 0;
+    @include responsive-XS{
+        margin-right: 10px;
+    }
+    @include responsive-SM{
+        margin-right: 10px;
+    }
+    @include responsive-MD{
+        margin-right: 12px;
+    }
+    @include responsive-LG{
+        margin-right: 15px;
+    }
+    @include responsive-XL{
+        margin-right: 15px;
+    }
+}
+
+.tool-nav-container li:last-child {
+    margin-right: 0;
+}
+
+.tool-nav-icon {
+    padding: 10px;
+    border-radius: 100px;
+    @include responsive-XS{
+        font-size: 1.5rem;
+    }
+    @include responsive-SM{
+        font-size: 1.5rem;
+    }
+    @include responsive-MD{
+        font-size: 1.6rem;
+    }
+    @include responsive-LG{
+        font-size: 1.7rem;
+    }
+    @include responsive-XL{
+        font-size: 1.7rem;
+    }
+}
+
+.tool-nav-link {
+    cursor: pointer;
+}
+
+
+/*--- COMMON ---*/
+
+.container {
+    @include responsive-XS{
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+    @include responsive-SM{
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+    @include responsive-MD{
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    @include responsive-LG{
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    @include responsive-XL{
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+}
+
+.box .additem-icon-container {
+    width: 100%;
+}
+
+.card .additem-icon-container {
+    width: 100%;
+    height: 100%;
+}
+
+.additem-icon-container {
+    border: 2px;
+    border-style: solid;
+    border-color: $grey-4;
+    color: $grey-6b;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.additem-icon {
+    @include responsive-XS{
+        font-size: $add-icon-XS;
+    }
+    @include responsive-SM{
+        font-size: $add-icon-SM;
+    }
+    @include responsive-MD{
+        font-size: $add-icon-MD;
+    }
+    @include responsive-LG{
+        font-size: $add-icon-LG;
+    }
+    @include responsive-XL{
+        font-size: $add-icon-XL;
+    }
+}
+
+.additem-icon-label {
+    font-family: $font-family;
+    font-weight: 600;
+    @include responsive-XS{
+        margin-top: $index-x4-title-sub-font-XS / 2;
+        font-size: $index-x4-title-sub-font-XS;
+    }
+    @include responsive-SM{
+        margin-top: $index-x4-title-sub-font-SM / 2;
+        font-size: $index-x4-title-sub-font-SM;
+    }
+    @include responsive-MD{
+        margin-top: $index-x4-title-sub-font-MD / 2;
+        font-size: $index-x4-title-sub-font-MD;
+    }
+    @include responsive-LG{
+        margin-top: $index-x4-title-sub-font-LG / 2;
+        font-size: $index-x4-title-sub-font-LG;
+    }
+    @include responsive-XL{
+        margin-top: $index-x4-title-sub-font-XL / 2;
+        font-size: $index-x4-title-sub-font-XL;
+    }
+}
+
+a.additem-link:hover .additem-icon-container {
+    color: $admin;
+}
+
+
+/*--- INDEX ---*/
+
+.index {
+    display: grid;
+    margin-right: auto;
+    margin-left: auto;
+    box-sizing: border-box;
+    @include responsive-XS{
+        width: 100%;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    @include responsive-SM{
+        width: 540px;
+        padding: 0;
+    }
+    @include responsive-MD{
+        width: 720px;
+        padding: 0;
+    }
+    @include responsive-LG{
+        width: 960px;
+        padding: 0;
+    }
+    @include responsive-XL{
+        width: 1140px;
+        padding: 0;
+    }
+}
+
+.index-categories {
+    @include responsive-XS{
+        grid-template-columns: 1fr;
+        column-gap: 25px;
+        row-gap: 37.5px;
+    }
+    @include responsive-SM{
+        grid-template-columns: 1fr 1fr;
+        column-gap: 25px;
+        row-gap: 37.5px;
+    }
+    @include responsive-MD{
+        grid-template-columns: 1fr 1fr;
+        column-gap: 30px;
+        row-gap: 45px;
+    }
+    @include responsive-LG{
+        grid-template-columns: 1fr 1fr 1fr;
+        column-gap: 30px;
+        row-gap: 45px;
+    }
+    @include responsive-XL{
+        grid-template-columns: 1fr 1fr 1fr;
+        column-gap: 30px;
+        row-gap: 45px;
+    }
+}
+
+.index-tools {
+    @include responsive-XS{
+        grid-template-columns: 1fr;
+        column-gap: 20px;
+        row-gap: 30px;
+    }
+    @include responsive-SM{
+        grid-template-columns: 1fr 1fr;
+        column-gap: 20px;
+        row-gap: 30px;
+    }
+    @include responsive-MD{
+        grid-template-columns: 1fr 1fr 1fr;
+        column-gap: 25px;
+        row-gap: 30px;
+    }
+    @include responsive-LG{
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        column-gap: 25px;
+        row-gap: 37.5px;
+    }
+    @include responsive-XL{
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        column-gap: 25px;
+        row-gap: 37.5px;
+    }
+}
+
+.card {
+    width: 100%;
+}
+
+.card-img-category {
+    width: 100%;
+    @include responsive-XS{
+        height: 80vw;
+    }
+    @include responsive-SM{
+        height: 258px;
+    }
+    @include responsive-MD{
+        height: 345px;
+    }
+    @include responsive-LG{
+        height: 300px;
+    }
+    @include responsive-XL{
+        height: 360px;
+    }
+}
+
+.card-img-tool {
+    width: 100%;
+    @include responsive-XS{
+        height: 80vw;
+    }
+    @include responsive-SM{
+        height: 260px;
+    }
+    @include responsive-MD{
+        height: 227px;
+    }
+    @include responsive-LG{
+        height: 222px;
+    }
+    @include responsive-XL{
+        height: 267px;
+    }
+}
+
+.card-img img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-title {
+    background-color: $white;
+    border-top: solid 1px $grey-2;
+    text-align: center;
+}
+
+.card-title-category {
+    @include responsive-XS{
+        padding: 10px;
+    }
+    @include responsive-SM{
+        padding: 10px;
+        max-width: 238px;
+    }
+    @include responsive-MD{
+        padding: 12px;
+        max-width: 321px;
+    }
+    @include responsive-LG{
+        padding: 15px;
+        max-width: 270px;
+    }
+    @include responsive-XL{
+        padding: 15px;
+        max-width: 330px;
+    }
+}
+
+.card-title-tool {
+    @include responsive-XS{
+        padding: 10px;
+    }
+    @include responsive-SM{
+        padding: 10px;
+        max-width: 240px;
+    }
+    @include responsive-MD{
+        padding: 12px;
+        max-width: 203px;
+    }
+    @include responsive-LG{
+        padding: 15px;
+        max-width: 192px;
+    }
+    @include responsive-XL{
+        padding: 15px;
+        max-width: 237px;
+    }
+}
+
+h2.title-category  {
+    font-family: $font-family;
+    font-weight: 700;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    @include responsive-XS{
+        font-size: $index-x3-title-main-font-XS;
+    }
+    @include responsive-SM{
+        font-size: $index-x3-title-main-font-SM;
+    }
+    @include responsive-MD{
+        font-size: $index-x3-title-main-font-MD;
+    }
+    @include responsive-LG{
+        font-size: $index-x3-title-main-font-LG;
+    }
+    @include responsive-XL{
+        font-size: $index-x3-title-main-font-XL;
+    }
+}
+
+h2.title-tool-model {
+    font-family: $font-family;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+    @include responsive-XS{
+        font-size: $index-x4-title-main-font-XS;
+    }
+    @include responsive-SM{
+        font-size: $index-x4-title-main-font-SM;
+    }
+    @include responsive-MD{
+        font-size: $index-x4-title-main-font-MD;
+    }
+    @include responsive-LG{
+        font-size: $index-x4-title-main-font-LG;
+    }
+    @include responsive-XL{
+        font-size: $index-x4-title-main-font-XL;
+    }
+}
+
+span.title-tool-type {
+    font-family: $font-family;
+    font-weight: 600;
+    color: $grey-6b;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    @include responsive-XS{
+        font-size: $index-x4-title-sub-font-XS;
+    }
+    @include responsive-SM{
+        font-size: $index-x4-title-sub-font-SM;
+    }
+    @include responsive-MD{
+        font-size: $index-x4-title-sub-font-MD;
+    }
+    @include responsive-LG{
+        font-size: $index-x4-title-sub-font-LG;
+    }
+    @include responsive-XL{
+        font-size: $index-x4-title-sub-font-XL;
+    }
+}
+
+a.card-link {
+    text-decoration: none;
+    cursor: pointer;
+    translate: all 0.2s linear;
+}
+
+a.card-link img {
+    opacity: 1;
+    transition: all 0.2s linear;
+}
+
+a.card-link img:hover {
+    opacity: 0.7;
+    translate: all 0.2s linear;
+}
+
+.card-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background: linear-gradient(180deg, rgba(255,255,255,1) 50%, rgba(249,249,249,0) 50%);
+}
+
+.card-controls-container {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.card-controls-container li {
+    margin: 0;
+    @include responsive-XS{
+        margin-right: 20px;
+    }
+    @include responsive-SM{
+        margin-right: 20px;
+    }
+    @include responsive-MD{
+        margin-right: 17px;
+    }
+    @include responsive-LG{
+        margin-right: 15px;
+    }
+    @include responsive-XL{
+        margin-right: 15px;
+    }
+}
+
+.card-controls-container li:last-child {
+    margin-right: 0;
+}
+
+.card-controls-icon {
+    background-color: $admin;
+    color: $white;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 100px;
+    @include responsive-XS{
+        font-size: 1.25rem;
+    }
+    @include responsive-SM{
+        font-size: 1.25rem;
+    }
+    @include responsive-MD{
+        font-size: 1.0625rem;
+    }
+    @include responsive-LG{
+        font-size: 0.9375rem;
+    }
+    @include responsive-XL{
+        font-size: 0.9375rem;
+    }
+}
+
+.card-controls-icon:hover {
+    background-color: darken($admin, 10%);
+    color: $white;
+}
+
+
+/*--- SHEET ---*/
+
+.datasheet {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-right: auto;
+    margin-left: auto;
+    box-sizing: border-box;
+    @include responsive-XS{
+        padding-right: 20px;
+        padding-left: 20px;
+    }
+    @include responsive-SM{
+        padding: 0;
+    }
+    @include responsive-MD{
+        padding: 0;
+    }
+    @include responsive-LG{
+        padding: 0;
+    }
+    @include responsive-XL{
+        padding: 0;
+    }
+}
+
+.datasheet-core {
+    @include responsive-XS{
+        width: 100%;
+    }
+    @include responsive-SM{
+        width: 540px;
+    }
+    @include responsive-MD{
+        width: 600px;
+    }
+    @include responsive-LG{
+        width: 640px;
+    }
+    @include responsive-XL{
+        width: 760px;
+    }
+}
+
+.datasheet-aside {
+    @include responsive-XS{
+        display: none;
+    }
+    @include responsive-SM{
+        display: none;
+    }
+    @include responsive-MD{
+        display: none;
+    }
+    @include responsive-LG{
+        display: block;
+        width: 300px;
+        margin-right: 20px;
+    }
+    @include responsive-XL{
+        display: block;
+        width: 360px;
+        margin-right: 20px;
+    }
+}
+
+.box {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.box-bg {
+    background-color: $white;
+}
+
+.box-p {
+    width: 100%;
+    box-sizing: border-box;
+    @include responsive-XS{
+        padding: $box-spacing-XS;
+    }
+    @include responsive-SM{
+        padding: $box-spacing-SM;
+    }
+    @include responsive-MD{
+        padding: $box-spacing-MD;
+    }
+    @include responsive-LG{
+        padding: $box-spacing-LG;
+    }
+    @include responsive-XL{
+        padding: $box-spacing-XL;
+    }
+}
+
+.box-mb {
+    @include responsive-XS{
+        margin-bottom: $box-spacing-XS;
+    }
+    @include responsive-SM{
+        margin-bottom: $box-spacing-SM;
+    }
+    @include responsive-MD{
+        margin-bottom: $box-spacing-MD;
+    }
+    @include responsive-LG{
+        margin-bottom: $box-spacing-LG;
+    }
+    @include responsive-XL{
+        margin-bottom: $box-spacing-XL;
+    }
+}
+
+.box-section {
+    @include responsive-XS{
+        margin-bottom: $box-spacing-XS * 2;
+    }
+    @include responsive-SM{
+        margin-bottom: $box-spacing-SM * 2;
+    }
+    @include responsive-MD{
+        margin-bottom: $box-spacing-MD * 2;
+    }
+    @include responsive-LG{
+        margin-bottom: $box-spacing-LG * 2;
+    }
+    @include responsive-XL{
+        margin-bottom: $box-spacing-XL * 2;
+    }
+}
+
+.box-section:last-child {
+    margin-bottom: 0;
+}
+
+.box-part {
+    @include responsive-XS{
+        margin-bottom: $box-spacing-XS / 2;
+    }
+    @include responsive-SM{
+        margin-bottom: $box-spacing-SM / 2;
+    }
+    @include responsive-MD{
+        margin-bottom: $box-spacing-MD / 2;
+    }
+    @include responsive-LG{
+        margin-bottom: $box-spacing-LG / 2;
+    }
+    @include responsive-XL{
+        margin-bottom: $box-spacing-XL / 2;
+    }
+}
+
+.box-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    background: linear-gradient(180deg, rgba(255,255,255,0) 50%, rgba(255,255,255,1) 50%);
+}
+
+.box-controls-container {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    @include responsive-XS{
+        margin-left: $box-spacing-XS;
+    }
+    @include responsive-SM{
+        margin-left: $box-spacing-SM;
+    }
+    @include responsive-MD{
+        margin-left: $box-spacing-MD;
+    }
+    @include responsive-LG{
+        margin-left: $box-spacing-LG;
+    }
+    @include responsive-XL{
+        margin-left: $box-spacing-XL;
+    }
+}
+
+.box-controls-container li {
+    margin: 0;
+    @include responsive-XS{
+        margin-right: 20px;
+    }
+    @include responsive-SM{
+        margin-right: 20px;
+    }
+    @include responsive-MD{
+        margin-right: 17px;
+    }
+    @include responsive-LG{
+        margin-right: 15px;
+    }
+    @include responsive-XL{
+        margin-right: 15px;
+    }
+}
+
+.box-controls-container li:last-child {
+    margin-right: 0;
+}
+
+.box-controls-icon {
+    background-color: $admin;
+    color: $white;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 100px;
+    @include responsive-XS{
+        font-size: 1.25rem;
+    }
+    @include responsive-SM{
+        font-size: 1.25rem;
+    }
+    @include responsive-MD{
+        font-size: 1.0625rem;
+    }
+    @include responsive-LG{
+        font-size: 0.9375rem;
+    }
+    @include responsive-XL{
+        font-size: 0.9375rem;
+    }
+}
+
+.box-controls-icon:hover {
+    background-color: darken($admin, 10%);
+    color: $white;
+}
+
+.box-part:last-child {
+    margin-bottom: 0;
+}
+
+img.tool-info-poster {
+    display: block;
+    width: 100%;
+    object-fit: cover;
+    @include responsive-XS{
+        height: 56.25vw;
+    }
+    @include responsive-SM{
+        height: 304px;
+    }
+    @include responsive-MD{
+        height: 337px;
+    }
+    @include responsive-LG{
+        height: 360px;
+    }
+    @include responsive-XL{
+        height: 428px;
+    }
+}
+
+ul.specs-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+ul.specs-list li {
+    font-family: $font-family;
+    font-weight: 400;
+    border-bottom: solid 1px $grey-4;
+    color: $grey-9;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    @include responsive-XS{
+        font-size: $p-XS;
+        padding-top: $p-XS;
+        padding-bottom: $p-XS;
+    }
+    @include responsive-SM{
+        font-size: $p-SM;
+        padding-top: $p-SM;
+        padding-bottom: $p-SM;
+    }
+    @include responsive-MD{
+        font-size: $p-MD;
+        padding-top: $p-MD;
+        padding-bottom: $p-MD;
+    }
+    @include responsive-LG{
+        font-size: $p-LG;
+        padding-top: $p-LG;
+        padding-bottom: $p-LG;
+    }
+    @include responsive-XL{
+        font-size: $p-XL;
+        padding-top: $p-XL;
+        padding-bottom: $p-XL;
+    }
+}
+
+ul.specs-list li:last-child {
+    border: none;
+}
+
+ul.ressources-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+ul.ressources-list li {
+    font-family: $font-family;
+    font-weight: 400;
+    color: $grey-9;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    @include responsive-XS{
+        font-size: $p-XS;
+        padding-top: $p-XS;
+        padding-bottom: 0;
+    }
+    @include responsive-SM{
+        font-size: $p-SM;
+        padding-top: $p-SM;
+        padding-bottom: 0;
+    }
+    @include responsive-MD{
+        font-size: $p-MD;
+        padding-top: $p-MD;
+        padding-bottom: 0;
+    }
+    @include responsive-LG{
+        font-size: $p-LG;
+        padding-top: $p-LG;
+        padding-bottom: 0;
+    }
+    @include responsive-XL{
+        font-size: $p-XL;
+        padding-top: $p-XL;
+        padding-bottom: 0;
+    }
+}
+
+.box-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    @include responsive-XS{
+        margin-top: $box-spacing-XS;
+        margin-bottom: $box-spacing-XS;
+    }
+    @include responsive-SM{
+        margin-top: $box-spacing-SM;
+        margin-bottom: $box-spacing-SM;
+    }
+    @include responsive-MD{
+        margin-top: $box-spacing-MD;
+        margin-bottom: $box-spacing-MD;
+    }
+    @include responsive-LG{
+        margin-top: $box-spacing-LG;
+        margin-bottom: $box-spacing-LG;
+    }
+    @include responsive-XL{
+        margin-top: $box-spacing-XL;
+        margin-bottom: $box-spacing-XL;
+    }
+}
+
+.box-video { 
+    overflow:hidden; 
+    padding-bottom: 56.25%; 
+    position: relative; 
+    height: 0;
+    @include responsive-XS{
+        margin-top: $box-spacing-XS;
+        margin-bottom: $box-spacing-XS;
+    }
+    @include responsive-SM{
+        margin-top: $box-spacing-SM;
+        margin-bottom: $box-spacing-SM;
+    }
+    @include responsive-MD{
+        margin-top: $box-spacing-MD;
+        margin-bottom: $box-spacing-MD;
+    }
+    @include responsive-LG{
+        margin-top: $box-spacing-LG;
+        margin-bottom: $box-spacing-LG;
+    }
+    @include responsive-XL{
+        margin-top: $box-spacing-XL;
+        margin-bottom: $box-spacing-XL;
+    }
+}
+    
+.box-video iframe {
+    left: 0; 
+    top: 0; 
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+.consumable-head {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    @include responsive-XS{
+        margin-bottom: $box-spacing-XS / 2;
+    }
+    @include responsive-SM{
+        margin-bottom: $box-spacing-SM / 2;
+    }
+    @include responsive-MD{
+        margin-bottom: $box-spacing-MD / 2;
+    }
+    @include responsive-LG{
+        margin-bottom: $box-spacing-LG / 2;
+    }
+    @include responsive-XL{
+        margin-bottom: $box-spacing-XS / 2;
+    }
+}
+
+.consumable-thumb {
+    @include responsive-XS{
+        margin-right: $box-spacing-XS;
+    }
+    @include responsive-SM{
+        margin-right: $box-spacing-SM;
+    }
+    @include responsive-MD{
+        margin-right: $box-spacing-MD;
+    }
+    @include responsive-LG{
+        margin-right: $box-spacing-LG;
+    }
+    @include responsive-XL{
+        margin-right: $box-spacing-XS;
+    }
+}
+
+.consumable-thumb img {
+    display: block;
+    border-radius: 5px;
+    @include responsive-XS{
+        height: 60px;
+        width: 60px;
+    }
+    @include responsive-SM{
+        height: 60px;
+        width: 60px;
+    }
+    @include responsive-MD{
+        height: 60px;
+        width: 60px;
+    }
+    @include responsive-LG{
+        height: 60px;
+        width: 60px;
+    }
+    @include responsive-XL{
+        height: 60px;
+        width: 60px;
+    }
+}
+
+.consumable-data {
+    display: flex;
+    flex-direction: row;
+}
+
+.consumable-icon {
+    color: $grey-9;
+    @include responsive-XS{
+        font-size: $p-XS * 1.25;
+        margin-right: $box-spacing-XS / 2;
+    }
+    @include responsive-SM{
+        font-size: $p-SM * 1.25;
+        margin-right: $box-spacing-SM / 2;
+    }
+    @include responsive-MD{
+        font-size: $p-MD * 1.25;
+        margin-right: $box-spacing-MD / 2;
+    }
+    @include responsive-LG{
+        font-size: $p-LG * 1.25;
+        margin-right: $box-spacing-LG / 2;
+    }
+    @include responsive-XL{
+        font-size: $p-XL * 1.25;
+        margin-right: $box-spacing-XL / 2;
+    }
+}
+
+a.tool-help-head {
+    font-family: $font-family;
+    font-weight: 700;
+    text-align: left;
+    color: $grey-7;
+    @include responsive-XS{
+        font-size: $p-XS;
+    }
+    @include responsive-SM{
+        font-size: $p-SM;
+    }
+    @include responsive-MD{
+        font-size: $p-MD;
+    }
+    @include responsive-LG{
+        font-size: $p-LG;
+    }
+    @include responsive-XL{
+        font-size: $p-XL;
+    }
+}
+
+.tool-head-icon {
+    @include responsive-XS{
+        margin-left: $box-spacing-XS / 2;
+    }
+    @include responsive-SM{
+        margin-left: $box-spacing-SM / 2;
+    }
+    @include responsive-MD{
+        margin-left: $box-spacing-MD / 2;
+    }
+    @include responsive-LG{
+        margin-left: $box-spacing-LG / 2;
+    }
+    @include responsive-XL{
+        margin-left: $box-spacing-XL / 2;
+    }
+}
+
+.help-head-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 1px solid $grey-1b;
+}
+
+.tool-help-list {
+    list-style-image: url("../graphics/icon-arrow.svg");
+    font-family: $font-family;
+    font-weight: 400;
+    color: $grey-9;
+    text-align: left;
+    margin: 0;
+    @include responsive-XS{
+        padding-left: $p-XS * 1.5;
+        font-size: $p-XS;
+    }
+    @include responsive-SM{
+        padding-left: $p-SM * 1.5;
+        font-size: $p-SM;
+    }
+    @include responsive-MD{
+        padding-left: $p-MD * 1.5;
+        font-size: $p-MD;
+    }
+    @include responsive-LG{
+        padding-left: $p-LG * 1.5;
+        font-size: $p-LG;
+    }
+    @include responsive-XL{
+        padding-left: $p-XL * 1.5;
+        font-size: $p-XL;
+    }
+}
+
+.tool-help-list li {
+    @include responsive-XS{
+        margin-bottom: $p-XS / 2;
+    }
+    @include responsive-SM{
+        margin-bottom: $p-SM / 2;
+    }
+    @include responsive-MD{
+        margin-bottom: $p-MD / 2;
+    }
+    @include responsive-LG{
+        margin-bottom: $p-LG / 2;
+    }
+    @include responsive-XL{
+        margin-bottom: $p-XL / 2;
+    }
+}
+
+.notice-toc-l ul {
+    margin: 0;
+    padding: 0;
+    font-family: $font-family;
+    color: $grey-9;
+    list-style: none;
+}
+
+.notice-toc-l ul a, .notice-toc-l ul a:visited {
+    color: $grey-9;
+}
+
+.notice-toc-l ul a:hover, .notice-toc-l ul a:focus {
+    color: $primary;
+}
+
+li.toc-h2 {
+    font-weight: 700;
+    font-size: $notice-toc-h2-font;
+    margin-bottom: $notice-toc-h2-font / 2;
+}
+
+li.toc-h3 {
+    font-weight: 500;
+    font-size: $notice-toc-h3-font;
+    margin-bottom: $notice-toc-h3-font / 2;
+}
+
+.sticked {
+    z-index: 9999;
+    position: fixed;
+    top: 0;
+    @include responsive-XS{
+        margin-top: 50px;
+    }
+    @include responsive-SM{
+        margin-top: 50px;
+    }
+    @include responsive-MD{
+        margin-top: 60px;
+    }
+    @include responsive-LG{
+        margin-top: 60px;
+    }
+    @include responsive-XL{
+        margin-top: 60px;
+    }
+}
+
+.notice-ui-input {
+    background-color: $green-1;
+    color: $green-4;
+    padding: 0.125rem 0.375rem;
+    border-radius: 2px;
+}
+
+.notice-ui-button {
+    background-color: $green-4;
+    color: $white;
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.1875rem;
+}
+
+/*-- PANEL --*/
+
+.panel-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.panel {
+    @include responsive-XS{
+        width: 100%;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    @include responsive-SM{
+        width: 432px;
+        padding: 0;
+    }
+    @include responsive-MD{
+        width: 384px;
+        padding: 0;
+    }
+    @include responsive-LG{
+        width: 397px;
+        padding: 0;
+    }
+    @include responsive-XL{
+        width: 400px;
+        padding: 0;
+    }
+}
+
+.table {
+    margin-right: auto;
+    margin-left: auto;
+    box-sizing: border-box;
+    @include responsive-XS{
+        width: 100%;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    @include responsive-SM{
+        width: 540px;
+        padding: 0;
+    }
+    @include responsive-MD{
+        width: 720px;
+        padding: 0;
+    }
+    @include responsive-LG{
+        width: 960px;
+        padding: 0;
+    }
+    @include responsive-XL{
+        width: 1140px;
+        padding: 0;
+    }
+}
+
+table {
+    background: $white;
+    border-collapse: collapse;
+    width: 100%;
+    font-family: $font-family;
+
+    th, td {
+        text-align: left;
+    }
+
+    thead {
+        color: $grey-6b;
+        font-weight: 600;
+        @include responsive-XS{
+            font-size: $index-x4-title-sub-font-XS;
+        }
+        @include responsive-SM{
+            font-size: $index-x4-title-sub-font-SM;
+        }
+        @include responsive-MD{
+            font-size: $index-x4-title-sub-font-MD;
+        }
+        @include responsive-LG{
+            font-size: $index-x4-title-sub-font-LG;
+        }
+        @include responsive-XL{
+            font-size: $index-x4-title-sub-font-XL;
+        }
+    }
+
+    tbody {
+        color: $grey-9;
+        font-weight: 400;
+        @include responsive-XS{
+            font-size: $p-XS;
+        }
+        @include responsive-SM{
+            font-size: $p-SM;
+        }
+        @include responsive-MD{
+            font-size: $p-MD;
+        }
+        @include responsive-LG{
+            font-size: $p-LG;
+        }
+        @include responsive-XL{
+            font-size: $p-XL;
+        }
+    }
+
+    thead td {
+        @include responsive-XS{
+            padding: $index-x4-title-sub-font-XS;
+        }
+        @include responsive-SM{
+            padding: $index-x4-title-sub-font-SM;
+        }
+        @include responsive-MD{
+            padding: $index-x4-title-sub-font-MD;
+        }
+        @include responsive-LG{
+            padding: $index-x4-title-sub-font-LG;
+        }
+        @include responsive-XL{
+            padding: $index-x4-title-sub-font-XL;
+        }
+    }
+
+    thead tr {
+        border-bottom: 4px solid $grey-1;
+    }
+
+    tbody td {
+        @include responsive-XS{
+            padding: $p-XS;
+        }
+        @include responsive-SM{
+            padding: $p-SM;
+        }
+        @include responsive-MD{
+            padding: $p-MD;
+        }
+        @include responsive-LG{
+            padding: $p-LG;
+        }
+        @include responsive-XL{
+            padding: $p-XL;
+        }
+    }
+
+    tbody tr {
+        border-bottom: 2px solid $grey-1;
+    }
+
+    td.show-l {
+        @include responsive-XS{
+            visibility: collapse;
+        }
+        @include responsive-SM{
+            visibility: collapse;
+        }
+        @include responsive-MD{
+            visibility: collapse;
+        }
+        @include responsive-LG{
+            visibility: visible;
+        }
+        @include responsive-XL{
+            visibility: visible;
+        }
+    }
+}
+
+.table-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.table-controls div {
+    margin: 0;
+    @include responsive-XS{
+        margin-right: 20px;
+    }
+    @include responsive-SM{
+        margin-right: 20px;
+    }
+    @include responsive-MD{
+        margin-right: 17px;
+    }
+    @include responsive-LG{
+        margin-right: 15px;
+    }
+    @include responsive-XL{
+        margin-right: 15px;
+    }
+}
+
+.table-controls div:last-child {
+    margin-right: 0;
+}
+
+.table-controls-icon {
+    background-color: $admin;
+    color: $white;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 100px;
+    @include responsive-XS{
+        font-size: 1.25rem;
+    }
+    @include responsive-SM{
+        font-size: 1.25rem;
+    }
+    @include responsive-MD{
+        font-size: 1.0625rem;
+    }
+    @include responsive-LG{
+        font-size: 0.9375rem;
+    }
+    @include responsive-XL{
+        font-size: 0.9375rem;
+    }
+}
+
+.table-controls-icon:hover {
+    background-color: darken($admin, 10%);
+    color: $white;
+}
+
+.table-sidecontrols {
+    @include responsive-XS{
+        margin-bottom: 15px;
+    }
+    @include responsive-SM{
+        margin-bottom: 15px;
+    }
+    @include responsive-MD{
+        margin-bottom: 20px;
+    }
+    @include responsive-LG{
+        margin-bottom: 20px;
+    }
+    @include responsive-XL{
+        margin-bottom: 20px;
+    }
+}
+
+
+/*-- ERROR --*/
+
+.message {
+    text-align: center;
+}
+
+.message-logo {
+    @include responsive-XS{
+        margin-bottom: $box-spacing-XS;
+    }
+    @include responsive-SM{
+        margin-bottom: $box-spacing-SM;
+    }
+    @include responsive-MD{
+        margin-bottom: $box-spacing-MD;
+    }
+    @include responsive-LG{
+        margin-bottom: $box-spacing-LG;
+    }
+    @include responsive-XL{
+        margin-bottom: $box-spacing-XL;
+    }
+}
+
+.message-logo img {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    width: auto;
+    @include responsive-XS{
+        height: 40px;
+    }
+    @include responsive-SM{
+        height: 40px;
+    }
+    @include responsive-MD{
+        height: 42px;
+    }
+    @include responsive-LG{
+        height: 45px;
+    }
+    @include responsive-XL{
+        height: 45px;
+    }
+}
+
+.message-content {
+    @include responsive-XS{
+        margin-bottom: $box-spacing-XS / 2;
+    }
+    @include responsive-SM{
+        margin-bottom: $box-spacing-SM / 2;
+    }
+    @include responsive-MD{
+        margin-bottom: $box-spacing-MD / 2;
+    }
+    @include responsive-LG{
+        margin-bottom: $box-spacing-LG / 2;
+    }
+    @include responsive-XL{
+        margin-bottom: $box-spacing-XL / 2;
+    }
+}
+
+.message-content h1 { 
+    font-family: $font-family;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 0;
+    @include responsive-XS{
+        font-size: $h2-XS;
+        margin-bottom: $h2-XS / 2;
+    }
+    @include responsive-SM{
+        font-size: $h2-SM;
+        margin-bottom: $h2-SM / 2;
+    }
+    @include responsive-MD{
+        font-size: $h2-MD;
+        margin-bottom: $h2-MD / 2;
+    }
+    @include responsive-LG{
+        font-size: $h2-LG;
+        margin-bottom: $h2-LG / 2;
+    }
+    @include responsive-XL{
+        font-size: $h2-XL;
+        margin-bottom: $h2-XL / 2;
+    }
+}
+
+/* CUSTOM */
+
+.delete-btn {
+    background: none;
+    padding: 0px;
+    border: none;
+}
+
+.delete-btn:focus, .icon-delete:focus {
+    outline:0;
+}
+
+.has-error {
+    border: 1px solid #f5c6cb !important;
+}
+
+.form-error {
+    color: #C0576B;
+    font-size: 0.8em;
+}
+
+.button-prototype-form {
+    margin-top: 15px;
+}
+
+.alert-danger, .alert-danger p {
+    color: #721c24;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.alert-primary, .alert-primary p {
+    color: #004085;
+}
+
+.alert-primary {
+    color: #004085;
+    background-color: #cce5ff;
+    border-color: #b8daff;
+}
+
+.alert {
+    position: relative;
+    padding: .75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+}
+
+.text-center {
+    text-align: center;
+}

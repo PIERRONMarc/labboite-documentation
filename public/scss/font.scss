@@ -1,0 +1,145 @@
+@font-face {
+    font-family: 'OpenSans';
+    src: url('../fonts/OpenSans-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url('../fonts/OpenSans-LightItalic.woff') format('woff');
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url('../fonts/OpenSans-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url('../fonts/OpenSans-Italic.woff') format('woff');
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url('../fonts/OpenSans-Semibold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url('../fonts/OpenSans-SemiboldItalic.woff') format('woff');
+    font-weight: 600;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url('../fonts/OpenSans-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url('../fonts/OpenSans-BoldItalic.woff') format('woff');
+    font-weight: 700;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url('../fonts/OpenSans-ExtraBold.woff') format('woff');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url('../fonts/OpenSans-ExtraBoldItalic.woff') format('woff');
+    font-weight: 800;
+    font-style: italic;
+}
+
+
+@font-face {
+  font-family: "LabboiteIcons";
+  src: url("../fonts/labboite-doc.eot");
+  src: url("../fonts/labboite-doc.eot?vc9kxa#iefix") format("embedded-opentype"),
+        url("../fonts/labboite-doc.woff?vc9kxa") format("woff"), 
+        url("../fonts/labboite-doc.woff2?vc9kxa") format("woff2"), 
+        url("../fonts/labboite-doc.ttf?vc9kxa") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+}
+
+%icon {
+  display: inline-block;
+  font-family: "LabboiteIcons" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  vertical-align: -.125em;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  border: none;
+}
+
+.icon {
+  @extend %icon;
+}
+
+.icon-burden::before {
+  content: "\ea01";
+}
+.icon-consumables::before {
+  content: "\ea02";
+}
+.icon-delete::before {
+  content: "\ea03";
+}
+.icon-edit::before {
+  content: "\ea04";
+}
+.icon-faq::before {
+  content: "\ea05";
+}
+.icon-info::before {
+  content: "\ea06";
+}
+.icon-less::before {
+  content: "\ea07";
+}
+.icon-more::before {
+  content: "\ea08";
+}
+.icon-notice::before {
+  content: "\ea09";
+}
+.icon-password::before {
+  content: "\ea0a";
+}
+.icon-price::before {
+  content: "\ea0b";
+}
+.icon-logout::before {
+  content: "\ea0c";
+}
+.icon-tips::before {
+  content: "\ea0d";
+}
+.icon-users::before {
+  content: "\ea0e";
+}
+  

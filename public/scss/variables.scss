@@ -1,0 +1,128 @@
+// Colors
+
+$white: #FFF;
+$primary: #E1580A;
+$admin: #58BAAB;
+
+$grey-1: #F9F9F9;
+$grey-1b: #F2F2F2;
+$grey-2: #ECECEC;
+$grey-3: #E0E0E0;
+$grey-4: #E2E2E2;
+$grey-5: #D6D6D6;
+$grey-6: #CBCBCB;
+$grey-6b: #C4C4C4;
+$grey-7: #9B9B9B;
+$grey-8: #848484;
+$grey-9: #777777;
+$grey-10: #3F3F3F;
+$grey-11: #393939;
+$grey-12: #323232;
+
+$orange-1: #FCEEE6;
+$orange-2: #FCEEE6;
+$orange-3: #F6CDB5;
+$orange-4: #E1580A;
+$orange-5: #CC4F00;
+$orange-6: #9F3D00;
+
+$green-1: #EEF8F6;
+$green-2: #DEF1EE;
+$green-3: #CDEAE6;
+$green-4: #58BAAB;
+$green-5: #4BA79A;
+$green-6: #3A8277;
+
+$font-family: 'OpenSans', Helvetica, Arial, sans-serif;
+$font-family-default: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+$p-XS: 0.9375rem;
+$p-SM: 0.9375rem;
+$p-MD: 0.9375rem;
+$p-LG: 1rem;
+$p-XL: 1rem;
+
+$h1-XS: 1.5rem;
+$h1-SM: 1.5rem;
+$h1-MD: 1.5rem;
+$h1-LG: 1.75rem;
+$h1-XL: 1.75rem;
+
+$h2-XS: 1.25rem;
+$h2-SM: 1.25rem;
+$h2-MD: 1.25rem;
+$h2-LG: 1.375rem;
+$h2-XL: 1.375rem;
+
+$h3-XS: 1.125rem;
+$h3-SM: 1.125rem;
+$h3-MD: 1.125rem;
+$h3-LG: 1.25rem;
+$h3-XL: 1.25rem;
+
+$box-spacing-XS: 25px;
+$box-spacing-SM: 25px;
+$box-spacing-MD: 25px;
+$box-spacing-LG: 30px;
+$box-spacing-XL: 30px;
+
+$header-spacing-XS: 20px;
+$header-spacing-SM: 20px;
+$header-spacing-MD: 25px;
+$header-spacing-LG: 30px;
+$header-spacing-XL: 30px;
+
+$notice-toc-h2-font: 1.1875rem;
+$notice-toc-h3-font: 1rem;
+
+$index-x3-title-main-font-XS: 1rem;
+$index-x3-title-main-font-SM: 1rem;
+$index-x3-title-main-font-MD: 1rem;
+$index-x3-title-main-font-LG: 1.125rem;
+$index-x3-title-main-font-XL: 1.125rem;
+
+$index-x4-title-main-font-XS: 0.9375rem;
+$index-x4-title-main-font-SM: 0.9375rem;
+$index-x4-title-main-font-MD: 0.9375rem;
+$index-x4-title-main-font-LG: 1rem;
+$index-x4-title-main-font-XL: 1rem;
+
+$index-x4-title-sub-font-XS: 0.875rem;
+$index-x4-title-sub-font-SM: 0.875rem;
+$index-x4-title-sub-font-MD: 0.875rem;
+$index-x4-title-sub-font-LG: 0.9375rem;
+$index-x4-title-sub-font-XL: 0.9375rem;
+
+$label-XS: 0.875rem;
+$label-SM: 0.875rem;
+$label-MD: 0.875rem;
+$label-LG: 0.9375rem;
+$label-XL: 0.9375rem;
+
+$add-icon-XS: 2.5rem;
+$add-icon-SM: 2.5rem;
+$add-icon-MD: 2.25rem;
+$add-icon-LG: 2.25rem;
+$add-icon-XL: 2.25rem;
+
+$input-padding: 10px;
+$input-fontsize: 16px;
+$input-border: 2px;
+$input-height: ($input-padding * 2) + $input-fontsize + ($input-border * 2);
+
+
+// Responsive
+
+$breakpoints-min: (
+    SM: 575px,
+    MD: 768px,
+    LG: 992px,
+    XL: 1200px
+);
+
+$breakpoints-max: (
+    XS: 574.98px,
+    SM: 767.98px,
+    MD: 991.98px,
+    LG: 1199.98px
+);
