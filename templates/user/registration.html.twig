@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register User{% endblock %}
+
+{% block body %}
+    {% include "header/admin/header.html.twig" %}
+
+    <!-- CONTENT -->
+    <main>
+        <div class="container">
+            <div class="form">
+                <div class="form-nav">
+                    <a href="{{ path('user_index') }}">retour</a>
+                </div>
+                <div class="form-box">
+                    <div class="form-head">
+                        <h1>Inscrire un utilisateur</h1>
+                    </div>
+                    <div class="form-body">
+                        {{ form_start(registrationForm) }}
+                            <div class="form-group form-mb-l">
+                                {{ form_label(registrationForm.username) }}
+                                {{ form_widget(registrationForm.username, {'attr': {'class': "form-element" ~ (registrationForm.username.vars.valid == false ? ' has-error')}}) }}
+                                {{ form_errors(registrationForm.username) }}
+                            </div>
+                            <div class="form-group form-mb-l">
+                                {{ form_label(registrationForm.mail) }}
+                                {{ form_widget(registrationForm.mail, {'attr': {'class': "form-element" ~ (registrationForm.mail.vars.valid == false ? ' has-error')}}) }}
+                                {{ form_errors(registrationForm.mail) }}
+                            </div>
+                            <div class="form-group form-mb-l">
+                                {{ form_label(registrationForm.plainPassword) }}
+                                {{ form_widget(registrationForm.plainPassword, {'attr': {'class': "form-element" ~ (registrationForm.plainPassword.vars.valid == false ? ' has-error')}}) }}
+                                {{ form_errors(registrationForm.plainPassword) }}
+                            </div>
+                            <div class="form-group form-mb-l">
+                                {{ form_label(registrationForm.confirmPassword) }}
+                                {{ form_widget(registrationForm.confirmPassword, {'attr': {'class': "form-element" ~ (registrationForm.confirmPassword.vars.valid == false ? ' has-error')}}) }}
+                                {{ form_errors(registrationForm.confirmPassword) }}
+                            </div>
+                            <div class="form-group form-mb-l form-inline">
+                                <div>
+                                    {{ form_widget(registrationForm.superAdmin, {'attr': {'class': 'form-check-input'}}) }}
+                                    {{ form_label(registrationForm.superAdmin) }}
+                                    {{ form_errors(registrationForm.superAdmin) }}
+                                </div>
+                            </div>
+                            <div class="form-action">
+                                <button type="submit" class="button button-submit">Inscrire</button>
+                            </div>
+                        {{ form_end(registrationForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

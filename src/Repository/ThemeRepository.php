@@ -47,4 +47,18 @@ class ThemeRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * Find first occurence in the dztabase
+     *
+     * @return Theme|null
+     */
+    public function findFirstRecord(): ?Theme
+    {
+        return $this->createQueryBuilder('t')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }

@@ -28,6 +28,11 @@ class Theme
      */
     private $categories;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -77,6 +82,24 @@ class Theme
                 $category->setTheme(null);
             }
         }
+
+        return $this;
+    }
+    public function __toString(){
+        // to show the name of the Tool in the select
+        return $this->name;
+        // to show the id of the Tategory in the select
+        // return $this->id;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

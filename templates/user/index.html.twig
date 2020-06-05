@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% include "header/admin/header.html.twig" %}
+
+    <!-- CONTENT -->
+    <main>
+        <div class="container">
+            <div class="table">
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class=" alert alert-{{ label }}">
+                            <p>{{ message }}</p> 
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+                <div class="table-sidecontrols">
+                    <div><a class="button button-small" href="{{ path('user_new') }}">Inscrire un utilisateur</a></div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Nom d'utilisateur</td>
+                            <td>Courriel</td>
+                            <td>Roles</td>
+                            <td>Date d'inscription</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       {% for user in users %}
+                            <tr>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.mail }}</td>
+                                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                                <td>{{ user.registrationDate|date("d/m/Y H:m") }}</td>
+                                <td class="td-right">
+                                    <div class="table-controls">
+                                        <div><a href="{{ path('user_edit', {'id': user.id}) }}"><span class="icon icon-edit table-controls-icon"></span></a></div>
+                                        <div><a href="{{ path('user_change_password', {'id': user.id}) }}"><span class="icon icon-password table-controls-icon"></span></a></div>
+                                        <div>
+                                            <form method="post" action="{{ path('user_delete', {'id': user.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+                                                <button class="icon icon-delete table-controls-icon"></button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+{% endblock %}

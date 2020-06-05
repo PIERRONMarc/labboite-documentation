@@ -3,137 +3,173 @@
 namespace App\Controller;
 
 use App\Entity\Tip;
+use App\Entity\Tool;
 use App\Form\TipType;
+use App\Repository\ThemeRepository;
+use App\Service\FileUploader;
 use App\Repository\TipRepository;
-use Gedmo\Sluggable\Util\Urlizer;
+use App\Service\HeaderHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 /**
- * @Route("/tip")
+ * Tip handling - tool page
  */
 class TipController extends AbstractController
 {
     /**
-     * @Route("/", name="tip_index", methods={"GET"})
+     * Index - front office
+     * 
+     * @Route("{themeSlug}/{categorySlug}/{slug}/tips", name="tip_index", methods={"GET"})
      */
-    public function index(TipRepository $tipRepository): Response
+    public function index(TipRepository $tipRepository, Tool $tool, ThemeRepository $themeRepository, HeaderHelper $headerHelper): Response
     {
-        return $this->render('tip/index.html.twig', [
-            'tips' => $tipRepository->findAll(),
+        //get all non empty section of the tool header as an array
+        $header = $headerHelper->getToolHeader($tool);
+        
+        return $this->render('tip/public/index.html.twig', [
+            'tips' => $tipRepository->findBy(['tool' => $tool]),
+            'tool' => $tool,
+            'themes' => $themeRepository->findAll(),
+            'header' => $header
+        ]);
+    }
+
+
+    /**
+     * Index - back office
+     * 
+     * @Route("admin/{themeSlug}/{categorySlug}/{slug}/tips", name="admin_tip_index", methods={"GET"})
+     */
+    public function adminIndex(TipRepository $tipRepository, Tool $tool, ThemeRepository $themeRepository): Response
+    {
+        return $this->render('tip/admin/index.html.twig', [
+            'tips' => $tipRepository->findBy(['tool' => $tool]),
+            'tool' => $tool,
+            'themes' => $themeRepository->findAll()
         ]);
     }
 
     /**
-     * @Route("/new", name="tip_new", methods={"GET","POST"})
+     * Creation form - back office 
+     * 
+     * @Route("admin/{themeSlug}/{categorySlug}/{slug}/tips/new", name="tip_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Tool $tool, ThemeRepository $themeRepository): Response
     {
         $tip = new Tip();
         $form = $this->createForm(TipType::class, $tip);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $picturePath = $form->get('imageFile')->getData();
+            $uploadedFile = $form->get('imageFile')->getData();
 
-            // this condition is needed because the 'brochure' field is not required
-            // so the PDF file must be processed only when a file is uploaded
-            if ($picturePath) {
-                $originalFilename = pathinfo($picturePath->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                $newFilename = Urlizer::urlize($originalFilename).'-'.uniqid().'.'.$picturePath->guessExtension();
-
-
-                // Move the file to the directory where brochures are stored
-                try {
-                    $destination = $this->getParameter('kernel.project_dir').'/public/img/tips';
-                    $picturePath->move(
-                       $destination,
-                        $newFilename
-
-                    );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                }
-
-                // updates the 'brochureFilename' property to store the PDF file name
-                // instead of its contents
-                $tip->setPicturePath($newFilename);
+            // if image is filled, upload it at the correct path
+            if ($uploadedFile) {
+                $destination = $this->getParameter('kernel.project_dir').'/public/upload/tips';
+                $fileUploader = new FileUploader($destination);
+                $newFileName = $fileUploader->upload($uploadedFile);
+                $tip->setPictureName($newFileName);
             }
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($tip);
-            $entityManager->flush();
 
-            return $this->redirectToRoute('tip_index');
+            // ensure that picture and youtube link are not both filled
+            if ($tip->getPictureName() && $tip->getYoutubeLink()) {
+                $violation = true;
+                $this->addFlash('danger', 'Vous ne pouvez pas insérer une image et une vidéo en même temps !');
+            }
+
+            // if the tip is valid
+            if (!isset($violation)) {
+                $tip->setTool($tool);
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($tip);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('admin_tip_index', [
+                    'slug' => $tool->getSlug(),
+                    'categorySlug' => $tool->getCategory()->getSlug(),
+                    'themeSlug' => $tool->getCategory()->getTheme()->getSlug()
+                ]);
+            } 
+
         }
 
-        return $this->render('tip/new.html.twig', [
+        return $this->render('tip/admin/new.html.twig', [
             'tip' => $tip,
+            'tool' => $tool,
             'form' => $form->createView(),
+            'themes' => $themeRepository->findAll(),
+            'actualTheme' => $tool->getCategory()->getTheme(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="tip_show", methods={"GET"})
+     * Edition form - back office
+     * 
+     * @Route("/admin/{themeSlug}/{categorySlug}/{slug}/tips/{id}/edit", name="tip_edit", methods={"GET","POST"})
      */
-    public function show(Tip $tip): Response
-    {
-        return $this->render('tip/show.html.twig', [
-            'tip' => $tip,
-        ]);
-    }
-
-    /**
-     * @Route("/{id}/edit", name="tip_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Tip $tip): Response
+    public function edit(Request $request, Tip $tip, ThemeRepository $themeRepository): Response
     {
         $form = $this->createForm(TipType::class, $tip);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $picturePath = $form->get('imageFile')->getData();
-
-            // this condition is needed because the 'brochure' field is not required
-            // so the PDF file must be processed only when a file is uploaded
-            if ($picturePath) {
-                $originalFilename = pathinfo($picturePath->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                $newFilename = Urlizer::urlize($originalFilename).'-'.uniqid().'.'.$picturePath->guessExtension();
-
-
-                // Move the file to the directory where brochures are stored
-                try {
-                    $destination = $this->getParameter('kernel.project_dir').'/public/img/tips';
-                    $picturePath->move(
-                       $destination,
-                        $newFilename
-
-                    );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                }
-
-                // updates the 'brochureFilename' property to store the PDF file name
-                // instead of its contents
-                $tip->setPicturePath($newFilename);
+        if ($form->isSubmitted()) {
+            // if a youtube link is filled then a picture cannot
+            if ($form->get('youtubeLink')->getData()) {
+                $tip->setPictureName(null);
             }
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('tip_index');
         }
 
-        return $this->render('tip/edit.html.twig', [
+        if ($form->isSubmitted() && $form->isValid()) {
+            $uploadedFile = $form->get('imageFile')->getData();
+
+            // make sure there is no youtube link and picture at the same time by giving the priority to the youtube link
+            if ($tip->getPictureName() && $tip->getYoutubeLink()) {
+                $tip->setPictureName(null);
+            }
+
+            // if image is filled, upload it at the correct path
+            if ($uploadedFile) {
+                $destination = $this->getParameter('kernel.project_dir').'/public/upload/tips';
+                $fileUploader = new FileUploader($destination);
+                $newFileName = $fileUploader->upload($uploadedFile);
+                $fileUploader->deleteFile($tip->getPictureName());
+                $tip->setPictureName($newFileName);
+            }
+
+            // ensure that picture and youtube link are not both filled
+            if ($uploadedFile && $tip->getYoutubeLink()) {
+                $violation = true;
+                $this->addFlash('danger', 'Vous ne pouvez pas insérer une image et une vidéo en même temps !');
+                $tip->setPictureName(null);
+            }
+
+            // if tip is valid
+            if (!isset($violation)) { 
+                $this->getDoctrine()->getManager()->flush();
+                return $this->redirectToRoute('admin_tip_index', [
+                    'slug' => $tip->getTool()->getSlug(),
+                    'categorySlug' => $tip->getTool()->getCategory()->getSlug(),
+                    'themeSlug' => $tip->getTool()->getCategory()->getTheme()->getSlug()
+                ]);
+            }
+        }
+
+        return $this->render('tip/admin/edit.html.twig', [
             'tip' => $tip,
             'form' => $form->createView(),
+            'themes' =>$themeRepository->findAll(),
+            'actualTheme' => $tip->getTool()->getCategory()->getTheme(),
+            'tool' => $tip->getTool(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="tip_delete", methods={"DELETE"})
+     * Delete a tip
+     * 
+     * @Route("/admin/tips/{id}", name="tip_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Tip $tip): Response
     {
@@ -143,6 +179,10 @@ class TipController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('tip_index');
+        return $this->redirectToRoute('admin_tip_index', [
+            'slug' => $tip->getTool()->getSlug(),
+            'categorySlug' => $tip->getTool()->getCategory()->getSlug(),
+            'themeSlug' => $tip->getTool()->getCategory()->getTheme()->getSlug()
+        ]);
     }
 }

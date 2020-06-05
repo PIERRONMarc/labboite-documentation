@@ -1,0 +1,204 @@
+{% extends 'base.html.twig' %}
+
+{% import _self as renderJobMacro %}
+{% macro characteristic(characteristic) %}
+<li>
+    <div class="form-list-element">
+        <div class="form-group">
+            {{ form_label(characteristic.content)}}
+            {{ form_widget(characteristic.content, {'attr': {'class': 'form-element'}})}}
+            {{ form_errors(characteristic.content) }}
+        </div>
+    </div>
+</li>
+{% endmacro %}
+{% macro resource(resource) %}
+<li>
+    <div class="form-list-element">
+        <div class="form-group form-mb-s">
+            {{ form_label(resource.name)}}
+            {{ form_widget(resource.name, {'attr': {'class': 'form-element'}})}}
+            {{ form_errors(resource.name) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(resource.link)}}
+            {{ form_widget(resource.link, {'attr': {'class': 'form-element'}})}}
+            {{ form_errors(resource.link) }}
+        </div>
+    </div>
+</li>
+{% endmacro %}
+
+
+{% block body %}
+
+    {% include "header/admin/tool-header.html.twig" %}
+
+    <!-- CONTENT -->
+    <main>
+        <div class="container">
+            <div class="form">
+                <div class="form-box">
+                    <div class="form-body">
+                        {{ form_start(form) }}
+                        {# <pre>
+                            {{ dump(form.characteristic.vars) }}
+                        </pre> #}
+                            <div class="form-group form-mb-l">
+                                <label for="infoPoster">Illustration</label>
+                                <div class="form-file-preview">
+                                    <div class="form-imgprev">
+                                    
+                                        <!-- IMG placeholder for demo purpose -->
+                                        {% if form.vars.value.information is not null and form.vars.value.information.pictureName is not null %}
+                                            <img src="{{ asset('upload/informations/' ~ form.vars.value.pictureName) }}" alt="Thumb" id="imgPreview">
+                                        {% else %}
+                                            <img src="{{ asset('img/default.png')}}" alt="Thumb" id="imgPreview">
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="form-file-button">
+                                    {{ form_widget(form.information.imageFile, {'attr': { 'class': 'form-control-file'}}) }}
+                                </div>
+                                {{ form_errors(form.information.imageFile) }}
+                            </div>
+                            <div class="form-group form-mb-l">
+                                {{ form_label(form.information.content) }}
+                                {{ form_widget(form.information.content, {'attr': { 'class': "form-element" ~ (form.information.content.vars.valid == false ? ' has-error')}}) }}
+                                {{ form_errors(form.information.content) }}
+                            </div>
+                            <div class="form-list">
+                                <h2>Caractéristiques</h2>
+                                <ul class="form-list-container characteristics" data-prototype="{{ renderJobMacro.characteristic(form.characteristic.vars.prototype)|e }}">
+                                    {% for characteristic in form.characteristic %}
+                                        {{ renderJobMacro.characteristic(characteristic)}}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <div class="form-list">
+                                <h2>Ressources</h2>
+                                <ul class="form-list-container resources" data-prototype="{{ renderJobMacro.resource(form.resources.vars.prototype)|e }}">
+                                    {% for resource in form.resources %}
+                                        {{ renderJobMacro.resource(resource)}}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <div class="form-action">
+                                <button type="submit" class="button button-submit">Valider</button>
+                            </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+
+{% block javascripts %}
+<script
+  src="https://code.jquery.com/jquery-3.4.0.min.js"
+  integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
+  crossorigin="anonymous"></script>
+
+
+
+<script>
+    var $collectionHolder;
+    var $resourceHolder;
+
+    // setup an "add a tag" link
+    var $addCharacButton = $('<button type="button" class="add_charac_link button-form-list">Ajouter</button>');
+    var $addResourceButton = $('<button type="button" class="add_resource_link button-form-list">Ajouter</button>');
+    var $newLinkLi = $('<li class="form-list-action"></li>').append($addCharacButton);
+    var $newResourceLinkLi = $('<li class="form-list-action"></li>').append($addResourceButton);
+
+    jQuery(document).ready(function() {
+        // Get the ul that holds the collection of tags
+        $collectionHolder = $('ul.characteristics');
+        $resourcesHolder = $('ul.resources');
+
+        // add a delete link to all of the existing tag form li elements
+        $collectionHolder.find('li').each(function() {
+            addTagFormDeleteLink($(this));
+        });
+        $resourcesHolder.find('li').each(function() {
+            addTagFormDeleteLink($(this));
+        });
+
+
+        // add the "add a tag" anchor and li to the tags ul
+        $collectionHolder.append($newLinkLi);
+        $resourcesHolder.append($newResourceLinkLi);
+        
+
+        // count the current form inputs we have (e.g. 2), use that as the new
+        // index when inserting a new item (e.g. 2)
+        $collectionHolder.data('index', $collectionHolder.find('input').length);
+        $resourcesHolder.data('index', $resourcesHolder.find('input').length);
+
+        $addCharacButton.on('click', function(e) {
+            // add a new tag form (see next code block)
+            addTagForm($collectionHolder, $newLinkLi);
+        });
+        $addResourceButton.on('click', function(e) {
+            // add a new tag form (see next code block)
+            addTagForm($resourcesHolder, $newResourceLinkLi);
+        });
+    });
+
+    function addTagForm($collectionHolder, $newLinkLi) {
+        // Get the data-prototype explained earlier
+        var prototype = $collectionHolder.data('prototype');
+
+        // get the new index
+        var index = $collectionHolder.data('index');
+
+        var newForm = prototype;
+        // You need this only if you didn't set 'label' => false in your tags field in TaskType
+        // Replace '__name__label__' in the prototype's HTML to
+        // instead be a number based on how many items we have
+        // newForm = newForm.replace(/__name__label__/g, index);
+
+        // Replace '__name__' in the prototype's HTML to
+        // instead be a number based on how many items we have
+        newForm = newForm.replace(/__name__/g, index);
+
+        // increase the index with one for the next item
+        $collectionHolder.data('index', index + 1);
+
+        // Display the form in the page in an li, before the "Add a tag" link li
+        var $newFormLi = $(newForm);
+        // var $newFormLi = $('<li></li>').append(newForm);
+        addTagFormDeleteLink($newFormLi);
+        $newLinkLi.before($newFormLi);
+    }
+
+    function addTagFormDeleteLink($tagFormLi) {
+        var $removeFormButton = $('<button type="button" class="button-form-list button-prototype-form">Supprimer</button>');
+        $tagFormLi.append($removeFormButton);
+
+        $removeFormButton.on('click', function(e) {
+            // remove the li for the tag form
+            $tagFormLi.remove();
+        });
+    }
+
+    // preview the uploaded file
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#imgPreview').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#final_information_information_imageFile").change(function(){
+        readURL(this);
+    });
+</script>
+{% endblock %}

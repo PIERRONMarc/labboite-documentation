@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\QuestionRepository")
@@ -18,6 +20,7 @@ class Question
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank
      */
     private $answer;
 
@@ -26,6 +29,12 @@ class Question
      * @ORM\JoinColumn(nullable=false)
      */
     private $tool;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     */
+    private $question;
 
     public function getId(): ?int
     {
@@ -52,6 +61,18 @@ class Question
     public function setTool(?Tool $tool): self
     {
         $this->tool = $tool;
+
+        return $this;
+    }
+
+    public function getQuestion(): ?string
+    {
+        return $this->question;
+    }
+
+    public function setQuestion(string $question): self
+    {
+        $this->question = $question;
 
         return $this;
     }

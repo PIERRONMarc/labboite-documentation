@@ -4,7 +4,9 @@
 /.env.local.php
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
-/public/bundles/
+# /public/bundles/
+/public/upload/
+/public/uploads/
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
@@ -17,4 +19,9 @@
 
 ###> docker ###
 .data
-###> docker ###
+.unison*
+###< docker ###
+
+###> macOS ###
+*DS_Store*
+###< macOS ###

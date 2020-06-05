@@ -19,32 +19,22 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
-    // /**
-    //  * @return Category[] Returns an array of Category objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
+    /**
+     * Find a category by his theme and own slug
+     * 
+     * @param String $categorySlug
+     * @param String $themeSlug
+     * @return Category|null
+     */
+    public function findBySlugs(String $categorySlug, String $themeSlug) {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Category
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
+            ->where('t.slug = :themeSlug')
+            ->andWhere('c.slug = :categorySlug')
+            ->innerJoin('c.theme', 't')
+            ->setParameters(['categorySlug' => $categorySlug, 'themeSlug' => $themeSlug])
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
+
 }

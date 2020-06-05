@@ -1,0 +1,420 @@
+/*--- FORMS ---*/
+
+.form {
+    display: grid;
+    margin-right: auto;
+    margin-left: auto;
+    box-sizing: border-box;
+    @include responsive-XS{
+        width: 100%;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    @include responsive-SM{
+        width: 540px;
+        padding: 0;
+    }
+    @include responsive-MD{
+        width: 600px;
+        padding: 0;
+    }
+    @include responsive-LG{
+        width: 640px;
+        padding: 0;
+    }
+    @include responsive-XL{
+        width: 760px;
+        padding: 0;
+    }
+}
+
+.form-nav {
+    font-family: $font-family;
+    font-weight: 600;
+    @include responsive-XS{
+        font-size: $label-XS;
+        padding-bottom: $box-spacing-XS / 2;
+    }
+    @include responsive-SM{
+        font-size: $label-SM;
+        padding-bottom: $box-spacing-SM / 2;
+    }
+    @include responsive-MD{
+        font-size: $label-MD;
+        padding-bottom: $box-spacing-MD / 2;
+    }
+    @include responsive-LG{
+        font-size: $label-LG;
+        padding-bottom: $box-spacing-LG / 2;
+    }
+    @include responsive-XL{
+        font-size: $label-XL;
+        padding-bottom: $box-spacing-XL / 2;
+    }
+}
+
+.form-box {
+    background-color: $white;
+    width: 100%;
+}
+
+.form-head, .form-body {
+    box-sizing: border-box;
+    @include responsive-XS{
+        padding: $box-spacing-XS;
+    }
+    @include responsive-SM{
+        padding: $box-spacing-SM;
+    }
+    @include responsive-MD{
+        padding: $box-spacing-MD;
+    }
+    @include responsive-LG{
+        padding: $box-spacing-LG;
+    }
+    @include responsive-XL{
+        padding: $box-spacing-XL;
+    }
+}
+
+.form-head {
+    border-bottom: solid 1px $grey-1b;
+    text-align: center;
+}
+
+.form-head h1 {
+    font-family: $font-family;
+    font-weight: 700;
+    text-align: center;
+    margin: 0;
+    @include responsive-XS{
+        font-size: $h1-XS;
+    }
+    @include responsive-SM{
+        font-size: $h1-SM;
+    }
+    @include responsive-MD{
+        font-size: $h1-MD;
+    }
+    @include responsive-LG{
+        font-size: $h1-LG;
+    }
+    @include responsive-XL{
+        font-size: $h1-XL;
+    }
+}
+
+.form-action {
+    text-align: center;
+}
+
+.form-inline {
+    display: flex;
+    flex-direction: row;
+}
+
+.form-inline div {
+    @include responsive-XS{
+        margin-right: $box-spacing-XS;
+    }
+    @include responsive-SM{
+        margin-right: $box-spacing-SM;
+    }
+    @include responsive-MD{
+        margin-right: $box-spacing-MD;
+    }
+    @include responsive-LG{
+        margin-right: $box-spacing-LG;
+    }
+    @include responsive-XL{
+        margin-right: $box-spacing-XL;
+    }
+}
+
+.form-group label {
+    font-family: $font-family;
+    color: $grey-9;
+    font-weight: 600;
+    @include responsive-XS{
+        font-size: $label-XS;
+    }
+    @include responsive-SM{
+        font-size: $label-SM;
+    }
+    @include responsive-MD{
+        font-size: $label-MD;
+    }
+    @include responsive-LG{
+        font-size: $label-LG;
+    }
+    @include responsive-XL{
+        font-size: $label-XL;
+    }
+}
+
+.form-mb-l {
+    @include responsive-XS{
+        margin-bottom: $box-spacing-XS;
+    }
+    @include responsive-SM{
+        margin-bottom: $box-spacing-SM;
+    }
+    @include responsive-MD{
+        margin-bottom: $box-spacing-MD;
+    }
+    @include responsive-LG{
+        margin-bottom: $box-spacing-LG;
+    }
+    @include responsive-XL{
+        margin-bottom: $box-spacing-XL;
+    }
+}
+
+.form-mb-s {
+    @include responsive-XS{
+        margin-bottom: $box-spacing-XS / 2;
+    }
+    @include responsive-SM{
+        margin-bottom: $box-spacing-SM / 2;
+    }
+    @include responsive-MD{
+        margin-bottom: $box-spacing-MD / 2;
+    }
+    @include responsive-LG{
+        margin-bottom: $box-spacing-LG / 2;
+    }
+    @include responsive-XL{
+        margin-bottom: $box-spacing-XL / 2;
+    }
+}
+
+.button-form-list {
+    display: inline-block;
+    width: 100%;
+    border-radius: 5px;
+    font-family: $font-family;
+    font-size: 1rem;
+    font-weight: 600;
+    color: $grey-9;
+    background-color: $grey-1;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid transparent;
+  
+    &:hover {
+        background-color: darken($grey-1, 3%);
+        text-decoration: none;
+    }
+
+    &:active {
+        background-color: darken($grey-1, 5%);
+    }
+  
+    &:focus,
+    &.focus {
+        outline: 0;
+    }
+  
+    &:disabled,
+    &.disabled,
+    fieldset:disabled & { // stylelint-disable-line selector-no-qualifying-type
+        pointer-events: none;
+        opacity: .5;
+    }
+}
+
+.form-list {
+    @include responsive-XS{
+        margin-bottom: $box-spacing-XS;
+    }
+    @include responsive-SM{
+        margin-bottom: $box-spacing-SM;
+    }
+    @include responsive-MD{
+        margin-bottom: $box-spacing-MD;
+    }
+    @include responsive-LG{
+        margin-bottom: $box-spacing-LG;
+    }
+    @include responsive-XL{
+        margin-bottom: $box-spacing-XL;
+    }
+}
+
+.form-list h2 {
+    font-family: $font-family;
+    text-align: left;
+    font-weight: 600;
+    @include responsive-XS{
+        font-size: $index-x3-title-main-font-XS;
+        margin-bottom: $box-spacing-XS / 2;
+    }
+    @include responsive-SM{
+        font-size: $index-x3-title-main-font-SM;
+        margin-bottom: $box-spacing-SM / 2;
+    }
+    @include responsive-MD{
+        font-size: $index-x3-title-main-font-MD;
+        margin-bottom: $box-spacing-MD / 2;
+    }
+    @include responsive-LG{
+        font-size: $index-x3-title-main-font-LG;
+        margin-bottom: $box-spacing-LG / 2;
+    }
+    @include responsive-XL{
+        font-size: $index-x3-title-main-font-XL;
+        margin-bottom: $box-spacing-XL / 2;
+    }
+}
+
+.form-list-container {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.form-list-container li {
+    @include responsive-XS{
+        margin-bottom: $box-spacing-XS;
+    }
+    @include responsive-SM{
+        margin-bottom: $box-spacing-SM;
+    }
+    @include responsive-MD{
+        margin-bottom: $box-spacing-MD;
+    }
+    @include responsive-LG{
+        margin-bottom: $box-spacing-LG;
+    }
+    @include responsive-XL{
+        margin-bottom: $box-spacing-XL;
+    }
+}
+
+.form-list-action {
+    background-color: transparent;
+}
+
+.form-imgprev {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 15px;
+    border: 2px dotted $grey-4;
+    width: 100%;
+    box-sizing: border-box;
+    @include responsive-XS{
+        margin-top: $box-spacing-XS / 2;
+        margin-bottom: $box-spacing-XS / 2;
+        height: 56.75vw;
+    }
+    @include responsive-SM{
+        margin-top: $box-spacing-SM / 2;
+        margin-bottom: $box-spacing-SM / 2;
+        height: 276px;
+    }
+    @include responsive-MD{
+        margin-top: $box-spacing-MD / 2;
+        margin-bottom: $box-spacing-MD / 2;
+        height: 309px;
+    }
+    @include responsive-LG{
+        margin-top: $box-spacing-LG / 2;
+        margin-bottom: $box-spacing-LG / 2;
+        height: 326px;
+    }
+    @include responsive-XL{
+        margin-top: $box-spacing-XL / 2;
+        margin-bottom: $box-spacing-XL / 2;
+        height: 394px;
+    }
+}
+
+.form-imgprev img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.form-element {
+    display: block;
+    width: 100%;
+    height: $input-height;
+    padding: $input-padding;
+    font-family: $font-family-default;
+    font-size: $input-fontsize;
+    font-weight: 400;
+    color: $grey-9;
+    background-color: $white;
+    background-clip: padding-box;
+    border: 1px solid $grey-4;
+    border-radius: .25rem;
+    appearance: none;
+    box-sizing: border-box;
+  
+    &:focus {
+        color: $grey-9;
+        background-color: $white;
+        outline: 0;
+    }
+  
+    &::placeholder {
+        color: $grey-9;
+        opacity: 1;
+    }
+  
+    &:disabled,
+    &[readonly] {
+        background-color: grey;
+        border-color: grey;
+        opacity: 1;
+    }
+}
+
+
+.button {
+    display: inline-block;
+    font-family: $font-family;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid;
+  
+    &:hover {
+        text-decoration: none;
+    }
+  
+    &:focus,
+    &.focus {
+        outline: 0;
+    }
+  
+    &:disabled,
+    &.disabled,
+    fieldset:disabled & { // stylelint-disable-line selector-no-qualifying-type
+        pointer-events: none;
+        opacity: .5;
+    }
+}
+
+.button-default, .button-submit {
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.5rem 0.75rem;
+}
+
+.button-small {
+    font-weight: 600;
+    font-size: 0.75rem;
+    padding: 0.375rem 0.5625rem;
+}
+
+textarea.form-element {
+    height: auto;
+}

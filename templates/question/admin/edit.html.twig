@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% include "header/admin/tool-header.html.twig" %}
+
+    <!-- CONTENT -->
+    <main>
+        <div class="container">
+            <div class="form">
+                <div class="form-nav">
+                    <a href="{{ path('admin_tip_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}">retour</a>
+                </div>
+                <div class="form-box">
+                    <div class="form-head">
+                        <h1>Modifier une question</h1>
+                    </div>
+                    <div class="form-body">
+                        {{ include('question/admin/_form.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+

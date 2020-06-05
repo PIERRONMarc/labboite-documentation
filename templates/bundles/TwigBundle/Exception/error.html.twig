@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+ <!-- LOGIN PANEL -->
+<div class="panel-container">
+    <div class="panel">
+        <div class="message">
+            <div class="message-logo">
+                <img src="{{ asset('img/graphics/logo.png') }}" alt="Logo du fablab" />
+            </div>
+            <div class="message-content">
+                <h1>Oups…</h1>  
+                <p>{{ exception.message }}</p>
+            </div>
+            <div class="message-cta">
+                <a class="button button-default" href="{{ path('home') }}">Retour à l'accueil</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

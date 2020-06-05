@@ -1,0 +1,41 @@
+{{ form_start(form) }}
+    <div class="form-group form-mb-l">
+        {{ form_label(form.name) }}
+        {{ form_widget(form.name, {'attr': { 'class': "form-element" ~ (form.name.vars.valid == false ? ' has-error')}}) }}
+        {{ form_errors(form.name) }}
+    </div>
+    <div class="form-group form-mb-l">
+        <label for="categoryThumb">Vignette</label>
+        <div class="form-file-preview">
+            <div class="form-imgprev">
+                {% if imgRelativeUrl is defined and imgRelativeUrl is not null %}
+                    <img src="{{ asset(imgRelativeUrl) }}" alt="Thumb" id="imgPreview">
+                {% else %}
+                    <img src="{{ asset('img/default.png')}}" alt="Thumb" id="imgPreview">
+                {% endif %}
+            </div>
+        </div>
+       <div class="form-file-button">
+            {{ form_widget(form.imageFile, {'attr': { 'class': 'form-control-file'}}) }}
+        </div>
+        {{ form_errors(form.imageFile) }}
+    </div>
+    <div class="form-group form-mb-l">
+        {{ form_label(form.description) }}
+        {{ form_widget(form.description, {'attr': { 'class': "form-element" ~ (form.description.vars.valid == false ? ' has-error')}}) }}
+        {{ form_errors(form.description) }}
+    </div>
+    <div class="form-group form-mb-l">
+        {{ form_label(form.price) }}
+        {{ form_widget(form.price, {'attr': { 'class': "form-element" ~ (form.price.vars.valid == false ? ' has-error')}}) }}
+        {{ form_errors(form.price) }}
+    </div>
+    <div class="form-group form-mb-l">
+        {{ form_label(form.charge) }}
+        {{ form_widget(form.charge, {'attr': { 'class': "form-element" ~ (form.charge.vars.valid == false ? ' has-error')}}) }}
+        {{ form_errors(form.charge) }}
+    </div>
+      <div class="form-action">
+        <button type="submit" class="button button-submit">Valider</button>
+    </div>
+{{ form_end(form) }}

@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% include "header/public/tool-header.html.twig" %}
+
+    <!-- CONTENT -->
+    <main>
+        <div class="container">
+            <div class="datasheet">
+                <div class="datasheet-core">
+                    {% for consumable in tool.consumable %}
+                        <!-- Consumable item -->
+                        <article class="tool-consumable box box-p box-mb box-bg">
+                            <div class="consumable-head box-part">
+                                <div class="consumable-thumb">
+                                    {% if consumable.pictureName is not null %}
+                                        <img src="{{ asset('upload/consumable/' ~ consumable.pictureName)}}" alt="Consommable">
+                                    {% else %}
+                                        <img src="{{ asset('img/default.png')}}" alt="Consommable" />
+                                    {% endif %}
+                                </div>
+                                <div class="consumable-title">
+                                    <h2>{{ consumable.name}}</h2>
+                                </div>
+                            </div>
+                            {% if consumable.description is not null %}
+                                    <div class="box-part">
+                                        <p>{{ consumable.description }}</p>
+                                    </div>
+                                {% endif %}
+                                {% if consumable.price is not null %}
+                                    <div class="box-part">
+                                        <div class="consumable-data">
+                                            <div>
+                                                <span class="icon icon-price consumable-icon"></span>
+                                            </div>
+                                            <div>
+                                                <p>{{ consumable.price }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                {% if consumable.charge %}
+                                    <div class="box-part">
+                                        <div class="consumable-data">
+                                            <div>
+                                                <span class="icon icon-burden consumable-icon"></span>
+                                            </div>
+                                            <div>
+                                                <p>{{ consumable.charge }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                        </article>
+                    {% else %}
+                        <p class="text-center">Il n'y a aucun consommable pour le moment</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+

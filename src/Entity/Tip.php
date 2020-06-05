@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TipRepository")
@@ -18,18 +20,20 @@ class Tip
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
     private $title;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\NotBlank
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $picturePath;
+    private $pictureName;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -71,14 +75,14 @@ class Tip
         return $this;
     }
 
-    public function getPicturePath(): ?string
+    public function getPictureName(): ?string
     {
-        return $this->picturePath;
+        return $this->pictureName;
     }
 
-    public function setPicturePath(?string $picturePath): self
+    public function setPictureName(?string $pictureName): self
     {
-        $this->picturePath = $picturePath;
+        $this->pictureName = $pictureName;
 
         return $this;
     }

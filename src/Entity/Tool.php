@@ -2,12 +2,16 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use App\Validator\Constraints as UserAssert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ToolRepository")
+ * @UserAssert\ToolIsUnique
  */
 class Tool
 {
@@ -20,13 +24,14 @@ class Tool
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $picturePath;
+    private $pictureName;
 
     /**
      * @ORM\Column(type="text")
@@ -35,6 +40,7 @@ class Tool
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
     private $type;
 
@@ -50,12 +56,12 @@ class Tool
     private $category;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Tip", mappedBy="tool", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Tip", mappedBy="tool", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $tips;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="tool", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="tool", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $question;
 
@@ -65,17 +71,12 @@ class Tool
     private $tutorial;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\NoticeParagraph", mappedBy="tool", orphanRemoval=true)
-     */
-    private $noticeParagraph;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Characteristic", mappedBy="tool", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Characteristic", mappedBy="tool", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $characteristic;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Consumable", mappedBy="tool", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Consumable", mappedBy="tool", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $consumable;
 
@@ -84,15 +85,30 @@ class Tool
      */
     private $information;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Resource", mappedBy="tool", orphanRemoval=true, cascade={"persist", "remove"})
+     */
+    private $resources;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Notice", inversedBy="tool", cascade={"persist", "remove"})
+     */
+    private $notice;
+
     public function __construct()
     {
         $this->tips = new ArrayCollection();
         $this->question = new ArrayCollection();
         $this->tutorial = new ArrayCollection();
-        $this->noticeParagraph = new ArrayCollection();
         $this->characteristic = new ArrayCollection();
         $this->relation = new ArrayCollection();
         $this->consumable = new ArrayCollection();
+        $this->resources = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -112,14 +128,14 @@ class Tool
         return $this;
     }
 
-    public function getPicturePath(): ?string
+    public function getPictureName(): ?string
     {
-        return $this->picturePath;
+        return $this->pictureName;
     }
 
-    public function setPicturePath(?string $picturePath): self
+    public function setPictureName(?string $pictureName): self
     {
-        $this->picturePath = $picturePath;
+        $this->pictureName = $pictureName;
 
         return $this;
     }
@@ -266,37 +282,6 @@ class Tool
     }
 
     /**
-     * @return Collection|NoticeParagraph[]
-     */
-    public function getNoticeParagraph(): Collection
-    {
-        return $this->noticeParagraph;
-    }
-
-    public function addNoticeParagraph(NoticeParagraph $noticeParagraph): self
-    {
-        if (!$this->noticeParagraph->contains($noticeParagraph)) {
-            $this->noticeParagraph[] = $noticeParagraph;
-            $noticeParagraph->setTool($this);
-        }
-
-        return $this;
-    }
-
-    public function removeNoticeParagraph(NoticeParagraph $noticeParagraph): self
-    {
-        if ($this->noticeParagraph->contains($noticeParagraph)) {
-            $this->noticeParagraph->removeElement($noticeParagraph);
-            // set the owning side to null (unless already changed)
-            if ($noticeParagraph->getTool() === $this) {
-                $noticeParagraph->setTool(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Characteristic[]
      */
     public function getCharacteristic(): Collection
@@ -380,5 +365,60 @@ class Tool
         return $this->name;
         // to show the id of the Tategory in the select
         // return $this->id;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Resource[]
+     */
+    public function getResources(): Collection
+    {
+        return $this->resources;
+    }
+
+    public function addResource(Resource $resource): self
+    {
+        if (!$this->resources->contains($resource)) {
+            $this->resources[] = $resource;
+            $resource->setTool($this);
+        }
+
+        return $this;
+    }
+
+    public function removeResource(Resource $resource): self
+    {
+        if ($this->resources->contains($resource)) {
+            $this->resources->removeElement($resource);
+            // set the owning side to null (unless already changed)
+            if ($resource->getTool() === $this) {
+                $resource->setTool(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getNotice(): ?Notice
+    {
+        return $this->notice;
+    }
+
+    public function setNotice(?Notice $notice): self
+    {
+        $this->notice = $notice;
+
+        return $this;
     }
 }

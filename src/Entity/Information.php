@@ -19,7 +19,7 @@ class Information
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $picturePath;
+    private $pictureName;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Tool", inversedBy="information", cascade={"persist", "remove"})
@@ -37,14 +37,14 @@ class Information
         return $this->id;
     }
 
-    public function getPicturePath(): ?string
+    public function getPictureName(): ?string
     {
-        return $this->picturePath;
+        return $this->pictureName;
     }
 
-    public function setPicturePath(?string $picturePath): self
+    public function setPictureName(?string $pictureName): self
     {
-        $this->picturePath = $picturePath;
+        $this->pictureName = $pictureName;
 
         return $this;
     }

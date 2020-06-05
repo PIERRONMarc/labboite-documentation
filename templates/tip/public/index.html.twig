@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% include "header/public/tool-header.html.twig" %}
+
+    <!-- CONTENT -->
+    <main>
+        <div class="container">
+            <div class="datasheet">
+                <div class="datasheet-core">
+                    {% for tip in tool.tips %}
+                        {% if tip.pictureName is not null %}
+                            <!-- Tip item -->
+                            <article class="tool-tip box box-mb box-p text-format box-bg">
+                                <h2>{{ tip.title }}</h2>
+                                <img class="box-image" src="{{ asset('upload/tips/' ~ tip.pictureName) }}" alt="Astuce" />
+                                <p>{{ tip.description }}</p>
+                            </article>
+                        {% endif %}
+
+                        {% if tip.youtubeLink is not null %}
+                            <!-- Tip item -->
+                            <article class="tool-tip box box-mb box-p text-format box-bg">
+                                <h2>{{ tip.title }}</h2>
+                                <div class="box-video">
+                                    <iframe src="{{ tip.youtubeLink }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div>
+                                <p>{{ tip.description }}</p>
+                            </article>
+                        {% endif %}
+
+                        {% if tip.youtubeLink is null and tip.pictureName is null %}
+                            <!-- Tip item -->
+                            <article class="tool-tip box box-mb box-p text-format box-bg">
+                                <h2>{{ tip.title }}</h2>
+                                <p>{{ tip.description }}</p>
+                            </article>
+                        {% endif %}
+                    {% else %}
+                        <p class="text-center">Il n'y a aucune astuce pour le moment</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

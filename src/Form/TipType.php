@@ -41,7 +41,6 @@ class TipType extends AbstractType
                 ],
             ])
             ->add('youtubeLink')
-            ->add('tool')
         ;
     }
 

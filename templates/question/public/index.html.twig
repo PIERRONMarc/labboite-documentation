@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% include "header/public/tool-header.html.twig" %}
+
+    <!-- CONTENT -->
+    <main>
+        <div class="container">
+            <div class="datasheet">
+                <div class="datasheet-core">
+                    <div class="accordion-list">
+                        {% for faq in tool.question %}
+                            <!-- Question item -->
+                            <article class="tool-help-item box box-bg box-mb accordion-item">
+                                <a href="#" class="tool-help-head accordion-trigger">
+                                    <div class="help-head-container box-p">
+                                        <div>{{ faq.question}}</div>
+                                        <div><span class="icon icon-more tool-head-icon"></span></div>
+                                    </div>
+                                </a>
+                                <div class="tool-help-body box-p text-format accordion-content" style="display: none;">
+                                    <p>{{ faq.answer|raw }}</p>
+                                </div>
+                            </article>
+                        {% else %}
+                            <p class="text-center">Il n'y a aucune aide pour le moment</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('javascript/accordion.js')}}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.accordion-list').simpleAccordion();
+        });
+    </script>
+{% endblock %}

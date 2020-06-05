@@ -1,0 +1,57 @@
+{{ form_start(form) }}
+       
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class=" alert alert-{{ label }}">
+                <p>{{ message }}</p> 
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <div class="form-group form-mb-l">
+        {{ form_label(form.title) }}
+        {{ form_widget(form.title, {'attr': { 'class': "form-element" ~ (form.title.vars.valid == false ? ' has-error')}}) }}
+        {{ form_errors(form.title) }}
+    </div>
+    
+    <div class="form-group form-mb-l">
+        {{ form_label(form.description) }}
+        {{ form_widget(form.description, {'attr': { 'class': "form-element" ~ (form.description.vars.valid == false ? ' has-error')}}) }}
+        {{ form_errors(form.description) }}
+    </div> 
+    <div class="form-group form-mb-l form-inline">
+        <div>
+            <input class="form-check-input" type="radio" name="tipMedia" id="tipMediaImageSelect" data-toggle-element=".formTipInput" value="image" {{ form.vars.value.pictureName is not null ? 'checked'}}>
+            <label for="tipMediaImageSelect">Image</label>
+        </div>
+        <div>
+        
+            <input class="form-check-input" type="radio" name="tipMedia" id="tipMediaYoutubeSelect" data-toggle-element=".formTipInput" value="youtube" {{ form.youtubeLink.vars.data ? 'checked'}}> 
+            <label for="tipMediaYoutubeSelect">Vidéo YouTube</label>
+        </div>
+    </div>
+    <div class="form-group form-mb-l formTipInput" data-toggle-element-value="image">
+        <label for="tipMediaImage">Vignette</label>
+        <div class="form-file-preview">
+            <div class="form-imgprev">
+                {% if form.vars.value is not null and form.vars.value.pictureName is not null %}
+                    <img src="{{ asset('upload/tips/' ~ form.vars.value.pictureName) }}" alt="Thumb" id="imgPreview">
+                {% else %}
+                    <img src="{{ asset('img/default.png')}}" alt="Thumb" id="imgPreview">
+                {% endif %}
+            </div>
+        </div>
+        <div class="form-file-button">
+            {{ form_widget(form.imageFile, {'attr': { 'class': 'form-control-file'}}) }}
+        </div>
+        {{ form_errors(form.imageFile) }}
+    </div>
+    <div class="form-group form-mb-l formTipInput" data-toggle-element-value="youtube">
+        {{ form_label(form.youtubeLink) }}
+        {{ form_widget(form.youtubeLink, {'attr': { 'class': "form-element" ~ (form.youtubeLink.vars.valid == false ? ' has-error')}}) }}
+        {{ form_errors(form.youtubeLink) }}
+    </div>
+    <div class="form-action">
+        <button type="submit" class="button button-submit">Valider</button>
+    </div>
+{{ form_end(form) }}
