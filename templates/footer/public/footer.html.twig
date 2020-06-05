@@ -3,9 +3,3 @@
 {% else %}
 <a href="{{ path('app_login') }}">Connexion</a>
 {% endif %}
-
-{# {% if splittedUrl[1] is defined  and splittedUrl[1] == 'admin' %}
-    <a href="{{ app.request.schemeAndHttpHost ~ app.request.baseUrl ~ '/' ~ splittedUrl|slice(2)|join('/') }}">voir front-office</a>
-{% else %}
-    <a href="{{ app.request.schemeAndHttpHost ~ app.request.baseUrl ~ '/admin/' ~ splittedUrl|slice(1)|join('/') }}">voir back-office</a>
-{% endif %} #}

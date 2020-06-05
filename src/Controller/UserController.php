@@ -17,11 +17,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
+ * User handling - back office
+ * 
  * @Route("/admin/user")
  */
 class UserController extends AbstractController
 {
     /**
+     * List all users
+     * 
      * @Route("/", name="user_index", methods={"GET"})
      */
     public function index(UserRepository $userRepository, ThemeRepository $themeRepository): Response
@@ -33,6 +37,8 @@ class UserController extends AbstractController
     }
 
     /**
+     * Creation form
+     * 
      * @Route("/new", name="user_new")
      */
     public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder, ThemeRepository $themeRepository): Response
@@ -73,6 +79,8 @@ class UserController extends AbstractController
     }
 
     /**
+     * Edition form
+     * 
      * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, User $user, ThemeRepository $themeRepository): Response
@@ -109,6 +117,8 @@ class UserController extends AbstractController
     }
 
     /**
+     * Password change form
+     * 
      * @Route("/{id}/change-password", name="user_change_password", methods={"GET", "POST"})
      */
     public function changePassword(Request $request, User $user, UserPasswordEncoderInterface $passwordEncoder, ThemeRepository $themeRepository) {
@@ -146,10 +156,13 @@ class UserController extends AbstractController
     }
 
     /**
+     * Delete a user
+     * 
      * @Route("/{id}", name="user_delete", methods={"DELETE"})
      */
     public function delete(Request $request, User $user): Response
     {
+        // prevent the user to delete his own account
         if ($user == $this->getUser()) {
             $this->addFlash('danger', 'Vous ne pouvez pas supprimer votre propre compte');
         } else {

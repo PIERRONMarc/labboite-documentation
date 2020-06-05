@@ -1,73 +1,71 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% include "header/admin/tool-header.html.twig" %}
 
-{% include "header/admin/tool-header.html.twig" %}
+    <!-- CONTENT -->
+    <main>
+        <div class="container">
+            <div class="datasheet">
+                <div class="datasheet-core">
+                    <div class="accordion-list">
 
-<!-- CONTENT -->
-<main>
-    <div class="container">
-        <div class="datasheet">
-            <div class="datasheet-core">
-                <div class="accordion-list">
-
-                    <!-- Add an item -->
-                    <article class="tool-consumable box box-mb">
-                        <a href="{{ path('question_new', {'slug': tool.slug, 'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug})}}"
-                            class="additem-link">
-                            <div class="additem-icon-container box-p">
-                                <div class="additem-icon-img"><span class="icon icon-more additem-icon"></span></div>
-                                <div class="additem-icon-label">Ajouter une question</div>
-                            </div>
-                        </a>
-                    </article>
-
-                    {% for question in tool.question %}
-                    <!-- Consumable item -->
-                    <article class="tool-help-item accordion-item">
-                        <div class="box-controls">
-                            <ul class="box-controls-container">
-                                <li><a
-                                        href="{{ path('question_edit', {'toolSlug': tool.slug, 'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'id': question.id})}}"><span
-                                            class="icon icon-edit box-controls-icon"></span></a></li>
-                                <li>
-                                    <form method="post" action="{{ path('question_delete', {'id': question.id}) }}"
-                                        onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette question ?');">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token"
-                                            value="{{ csrf_token('delete' ~ question.id) }}">
-                                        <button class="delete-btn"><span
-                                                class="icon icon-delete box-controls-icon"></span></button>
-                                    </form>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="box box-bg box-mb">
-                            <a href="#" class="tool-help-head accordion-trigger">
-                                <div class="help-head-container box-p">
-                                    <div>{{ question.question}}</div>
-                                    <div><span class="icon icon-more tool-head-icon"></span></div>
+                        <!-- Add an item -->
+                        <article class="tool-consumable box box-mb">
+                            <a href="{{ path('question_new', {'slug': tool.slug, 'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug})}}"
+                                class="additem-link">
+                                <div class="additem-icon-container box-p">
+                                    <div class="additem-icon-img"><span class="icon icon-more additem-icon"></span></div>
+                                    <div class="additem-icon-label">Ajouter une question</div>
                                 </div>
                             </a>
-                            <div class="tool-help-body box-p text-format accordion-content" style="display: none;">
-                                <p>{{ question.answer|raw }}</p>
+                        </article>
+
+                        {% for question in tool.question %}
+                        <!-- Consumable item -->
+                        <article class="tool-help-item accordion-item">
+                            <div class="box-controls">
+                                <ul class="box-controls-container">
+                                    <li><a
+                                            href="{{ path('question_edit', {'toolSlug': tool.slug, 'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'id': question.id})}}"><span
+                                                class="icon icon-edit box-controls-icon"></span></a></li>
+                                    <li>
+                                        <form method="post" action="{{ path('question_delete', {'id': question.id}) }}"
+                                            onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette question ?');">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token"
+                                                value="{{ csrf_token('delete' ~ question.id) }}">
+                                            <button class="delete-btn"><span
+                                                    class="icon icon-delete box-controls-icon"></span></button>
+                                        </form>
+                                    </li>
+                                </ul>
                             </div>
-                        </div>
-                    </article>
-                    {% endfor %}
+                            <div class="box box-bg box-mb">
+                                <a href="#" class="tool-help-head accordion-trigger">
+                                    <div class="help-head-container box-p">
+                                        <div>{{ question.question}}</div>
+                                        <div><span class="icon icon-more tool-head-icon"></span></div>
+                                    </div>
+                                </a>
+                                <div class="tool-help-body box-p text-format accordion-content" style="display: none;">
+                                    <p>{{ question.answer|raw }}</p>
+                                </div>
+                            </div>
+                        </article>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</main>
-
+    </main>
 {% endblock %}
 
 {% block javascripts %}
-<script type="text/javascript" src="{{ asset('javascript/accordion.js')}}"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('.accordion-list').simpleAccordion();
-    });
-</script>
+    <script type="text/javascript" src="{{ asset('javascript/accordion.js')}}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.accordion-list').simpleAccordion();
+        });
+    </script>
 {% endblock %}

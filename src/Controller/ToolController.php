@@ -15,9 +15,14 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * Tool handling
+ */
 class ToolController extends AbstractController
 {
     /**
+     * Index - front office
+     * 
      * @Route("{themeSlug}/{slug}/tool", name="tool_index")
      */
     public function index(ToolRepository $toolRepository, Category $category, ThemeRepository $themeRepository): Response
@@ -30,6 +35,8 @@ class ToolController extends AbstractController
     }
 
     /**
+     * Index - back office
+     * 
      * @Route("admin/{themeSlug}/{slug}/tool", name="admin_tool_index")
      */
     public function adminIndex(ToolRepository $toolRepository, Category $category, ThemeRepository $themeRepository): Response
@@ -43,6 +50,8 @@ class ToolController extends AbstractController
     }
     
     /**
+     * Creation form - back office
+     * 
      * @Route("admin/{themeSlug}/{slug}/tool/new", name="tool_new", methods={"GET","POST"})
      */
     public function new(Request $request, Category $category, ValidatorInterface $validator, ThemeRepository $themeRepository): Response
@@ -54,8 +63,8 @@ class ToolController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // file input handling
             $uploadedFile = $form['imageFile']->getData();
+            // if image is filled, upload it at the correct path
             if ($uploadedFile) {
                 $destination = $this->getParameter('kernel.project_dir').'/public/upload/tool';
                 $fileUploader = new FileUploader($destination);
@@ -64,8 +73,6 @@ class ToolController extends AbstractController
             }
 
             $tool->setSlug(Urlizer::urlize($tool->getName()));
-            
-
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($tool);
             $entityManager->flush();
@@ -82,6 +89,8 @@ class ToolController extends AbstractController
     }
 
     /**
+     * Edition form - back office
+     * 
      * @Route("admin/{themeSlug}/{slug}/tool/edit", name="tool_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Tool $tool, ThemeRepository $themeRepository): Response
@@ -90,7 +99,7 @@ class ToolController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // file input handling
+            // if image is filled, upload it at the correct path
             $uploadedFile = $form['imageFile']->getData();
             if ($uploadedFile) {
                 $destination = $this->getParameter('kernel.project_dir').'/public/upload/tool';
@@ -114,6 +123,8 @@ class ToolController extends AbstractController
     }
 
     /**
+     * Delete a tool - back office
+     * 
      * @Route("admin/tool/{id}", name="tool_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Tool $tool): Response

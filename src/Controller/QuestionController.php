@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Question;
-use App\Entity\Theme;
 use App\Entity\Tool;
 use App\Form\QuestionType;
 use App\Repository\QuestionRepository;
@@ -14,13 +13,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Question handling - tool page
+ */
 class QuestionController extends AbstractController
 {
     /**
+     * Index - front office
+     * 
      * @Route("{themeSlug}/{categorySlug}/{slug}/faq", name="question_index", methods={"GET"})
      */
     public function index(QuestionRepository $questionRepository, Tool $tool, ThemeRepository $themeRepository, HeaderHelper $headerHelper): Response
     {
+        //get all non empty section of the tool header as an array
         $header = $headerHelper->getToolHeader($tool);
         
         return $this->render('question/public/index.html.twig', [
@@ -32,9 +37,11 @@ class QuestionController extends AbstractController
     }
 
      /**
-     * @Route("admin/{themeSlug}/{categorySlug}/{slug}/faq", name="admin_question_index", methods={"GET"})
+      * Index - back office
+      *
+      * @Route("admin/{themeSlug}/{categorySlug}/{slug}/faq", name="admin_question_index", methods={"GET"})
      */
-    public function indexAdmin(QuestionRepository $questionRepository, Tool $tool, ThemeRepository $themeRepository): Response
+    public function adminIndex(QuestionRepository $questionRepository, Tool $tool, ThemeRepository $themeRepository): Response
     {
         return $this->render('question/admin/index.html.twig', [
             'tool' => $tool,
@@ -43,6 +50,8 @@ class QuestionController extends AbstractController
         ]);
     }
     /**
+     * Creation form question - back office
+     * 
      * @Route("admin/{themeSlug}/{categorySlug}/{slug}/faq/new/", name="question_new", methods={"GET","POST"})
      */
     public function new(Request $request, Tool $tool, ThemeRepository $themeRepository): Response
@@ -73,6 +82,8 @@ class QuestionController extends AbstractController
     }
    
     /**
+     * Edition form - back office
+     * 
      * @Route("admin/{themeSlug}/{categorySlug}/{toolSlug}/faq/{id}/edit", name="question_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Question $question, ThemeRepository $themeRepository): Response
@@ -99,6 +110,8 @@ class QuestionController extends AbstractController
     }
 
     /**
+     * Delete a question - back office
+     * 
      * @Route("admin/faq/{id}", name="question_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Question $question): Response

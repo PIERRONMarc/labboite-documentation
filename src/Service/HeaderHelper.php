@@ -4,6 +4,9 @@ namespace App\Service;
 
 use App\Entity\Tool;
 
+/**
+ * Header utility class 
+ */
 class HeaderHelper {
 
     /**

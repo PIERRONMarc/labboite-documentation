@@ -9,9 +9,17 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
+/**
+ * Make sure a category is unique in his theme
+ */
 class CategoryIsUniqueValidator extends ConstraintValidator
 {
 
+    /**
+     * For categry request
+     *
+     * @var CategoryRepository
+     */
     private $categoryRepository;
 
     public function __construct(CategoryRepository $categoryRepository) {
@@ -26,9 +34,9 @@ class CategoryIsUniqueValidator extends ConstraintValidator
 
         $slug = Urlizer::urlize($protocol->getName());
         $existingCategory = $this->categoryRepository->findOneBy(['slug' => $slug, 'theme' => $protocol->getTheme()]);
-        // si une catégorie du même nom existe pour le thème actuel
+        // if a category with the same name already exist for this theme
         if ($existingCategory) {
-            // si la catégorie du même nom n'est pas la catégorie actuelle
+            // if the same name category is not the current category
             if (!($existingCategory->getId() === $protocol->getId())) {
                 $this->context->buildViolation($constraint->message)
                     ->atPath('name')

@@ -13,11 +13,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\File;
 
+
+/**
+ * Categories handling
+ */
 class CategoryController extends AbstractController
 {
     /**
+     * Index - front office
+     * 
      * @Route("/{slug}/category", name="category_index", methods={"GET"})
      */
     public function index(CategoryRepository $categoryRepository, ThemeRepository $themeRepository, Theme $theme): Response
@@ -31,6 +36,8 @@ class CategoryController extends AbstractController
     }
 
     /**
+     * Index - back office
+     * 
      * @Route("admin/{slug}/category", name="admin_category_index", methods={"GET"})
      */
     public function adminIndex(CategoryRepository $categoryRepository, ThemeRepository $themeRepository, Theme $theme): Response
@@ -44,18 +51,20 @@ class CategoryController extends AbstractController
     }
 
     /**
+     * Creation form - back office
+     * 
      * @Route("admin/{slug}/category/new", name="category_new", methods={"GET","POST"})
      */
     public function new(Request $request, Theme $theme, ThemeRepository $themeRepository): Response
     {
         $category = new Category();
-        $category->setTheme($theme);
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $uploadedFile = $form->get('imageFile')->getData();
 
+            // if image is filled, upload it at the correct path
             if ($uploadedFile) {
                 $destination = $this->getParameter('kernel.project_dir').'/public/upload/category';
                 $fileUploader = new FileUploader($destination);
@@ -63,6 +72,7 @@ class CategoryController extends AbstractController
                 $category->setThumbnailName($newFileName);
             }
 
+            $category->setTheme($theme);
             $category->setSlug(Urlizer::urlize($category->getName()));
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($category);
@@ -81,19 +91,20 @@ class CategoryController extends AbstractController
     }
 
     /**
+     * Edition form - back office
+     * 
      * @Route("admin/{themeSlug}/{categorySlug}/edit", name="category_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, $themeSlug, $categorySlug, CategoryRepository $categoryRepo, ThemeRepository $themeRepository): Response
     {
-        $category = $categoryRepo->findBySlugs($categorySlug, $themeSlug);
+        $category = $categoryRepo->findBySlugs($categorySlug, $themeSlug); // find by theme and category slug because a category could have the same slug in another theme
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $uploadedFile = $form->get('imageFile')->getData();
 
-            // this condition is needed because the 'brochure' field is not required
-            // so the PDF file must be processed only when a file is uploaded
+            // if image is filled, upload it at the correct path
             if ($uploadedFile) {
                 $destination = $this->getParameter('kernel.project_dir').'/public/upload/category';
                 $fileUploader = new FileUploader($destination);
@@ -116,6 +127,8 @@ class CategoryController extends AbstractController
     }
 
     /**
+     * Delete a category - back office
+     * 
      * @Route("admin/category/{id}", name="category_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Category $category): Response

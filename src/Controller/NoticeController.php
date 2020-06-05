@@ -13,13 +13,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Handle notice - tool page
+ */
 class NoticeController extends AbstractController
 {
     /**
+     * Index - front office
+     * 
      * @Route("{themeSlug}/{categorySlug}/{slug}/notice", name="notice_index", methods={"GET"})
      */
     public function index(NoticeRepository $noticeRepository, ThemeRepository $themeRepository, Tool $tool, HeaderHelper $headerHelper): Response
     {
+        //get all non empty section of the tool header as an array
         $header = $headerHelper->getToolHeader($tool);
         
         return $this->render('notice/public/index.html.twig', [
@@ -31,10 +37,15 @@ class NoticeController extends AbstractController
     }
 
     /**
+     * Index and form - back office
+     * 
+     * Handle new notice object and edition at the same time.
+     * 
      * @Route("/admin/{themeSlug}/{categorySlug}/{slug}/notice", name="admin_notice_index", methods={"GET","POST"})
      */
-    public function edit(Request $request, Tool $tool, ThemeRepository $themeRepository): Response
+    public function adminIndex(Request $request, Tool $tool, ThemeRepository $themeRepository): Response
     {
+        // if there is no notice we create one
         if ($tool->getNotice()) {
             $notice = $tool->getNotice();
         } else {

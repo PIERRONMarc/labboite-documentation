@@ -1,89 +1,87 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% include "header/admin/tool-header.html.twig" %}
+    
+    <!-- CONTENT -->
+    <main>
+        <div class="container">
+            <div class="datasheet">
+                <div class="datasheet-core">
 
-{% include "header/admin/tool-header.html.twig" %}
-
-<!-- CONTENT -->
-<main>
-    <div class="container">
-        <div class="datasheet">
-            <div class="datasheet-core">
-
-                <!-- Add an item -->
-                <article class="tool-consumable box box-mb">
-                    <a href="{{ path('consumable_new', {'slug': tool.slug, 'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug})}}" class="additem-link">
-                        <div class="additem-icon-container box-p">
-                            <div class="additem-icon-img"><span class="icon icon-more additem-icon"></span></div>
-                            <div class="additem-icon-label">Ajouter un consommable</div>
-                        </div>
-                    </a>
-                </article>
-                        
-                <!-- Existing item -->
-                {% for consumable in tool.consumable %}
-                    <article class="tool-consumable box-mb">
-                        <div class="box-controls">
-                            <ul class="box-controls-container">
-                                <li><a href="{{ path('consumable_edit', {'toolSlug': tool.slug, 'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'consumable': consumable.id})}}"><span class="icon icon-edit box-controls-icon"></span></a></li>
-                                <li>
-                                    <form method="post" action="{{ path('consumable_delete', {'id': consumable.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce consommable ?');">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ consumable.id) }}">
-                                        <button class="delete-btn"><span class="icon icon-delete box-controls-icon"></span></button>
-                                    </form>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="box box-bg box-p">
-                            <div class="consumable-head box-part">
-                                <div class="consumable-thumb">
-                                    {% if consumable.pictureName is not null %}
-                                        <img src="{{ asset('upload/consumable/' ~ consumable. pictureName)}}" alt="Consommable">
-                                    {% else %}
-                                        <img src="{{ asset('img/default.png')}}" alt="Consommable" />
-                                    {% endif %}
-                                </div>
-                                <div class="consumable-title">
-                                    <h2>{{ consumable.name}}</h2>
-                                </div>
+                    <!-- Add an item -->
+                    <article class="tool-consumable box box-mb">
+                        <a href="{{ path('consumable_new', {'slug': tool.slug, 'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug})}}" class="additem-link">
+                            <div class="additem-icon-container box-p">
+                                <div class="additem-icon-img"><span class="icon icon-more additem-icon"></span></div>
+                                <div class="additem-icon-label">Ajouter un consommable</div>
                             </div>
-                            {% if consumable.description is not null %}
-                                <div class="box-part">
-                                    <p>{{ consumable.description }}</p>
-                                </div>
-                            {% endif %}
-                            {% if consumable.price is not null %}
-                                <div class="box-part">
-                                    <div class="consumable-data">
-                                        <div>
-                                            <span class="icon icon-price consumable-icon"></span>
-                                        </div>
-                                        <div>
-                                            <p>{{ consumable.price }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endif %}
-                            {% if consumable.charge %}
-                                <div class="box-part">
-                                    <div class="consumable-data">
-                                        <div>
-                                            <span class="icon icon-burden consumable-icon"></span>
-                                        </div>
-                                        <div>
-                                            <p>{{ consumable.charge }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endif %}
-                        </div>
+                        </a>
                     </article>
-                {% endfor %}
+                            
+                    <!-- Existing item -->
+                    {% for consumable in tool.consumable %}
+                        <article class="tool-consumable box-mb">
+                            <div class="box-controls">
+                                <ul class="box-controls-container">
+                                    <li><a href="{{ path('consumable_edit', {'toolSlug': tool.slug, 'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'consumable': consumable.id})}}"><span class="icon icon-edit box-controls-icon"></span></a></li>
+                                    <li>
+                                        <form method="post" action="{{ path('consumable_delete', {'id': consumable.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce consommable ?');">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ consumable.id) }}">
+                                            <button class="delete-btn"><span class="icon icon-delete box-controls-icon"></span></button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="box box-bg box-p">
+                                <div class="consumable-head box-part">
+                                    <div class="consumable-thumb">
+                                        {% if consumable.pictureName is not null %}
+                                            <img src="{{ asset('upload/consumable/' ~ consumable. pictureName)}}" alt="Consommable">
+                                        {% else %}
+                                            <img src="{{ asset('img/default.png')}}" alt="Consommable" />
+                                        {% endif %}
+                                    </div>
+                                    <div class="consumable-title">
+                                        <h2>{{ consumable.name}}</h2>
+                                    </div>
+                                </div>
+                                {% if consumable.description is not null %}
+                                    <div class="box-part">
+                                        <p>{{ consumable.description }}</p>
+                                    </div>
+                                {% endif %}
+                                {% if consumable.price is not null %}
+                                    <div class="box-part">
+                                        <div class="consumable-data">
+                                            <div>
+                                                <span class="icon icon-price consumable-icon"></span>
+                                            </div>
+                                            <div>
+                                                <p>{{ consumable.price }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                {% if consumable.charge %}
+                                    <div class="box-part">
+                                        <div class="consumable-data">
+                                            <div>
+                                                <span class="icon icon-burden consumable-icon"></span>
+                                            </div>
+                                            <div>
+                                                <p>{{ consumable.charge }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
             </div>
         </div>
-    </div>
-</main>
-
+    </main>
 {% endblock %}
 

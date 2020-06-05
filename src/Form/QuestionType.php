@@ -20,7 +20,7 @@ class QuestionType extends AbstractType
             ->add('answer', CKEditorType::class, [
                 'config_name' => 'main_config',
                 'label' => 'Réponse*',
-                'empty_data' => '',
+                'empty_data' => '', // app will crash on submit without this line
             ])
         ;
     }

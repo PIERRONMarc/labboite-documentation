@@ -6,10 +6,6 @@ use App\Entity\Tool;
 use App\Entity\Consumable;
 use App\Form\ConsumableType;
 use App\Service\FileUploader;
-use App\Form\FinalConsumableType;
-use Gedmo\Sluggable\Util\Urlizer;
-use App\Repository\ToolRepository;
-
 use App\Repository\ConsumableRepository;
 use App\Repository\ThemeRepository;
 use App\Service\HeaderHelper;
@@ -17,15 +13,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
+/**
+ * Consumables handling - tool page
+ */
 class ConsumableController extends AbstractController
 {
     /**
+     * Index - front office
+     * 
      * @Route("{themeSlug}/{categorySlug}/{slug}/consumable", name="consumable_index", methods={"GET"})
      */
     public function index(ConsumableRepository $consumableRepository, Tool $tool, ThemeRepository $themeRepository, HeaderHelper $headerHelper): Response
     {
+        //get all non empty section of the tool header as an array
         $header = $headerHelper->getToolHeader($tool);
         
         return $this->render('consumable/public/index.html.twig', [
@@ -37,6 +38,8 @@ class ConsumableController extends AbstractController
     }
     
     /**
+     * Index - back office 
+     * 
      * @Route("admin/{themeSlug}/{categorySlug}/{slug}/consumable", name="admin_consumable_index", methods={"GET"})
      */
     public function adminIndex(ConsumableRepository $consumableRepository, Tool $tool, ThemeRepository $themeRepository): Response
@@ -49,6 +52,8 @@ class ConsumableController extends AbstractController
     }
     
     /**
+     * Creation form - back office
+     * 
      * @Route("admin/{themeSlug}/{categorySlug}/{slug}/consumable/new", name="consumable_new", methods={"GET","POST"})
      */
     public function new(Request $request, Tool $tool, ThemeRepository $themeRepository): Response
@@ -61,6 +66,7 @@ class ConsumableController extends AbstractController
            
             $uploadedFile = $form->get('imageFile')->getData();
             
+            // if image is filled, upload it at the correct path
             if ($uploadedFile) {
                 $destination = $this->getParameter('kernel.project_dir').'/public/upload/consumable';
                 $fileUploader = new FileUploader($destination);
@@ -89,6 +95,8 @@ class ConsumableController extends AbstractController
     }
 
     /**
+     * Edition form - back office
+     * 
      * @Route("admin/{themeSlug}/{categorySlug}/{toolSlug}/consumable/{consumable}/edit", name="consumable_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Consumable $consumable, ThemeRepository $themeRepository): Response
@@ -99,6 +107,7 @@ class ConsumableController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $uploadedFile = $form->get('imageFile')->getData();
             
+            // if image is filled, upload it at the correct path
             if ($uploadedFile) {
                 $destination = $this->getParameter('kernel.project_dir').'/public/upload/consumable';
                 $fileUploader = new FileUploader($destination);
@@ -125,6 +134,8 @@ class ConsumableController extends AbstractController
     }
 
     /**
+     * Delete a consumable - back office
+     * 
      * @Route("admin/consumable/{id}", name="consumable_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Consumable $consumable): Response

@@ -12,13 +12,19 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-
+/**
+ * Information handling - tool page
+ */
 class InformationController extends AbstractController
 {
     /**
+     * Index and form - back office
+     * 
+     * Handle new information object and edition at the same time.
+     * 
      * @Route("admin/{themeSlug}/{categorySlug}/{slug}/information", name="admin_information_index", methods={"GET","POST"})
      */
-    public function edit(Request $request, Tool $tool, ThemeRepository $themeRepository): Response
+    public function adminIndex(Request $request, Tool $tool, ThemeRepository $themeRepository): Response
     {
         $form = $this->createForm(FinalInformationType::class, $tool);
         $form->handleRequest($request);
@@ -26,6 +32,7 @@ class InformationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $uploadedFile = $form->get('information')->get('imageFile')->getData();
 
+            // if image is filled, upload it at the correct path
             if ($uploadedFile) {
                 $destination = $this->getParameter('kernel.project_dir').'/public/upload/informations';
                 $fileUploader = new FileUploader($destination);
@@ -49,10 +56,13 @@ class InformationController extends AbstractController
     }
 
     /**
+     * Index - front office
+     * 
      * @Route("{themeSlug}/{categorySlug}/{slug}/information", name="information_index", methods={"GET"})
      */
     public function index(Tool $tool, ThemeRepository $themeRepository, HeaderHelper $headerHelper)
     {
+        //get all non empty section of the tool header as an array
         $header = $headerHelper->getToolHeader($tool);
         
         return $this->render('information/public/index.html.twig', [

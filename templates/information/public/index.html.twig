@@ -1,60 +1,57 @@
 {% extends "base.html.twig" %}
 
-
 {% set category = tool.category %}
 
 {% block body %}
+    {% include "header/public/tool-header.html.twig" %}
 
-{% include "header/public/tool-header.html.twig" %}
-
-<!-- CONTENT -->
-<main>
-    <div class="container">
-        <div class="datasheet">
-            <div class="datasheet-core">
-                <section class="tool-info">
-                    <!-- Poster -->
-                    <div>
-                        {% if tool.information is not null and tool.information.pictureName is not null %}
-                            <img class="tool-info-poster" src="{{ asset('upload/informations/' ~ tool.information.pictureName) }}" alt="Image de l'outil" />
-                        {% else %}
-                            <img class="tool-info-poster" src="{{ asset('img/default.png') }}" alt="Image de l'outil" />
-                        {% endif %}
-                    </div>
-                    <div class="box box-mb box-p">
-                        <!-- Description -->
-                        {% if tool.information is not null and tool.information.content is not null %}
+    <!-- CONTENT -->
+    <main>
+        <div class="container">
+            <div class="datasheet">
+                <div class="datasheet-core">
+                    <section class="tool-info">
+                        <!-- Poster -->
+                        <div>
+                            {% if tool.information is not null and tool.information.pictureName is not null %}
+                                <img class="tool-info-poster" src="{{ asset('upload/informations/' ~ tool.information.pictureName) }}" alt="Image de l'outil" />
+                            {% else %}
+                                <img class="tool-info-poster" src="{{ asset('img/default.png') }}" alt="Image de l'outil" />
+                            {% endif %}
+                        </div>
+                        <div class="box box-mb box-p">
+                            <!-- Description -->
+                            {% if tool.information is not null and tool.information.content is not null %}
+                                <div class="box-section">
+                                    <p>{{ tool.information.content }}</p>
+                                </div>
+                            {% endif %}
+                            <!-- Specs -->
                             <div class="box-section">
-                                <p>{{ tool.information.content }}</p>
+                                <h2>Caractéristiques</h2>
+                                <ul class="specs-list">
+                                    {% for carac in tool.characteristic %}
+                                        <li>{{ carac.content }}</li>
+                                    {% else %}
+                                        <li>Il n'y a aucune caractéristique pour le moment</li>
+                                    {% endfor %}
+                                </ul>
                             </div>
-                        {% endif %}
-                        <!-- Specs -->
-                        <div class="box-section">
-                            <h2>Caractéristiques</h2>
-                            <ul class="specs-list">
-                                {% for carac in tool.characteristic %}
-                                    <li>{{ carac.content }}</li>
-                                {% else %}
-                                    <li>Il n'y a aucune caractéristique pour le moment</li>
-                                {% endfor %}
-                            </ul>
+                            <!-- Ressources -->
+                            <div class="box-section">
+                                <h2>Ressources</h2>
+                                <ul class="ressources-list">
+                                    {% for resource in tool.resources %}
+                                        <li><a href="{{ resource.link }}">{{ resource.name }}</a></li></li>
+                                    {% else %}
+                                        <li>Il n'y a aucune ressource pour le moment</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
                         </div>
-                        <!-- Ressources -->
-                        <div class="box-section">
-                            <h2>Ressources</h2>
-                            <ul class="ressources-list">
-                                {% for resource in tool.resources %}
-                                    <li><a href="{{ resource.link }}">{{ resource.name }}</a></li></li>
-                                {% else %}
-                                    <li>Il n'y a aucune ressource pour le moment</li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                </section>
+                    </section>
+                </div>
             </div>
         </div>
-    </div>
-</main>
-
+    </main>
 {% endblock %}

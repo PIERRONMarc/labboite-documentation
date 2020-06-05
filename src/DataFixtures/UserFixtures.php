@@ -8,6 +8,9 @@ use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+/**
+ * User fake data
+ */
 class UserFixtures extends Fixture
 {
     public function __construct(UserPasswordEncoderInterface $encoder)

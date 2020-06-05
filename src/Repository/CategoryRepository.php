@@ -19,6 +19,13 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
+    /**
+     * Find a category by his theme and own slug
+     * 
+     * @param String $categorySlug
+     * @param String $themeSlug
+     * @return Category|null
+     */
     public function findBySlugs(String $categorySlug, String $themeSlug) {
         return $this->createQueryBuilder('c')
             ->where('t.slug = :themeSlug')

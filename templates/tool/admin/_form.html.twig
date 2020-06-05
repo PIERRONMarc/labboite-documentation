@@ -1,5 +1,4 @@
 {{ form_start(form) }}
-
     <div class="form-group form-mb-l">
         {{ form_label(form.name) }}
         {{ form_widget(form.name, {'attr': { 'class': "form-element" ~ (form.name.vars.valid == false ? ' has-error')}}) }}
@@ -44,9 +43,4 @@
     <div class="form-action">
         <button type="submit" class="button button-submit">Valider</button>
     </div>
-
-    
-
-
-    {# <button class="btn">{{ button_label|default('Save') }}</button> #}
 {{ form_end(form) }}
