@@ -11,7 +11,7 @@
                     {% for tip in tool.tips %}
                         {% if tip.pictureName is not null %}
                             <!-- Tip item -->
-                            <article class="tool-tip box box-mb box-p text-format">
+                            <article class="tool-tip box box-mb box-p text-format box-bg">
                                 <h2>{{ tip.title }}</h2>
                                 <img class="box-image" src="{{ asset('upload/tips/' ~ tip.pictureName) }}" alt="Astuce" />
                                 <p>{{ tip.description }}</p>
@@ -20,7 +20,7 @@
 
                         {% if tip.youtubeLink is not null %}
                             <!-- Tip item -->
-                            <article class="tool-tip box box-mb box-p text-format">
+                            <article class="tool-tip box box-mb box-p text-format box-bg">
                                 <h2>{{ tip.title }}</h2>
                                 <div class="box-video">
                                     <iframe src="{{ tip.youtubeLink }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -31,7 +31,7 @@
 
                         {% if tip.youtubeLink is null and tip.pictureName is null %}
                             <!-- Tip item -->
-                            <article class="tool-tip box box-mb box-p text-format">
+                            <article class="tool-tip box box-mb box-p text-format box-bg">
                                 <h2>{{ tip.title }}</h2>
                                 <p>{{ tip.description }}</p>
                             </article>

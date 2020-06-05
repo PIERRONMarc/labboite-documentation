@@ -2587,7 +2587,7 @@ textarea.form-element {
 .icon-users::before {
   content: "\ea0e"; }
 
-/* CUSTOM */
+  /* CUSTOM */
 
 .delete-btn {
   background: none;
@@ -2596,6 +2596,45 @@ textarea.form-element {
 }
 
 .delete-btn:focus, .icon-delete:focus {outline:0;}
+
+.has-error {
+  border: 1px solid #f5c6cb !important;
+}
+
+.form-error {
+  color: #C0576B;
+  font-size: 0.8em;
+}
+
+.button-prototype-form {
+  margin-top: 15px;
+}
+
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.alert {
+  position: relative;
+  padding: .75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+}
+
+/* CUSTOM */
+
+.delete-btn {
+  background: none;
+  padding: 0px;
+  border: none;
+}
+
+.delete-btn:focus, .icon-delete:focus {
+  outline:0;
+}
 
 .has-error {
   border: 1px solid #f5c6cb !important;
