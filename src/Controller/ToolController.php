@@ -9,6 +9,7 @@ use App\Repository\ThemeRepository;
 use App\Service\FileUploader;
 use Gedmo\Sluggable\Util\Urlizer;
 use App\Repository\ToolRepository;
+use App\Service\HeaderHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,13 +26,27 @@ class ToolController extends AbstractController
      * 
      * @Route("{themeSlug}/{slug}/tool", name="tool_index")
      */
-    public function index(ToolRepository $toolRepository, Category $category, ThemeRepository $themeRepository): Response
+    public function index(ToolRepository $toolRepository, Category $category, ThemeRepository $themeRepository, $themeSlug, HeaderHelper $headerHelper): Response
     {
-        return $this->render('tool/public/index.html.twig', [
-            'tools' => $toolRepository->findBy(['category' => $category], ['displayOrder' => 'ASC']),
-            'themes' => $themeRepository->findAll(),
-            'category' => $category
-        ]);
+        $tools = $toolRepository->findBy(['category' => $category], ['displayOrder' => 'ASC']);
+
+        // if there is only one tool we display his tool page directly
+        if (count($tools) === 1) {
+            //get all non empty section of the tool header as an array
+            $header = $headerHelper->getToolHeader($tools[0]);
+
+            return $this->render('information/public/index.html.twig', [
+                'tool' => $tools[0],
+                'themes' => $themeRepository->findAll(),
+                'header' => $header
+            ]);
+        } else {
+            return $this->render('tool/public/index.html.twig', [
+                'tools' => $toolRepository->findBy(['category' => $category], ['displayOrder' => 'ASC']),
+                'themes' => $themeRepository->findAll(),
+                'category' => $category
+            ]);
+        }
     }
 
     /**

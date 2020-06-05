@@ -27,7 +27,7 @@
                 {% if 'information' in header %}
                     <li>
                         <a title="Information" href="{{ path('information_index', {'categorySlug': tool.category.slug, 'themeSlug': tool.category.theme.slug, 'slug': tool.slug}) }}">
-                            <span class="icon icon-info tool-nav-icon tool-nav-link {{ app.request.attributes.get('_route') == 'information_index' ? 'tool-nav-active' : null}}"></span>
+                            <span class="icon icon-info tool-nav-icon tool-nav-link {{ app.request.attributes.get('_route') == 'information_index' or app.request.attributes.get('_route') == 'tool_index' ? 'tool-nav-active' : null}}"></span>
                         </a>
                     </li>
                 {% endif %}
