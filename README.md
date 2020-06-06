@@ -40,6 +40,7 @@ This project is docker enabled, just `'docker-compose up'` and you're good to go
 * Each folder in the template directory can be divided in 2 folder : 
     - an "admin" folder : for back-office templates
     - a "public" folder : for front-office templates
+* To load the first user in database, you can load the user fixture located at ./src/DataFixtures/UserFixtures.php (for more info see : https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html )
 
 ## Stack
 
@@ -57,7 +58,7 @@ This project is docker enabled, just `'docker-compose up'` and you're good to go
     >php bin/console doctrine:database:create  
     php bin/console doctrine:migrations:migrate
 5. Optionnal : load fake data
-    >php bin/console doctrine:load:fixtures
+    >php bin/console doctrine:fixtures:load
 
 ## Credits
 
