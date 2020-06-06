@@ -41,6 +41,7 @@ This project is docker enabled, just `'docker-compose up'` and you're good to go
     - an "admin" folder : for back-office templates
     - a "public" folder : for front-office templates
 * To load the first user in database, you can load the user fixture located at ./src/DataFixtures/UserFixtures.php (for more info see : https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html )
+* The first time you are using elFinder to manage files from CKEditor, elFinder can throw an error due to the folder ./public/upload/ckeditor not being created yet. After that, the error will not occur anymore.
 
 ## Stack
 
