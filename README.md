@@ -32,7 +32,7 @@ Admins publish and update this part of the website. As the fablab has many diffe
 
 ## Database
 
-For more details about database, see this the conceptual data model at ./documentation/labboite-cdm.jpg
+For more details about database, see the conceptual data model at ./documentation/labboite-cdm.jpg
 
 ## Installation
 
@@ -61,4 +61,4 @@ This project is docker enabled, just `'docker-compose up'` and you're good to go
 ## Credits
 
 Design : Valentin Socha  
-Development : [PIERRON Marc](https://www.marcpierron.com), [HANNA Filoupatir](https://github.com/filou78955)
+Development : [PIERRON Marc](https://marcpierron.com/), [HANNA Filoupatir](https://github.com/filou78955)
